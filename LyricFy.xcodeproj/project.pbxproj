@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		67227EFE29F85EDE00E1166C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67227EFD29F85EDE00E1166C /* AppDelegate.swift */; };
 		67227F0029F85EDE00E1166C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67227EFF29F85EDE00E1166C /* SceneDelegate.swift */; };
-		67227F0229F85EDE00E1166C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67227F0129F85EDE00E1166C /* ViewController.swift */; };
+		67227F0229F85EDE00E1166C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67227F0129F85EDE00E1166C /* MainViewController.swift */; };
 		67227F0829F85EDE00E1166C /* LyricFy.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 67227F0629F85EDE00E1166C /* LyricFy.xcdatamodeld */; };
 		67227F0A29F85EDF00E1166C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67227F0929F85EDF00E1166C /* Assets.xcassets */; };
 		67227F0D29F85EDF00E1166C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67227F0B29F85EDF00E1166C /* LaunchScreen.storyboard */; };
@@ -19,7 +19,7 @@
 		67227EFA29F85EDE00E1166C /* LyricFy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LyricFy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67227EFD29F85EDE00E1166C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		67227EFF29F85EDE00E1166C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		67227F0129F85EDE00E1166C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		67227F0129F85EDE00E1166C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		67227F0729F85EDE00E1166C /* LyricFy.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LyricFy.xcdatamodel; sourceTree = "<group>"; };
 		67227F0929F85EDF00E1166C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		67227F0C29F85EDF00E1166C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -56,15 +56,47 @@
 		67227EFC29F85EDE00E1166C /* LyricFy */ = {
 			isa = PBXGroup;
 			children = (
-				67227EFD29F85EDE00E1166C /* AppDelegate.swift */,
-				67227EFF29F85EDE00E1166C /* SceneDelegate.swift */,
-				67227F0129F85EDE00E1166C /* ViewController.swift */,
+				781D450929F98CB2005B1ACC /* Managers */,
+				781D450729F98C5E005B1ACC /* Resources */,
+				781D450829F98C73005B1ACC /* ViewControllers */,
 				67227F0929F85EDF00E1166C /* Assets.xcassets */,
-				67227F0B29F85EDF00E1166C /* LaunchScreen.storyboard */,
 				67227F0E29F85EDF00E1166C /* Info.plist */,
-				67227F0629F85EDE00E1166C /* LyricFy.xcdatamodeld */,
 			);
 			path = LyricFy;
+			sourceTree = "<group>";
+		};
+		781D450729F98C5E005B1ACC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				67227EFD29F85EDE00E1166C /* AppDelegate.swift */,
+				67227EFF29F85EDE00E1166C /* SceneDelegate.swift */,
+				67227F0B29F85EDF00E1166C /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		781D450829F98C73005B1ACC /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				67227F0129F85EDE00E1166C /* MainViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		781D450929F98CB2005B1ACC /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				781D450A29F98CD0005B1ACC /* CoreData */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		781D450A29F98CD0005B1ACC /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				67227F0629F85EDE00E1166C /* LyricFy.xcdatamodeld */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -159,7 +191,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				67227F0229F85EDE00E1166C /* ViewController.swift in Sources */,
+				67227F0229F85EDE00E1166C /* MainViewController.swift in Sources */,
 				67227EFE29F85EDE00E1166C /* AppDelegate.swift in Sources */,
 				67227F0829F85EDE00E1166C /* LyricFy.xcdatamodeld in Sources */,
 				67227F0029F85EDE00E1166C /* SceneDelegate.swift in Sources */,
