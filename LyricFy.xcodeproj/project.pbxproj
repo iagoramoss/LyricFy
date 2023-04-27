@@ -13,6 +13,9 @@
 		67227F0829F85EDE00E1166C /* LyricFy.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 67227F0629F85EDE00E1166C /* LyricFy.xcdatamodeld */; };
 		67227F0A29F85EDF00E1166C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67227F0929F85EDF00E1166C /* Assets.xcassets */; };
 		67227F0D29F85EDF00E1166C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67227F0B29F85EDF00E1166C /* LaunchScreen.storyboard */; };
+		9F0CECAB29FAEC7E00103EFE /* CompositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0CECAA29FAEC7E00103EFE /* CompositionView.swift */; };
+		9F0CECAE29FB050800103EFE /* CompositionScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0CECAD29FB050800103EFE /* CompositionScreenController.swift */; };
+		9F0CECB129FB0C5B00103EFE /* ViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0CECB029FB0C5B00103EFE /* ViewCode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		67227F0929F85EDF00E1166C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		67227F0C29F85EDF00E1166C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		67227F0E29F85EDF00E1166C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9F0CECAA29FAEC7E00103EFE /* CompositionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionView.swift; sourceTree = "<group>"; };
+		9F0CECAD29FB050800103EFE /* CompositionScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionScreenController.swift; sourceTree = "<group>"; };
+		9F0CECB029FB0C5B00103EFE /* ViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +62,8 @@
 		67227EFC29F85EDE00E1166C /* LyricFy */ = {
 			isa = PBXGroup;
 			children = (
+				9F0CECAF29FB0C0800103EFE /* Protocols */,
+				9F0CECAC29FB04E600103EFE /* Views */,
 				781D450929F98CB2005B1ACC /* Managers */,
 				781D450729F98C5E005B1ACC /* Resources */,
 				781D450829F98C73005B1ACC /* ViewControllers */,
@@ -79,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				67227F0129F85EDE00E1166C /* MainViewController.swift */,
+				9F0CECAD29FB050800103EFE /* CompositionScreenController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -97,6 +106,22 @@
 				67227F0629F85EDE00E1166C /* LyricFy.xcdatamodeld */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		9F0CECAC29FB04E600103EFE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9F0CECAA29FAEC7E00103EFE /* CompositionView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9F0CECAF29FB0C0800103EFE /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				9F0CECB029FB0C5B00103EFE /* ViewCode.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -192,8 +217,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				67227F0229F85EDE00E1166C /* MainViewController.swift in Sources */,
+				9F0CECAB29FAEC7E00103EFE /* CompositionView.swift in Sources */,
 				67227EFE29F85EDE00E1166C /* AppDelegate.swift in Sources */,
+				9F0CECB129FB0C5B00103EFE /* ViewCode.swift in Sources */,
 				67227F0829F85EDE00E1166C /* LyricFy.xcdatamodeld in Sources */,
+				9F0CECAE29FB050800103EFE /* CompositionScreenController.swift in Sources */,
 				67227F0029F85EDE00E1166C /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
