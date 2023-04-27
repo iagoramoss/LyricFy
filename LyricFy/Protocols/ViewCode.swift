@@ -1,23 +1,32 @@
 //
-//  Extension+ViewCode.swift
+//  ViewCode.swift
 //  LyricFy
 //
 //  Created by Anne Victoria Batista Auzier on 27/04/23.
 //
 
-import UIKit
+import Foundation
 
 protocol ViewCode {
+
     func setupHierarchy()
+
     func setupConstraints()
+
     func setupAdditionalConfiguration()
-    func setupView()
 }
 
 extension ViewCode {
+
     func setupView() {
         setupHierarchy()
         setupConstraints()
         setupAdditionalConfiguration()
     }
+
+    func setupHierarchy() {}
+
+    func setupConstraints() {}
+
+    func setupAdditionalConfiguration() {}
 }
