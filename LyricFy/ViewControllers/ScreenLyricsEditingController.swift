@@ -14,6 +14,7 @@ class ScreenLyricsEditingController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
+        setupBindings()
     }
 
     override func loadView() {
@@ -22,9 +23,28 @@ class ScreenLyricsEditingController: UIViewController {
         self.view = screen
     }
 
-    func setupNavigationBar() {
-        navigationItem.title = "Intro"
-        navigationController?.navigationBar.prefersLargeTitles = true
+    func setupBindings() {
+        screen?.textView.delegate = self
     }
 
+    func setupNavigationBar() {
+        navigationItem.title = "Intro"
+        navigationController?.navigationBar.prefersLargeTitles = false
+    }
+
+}
+
+extension ScreenLyricsEditingController: UITextViewDelegate {
+
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        screen?.textView.becomeFirstResponder()
+    }
+
+    func textViewDidChange(_ textView: UITextView) {
+        guard let textView = screen?.textView else { return }
+
+        let newSize = textView.sizeThatFits(
+            CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
+        textView.frame.size.height = newSize.height
+    }
 }
