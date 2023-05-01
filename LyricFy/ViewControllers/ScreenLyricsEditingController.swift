@@ -29,7 +29,7 @@ class ScreenLyricsEditingController: UIViewController {
 
     func setupNavigationBar() {
         navigationItem.title = "Intro"
-        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
 
 }
