@@ -9,43 +9,41 @@ import Foundation
 import UIKit
 
 class Alert: UIAlertController {
-    private var action: (() -> Void)?
 
-    convenience init(title: String?,
-                     message: String?,
-                     cancelButtonText: String = "Cancel",
-                     okButtonText: String = "OK",
-                     action: (() -> Void)? = nil) {
+    convenience init(title: String,
+                     message: String,
+                     cancelButtonLabel: String = "Cancel",
+                     actioButtonLabel: String = "OK",
+                     action: @escaping () -> Void
+    ) {
         self.init(title: title, message: message, preferredStyle: .alert)
-        self.action = action
 
-        let cancelButton = UIAlertAction(title: cancelButtonText, style: .cancel)
-
-        let okButton = UIAlertAction(title: okButtonText, style: .default) { _ in
-            self.action?()
-        }
+        let cancelButton = UIAlertAction(title: cancelButtonLabel, style: .cancel)
+        let actionButton = UIAlertAction(title: actioButtonLabel, style: .default, handler: { _ in action() })
 
         self.addAction(cancelButton)
-        self.addAction(okButton)
+        self.addAction(actionButton)
     }
 
     convenience init(title: String,
-                     okButtonText: String = "Create",
+                     cancelButtonLabel: String = "Cancel",
+                     actionButtonLabel: String = "Create",
                      textFieldPlaceholder: String,
-                     defaultText: String,
-                     action: @escaping (String) -> Void) {
-        self.init(title: title, message: nil, okButtonText: okButtonText)
-
-        self.addTextField { (textField) in
+                     textFieldDefaultText: String,
+                     action: @escaping (String) -> Void
+    ) {
+        self.init(title: title, message: nil, preferredStyle: .alert)
+        self.addTextField { textField in
             textField.placeholder = textFieldPlaceholder
         }
 
-        self.action = {
-            guard let text = self.textFields?.first?.text else {
-                return
-            }
-
-            action(text.isEmpty ? defaultText : text)
+        let cancelButton = UIAlertAction(title: cancelButtonLabel, style: .cancel)
+        let actionButton = UIAlertAction(title: actionButtonLabel, style: .default) { _ in
+            guard let input = self.textFields?.first?.text, !input.isEmpty else { return }
+            action(input)
         }
+
+        self.addAction(cancelButton)
+        self.addAction(actionButton)
     }
 }
