@@ -40,6 +40,7 @@ class LyricsEditingScreenView: UIView, ViewCode {
         view.font = UIFont.systemFont(ofSize: 17)
         view.textAlignment = .left
         view.backgroundColor = .clear
+        view.typingAttributes = NSAttributedString.defaultParagraphAttributes
         return view
     }()
 
