@@ -19,6 +19,7 @@ class LyricsEditingScreenView: UIView, ViewCode {
         view.minimumZoomScale = 1
         view.maximumZoomScale = 1
         view.backgroundColor = .clear
+        view.keyboardDismissMode = .onDrag
         return view
     }()
 
@@ -66,11 +67,11 @@ class LyricsEditingScreenView: UIView, ViewCode {
             scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
             scrollView.widthAnchor.constraint(equalToConstant: .screenWidth),
 
-            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -20),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
             contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentView.widthAnchor.constraint(equalToConstant: .screenWidth - 40),
+            contentView.widthAnchor.constraint(equalToConstant: .screenWidth - 32),
 
             textView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             textView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
