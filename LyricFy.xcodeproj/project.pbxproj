@@ -16,6 +16,8 @@
 		9F0CECAB29FAEC7E00103EFE /* CompositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0CECAA29FAEC7E00103EFE /* CompositionView.swift */; };
 		9F0CECAE29FB050800103EFE /* CompositionScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0CECAD29FB050800103EFE /* CompositionScreenController.swift */; };
 		9F0CECB129FB0C5B00103EFE /* ViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0CECB029FB0C5B00103EFE /* ViewCode.swift */; };
+		9F35359229FEE7A600F24950 /* SheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35359129FEE7A600F24950 /* SheetViewController.swift */; };
+		9F62B0B72A01A27000A2F91C /* SheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F62B0B62A01A27000A2F91C /* SheetView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		9F0CECAA29FAEC7E00103EFE /* CompositionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionView.swift; sourceTree = "<group>"; };
 		9F0CECAD29FB050800103EFE /* CompositionScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionScreenController.swift; sourceTree = "<group>"; };
 		9F0CECB029FB0C5B00103EFE /* ViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCode.swift; sourceTree = "<group>"; };
+		9F35359129FEE7A600F24950 /* SheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetViewController.swift; sourceTree = "<group>"; };
+		9F62B0B62A01A27000A2F91C /* SheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				67227F0129F85EDE00E1166C /* MainViewController.swift */,
+				9F35359129FEE7A600F24950 /* SheetViewController.swift */,
 				9F0CECAD29FB050800103EFE /* CompositionScreenController.swift */,
 			);
 			path = ViewControllers;
@@ -112,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				9F0CECAA29FAEC7E00103EFE /* CompositionView.swift */,
+				9F62B0B62A01A27000A2F91C /* SheetView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -217,9 +223,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				67227F0229F85EDE00E1166C /* MainViewController.swift in Sources */,
+				9F62B0B72A01A27000A2F91C /* SheetView.swift in Sources */,
 				9F0CECAB29FAEC7E00103EFE /* CompositionView.swift in Sources */,
 				67227EFE29F85EDE00E1166C /* AppDelegate.swift in Sources */,
 				9F0CECB129FB0C5B00103EFE /* ViewCode.swift in Sources */,
+				9F35359229FEE7A600F24950 /* SheetViewController.swift in Sources */,
 				67227F0829F85EDE00E1166C /* LyricFy.xcdatamodeld in Sources */,
 				9F0CECAE29FB050800103EFE /* CompositionScreenController.swift in Sources */,
 				67227F0029F85EDE00E1166C /* SceneDelegate.swift in Sources */,
