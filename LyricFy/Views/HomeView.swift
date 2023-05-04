@@ -100,10 +100,9 @@ extension HomeView: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate
         if indexPath.item > 0 {
             return UIContextMenuConfiguration(
                 identifier: nil,
-                previewProvider: nil)
-            { _ in
+                previewProvider: nil) { _ in
                 return UIMenu(title: "X",
-                              children:[
+                              children: [
                                 UIAction(title: "Edit name",
                                          image: UIImage(systemName: "pencil.circle"),
                                          state: .off) { _ in

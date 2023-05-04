@@ -77,6 +77,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D2CB0E12A042BBB0080CB8A /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				0D2CB0D929FC41210080CB8A /* ProjectsCell.swift */,
+				0D2CB0DF2A039EA10080CB8A /* AddProjectsCell.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		67227EF129F85EDE00E1166C = {
 			isa = PBXGroup;
 			children = (
@@ -113,6 +122,7 @@
 		67227F1629FC508100E1166C /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				0D2CB0E12A042BBB0080CB8A /* Home */,
 				67227F1729FC50A300E1166C /* Alert.swift */,
 			);
 			path = Components;
@@ -193,6 +203,7 @@
 		78F391DC2A02EF6C0097884C /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				0D2CB0DD29FC4F560080CB8A /* HomeViewModel.swift */,
 				78F391DD2A02EF9F0097884C /* ScreenLyricsEditingViewModel.swift */,
 			);
 			path = ViewModels;
@@ -201,9 +212,6 @@
 		9F0CECAC29FB04E600103EFE /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				0D2CB0DD29FC4F560080CB8A /* HomeViewModel.swift */,
-				0D2CB0D929FC41210080CB8A /* ProjectsCell.swift */,
-				0D2CB0DF2A039EA10080CB8A /* AddProjectsCell.swift */,
 				67227F1629FC508100E1166C /* Components */,
 				7865F4392A005ED20032039C /* Extensions */,
 				7807628929FC31E800353A06 /* LyricsEditing */,
