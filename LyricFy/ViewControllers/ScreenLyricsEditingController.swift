@@ -23,8 +23,8 @@ class ScreenLyricsEditingController: UIViewController {
     }
     
     init(viewModel: ScreenLyricsEditingViewModel) {
-        super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
     
     private func setupView() {
