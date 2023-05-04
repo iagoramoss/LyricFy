@@ -27,10 +27,6 @@ class ScreenLyricsEditingController: UIViewController {
         self.viewModel = viewModel
     }
     
-    func setupViewModel(viewModel: ScreenLyricsEditingViewModel) {
-        self.viewModel = viewModel
-    }
-    
     private func setupView() {
         setupNavigationBar()
         setupBindings()
