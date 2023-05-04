@@ -18,7 +18,7 @@ class ScreenLyricsEditingController: UIViewController {
     
     override func loadView() {
         super.loadView()
-        self.screen = LyricsEditingScreenView()
+        self.screen = LyricsEditingScreenView(keyboardListener: self)
         self.view = screen
     }
     
@@ -43,6 +43,7 @@ class ScreenLyricsEditingController: UIViewController {
     private func setupNavigationBar() {
         navigationItem.title = viewModel?.lyricsType
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.tintColor = .black
     }
     
     deinit {
@@ -70,5 +71,25 @@ extension ScreenLyricsEditingController: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         viewModel?.saveLyricsEdition()
+    }
+}
+
+extension ScreenLyricsEditingController: KeyboardListener {
+    
+    func keyboardWillAppear() {
+        let doneButton = UIBarButtonItem(title: "Done",
+                                         style: .done,
+                                         target: self,
+                                         action: #selector(doneClicked))
+        navigationItem.rightBarButtonItem = doneButton
+    }
+    
+    func keyboardWillhide() {
+        navigationItem.rightBarButtonItem = nil
+    }
+    
+    @objc
+    func doneClicked(_ sender: Any) {
+        view.endEditing(true)
     }
 }
