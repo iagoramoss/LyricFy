@@ -11,16 +11,6 @@ class HomeView: UIView {
     
     var projects: [Project] = HomeViewModel().projects
     
-    lazy var alert: UIAlertController = {
-        let alert = UIAlertController(title: "Delete",
-                                      message: "This project will be deleted. And it will not be possible to recover it.",
-                                      preferredStyle: .actionSheet)
-//        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .destructive, handler: { _ in
-//        NSLog("The \"OK\" alert occured.")
-//        }))
-        return alert
-    }()
-    
     lazy var layout: UICollectionViewFlowLayout = {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -32,9 +22,10 @@ class HomeView: UIView {
         let collectionProjects = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         collectionProjects.translatesAutoresizingMaskIntoConstraints = false
         collectionProjects.backgroundColor = .none
-        collectionProjects.register(ProjectsCell.self, forCellWithReuseIdentifier: ProjectsCell.identifier)
+        collectionProjects.register(ProjectsCell.self,
+                                    forCellWithReuseIdentifier: ProjectsCell.identifier)
         collectionProjects.register(AddProjectsCell.self, forCellWithReuseIdentifier: AddProjectsCell.identifier)
-//        collectionProjects.setCollectionViewLayout(layout, animated: false)
+        //        collectionProjects.setCollectionViewLayout(layout, animated: false)
         collectionProjects.delegate = self
         collectionProjects.dataSource = self
         
@@ -70,11 +61,20 @@ extension HomeView: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate
         return projects.count + 1
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         
-        let addCell = collectionProjects.dequeueReusableCell(withReuseIdentifier: AddProjectsCell.identifier, for: indexPath) as? AddProjectsCell
+        let addCell = collectionProjects.dequeueReusableCell(
+            withReuseIdentifier: AddProjectsCell.identifier,
+            for: indexPath
+        ) as? AddProjectsCell
         
-        let cell = collectionProjects.dequeueReusableCell(withReuseIdentifier: ProjectsCell.identifier, for: indexPath) as? ProjectsCell
+        let cell = collectionProjects.dequeueReusableCell(
+            withReuseIdentifier: ProjectsCell.identifier,
+            for: indexPath
+        ) as? ProjectsCell
         if indexPath.item > 0 {
             cell?.nameProject.text = projects[indexPath.row - 1].projectName
             cell?.date.text = projects[indexPath.row - 1].date
@@ -84,15 +84,26 @@ extension HomeView: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
         return CGSize(width: 166, height: 144)
     }
     
-    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        contextMenuConfigurationForItemAt indexPath: IndexPath,
+        point: CGPoint
+    ) -> UIContextMenuConfiguration? {
         if indexPath.item > 0 {
-            return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+            return UIContextMenuConfiguration(
+                identifier: nil,
+                previewProvider: nil)
+            { _ in
                 return UIMenu(title: "X",
-                              children: [
+                              children:[
                                 UIAction(title: "Edit name",
                                          image: UIImage(systemName: "pencil.circle"),
                                          state: .off) { _ in
@@ -103,22 +114,20 @@ extension HomeView: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate
                                          attributes: .destructive,
                                          state: .off) { _ in
                                              print("delete version")
-                                                 NotificationCenter.default.post(.init(name: Notification.Name(rawValue: "excluir")))
-                                             self.alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .destructive, handler: { _ in
-                                                 self.projects.remove(at: indexPath.row-1)
-                                                 collectionView.deleteItems(at: [indexPath])
-                                             }))
                                              
                                          }
                               ]
                 )
             }
-        }else {
+        } else {
             return nil
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
         if indexPath.item > 0 {
             NotificationCenter.default.post(.init(name: Notification.Name(rawValue: "emptyView")))
         } else {
@@ -126,9 +135,12 @@ extension HomeView: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int
+    ) -> CGFloat {
         return 30
     }
-    
     
 }

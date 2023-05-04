@@ -53,23 +53,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0D2CB0D829FC40F60080CB8A /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				0D2CB0D929FC41210080CB8A /* ProjectsCell.swift */,
-				0D2CB0DF2A039EA10080CB8A /* AddProjectsCell.swift */,
-			);
-			path = Components;
-			sourceTree = "<group>";
-		};
-		0D2CB0DB29FC4EF70080CB8A /* ViemModels */ = {
-			isa = PBXGroup;
-			children = (
-				0D2CB0DD29FC4F560080CB8A /* HomeViewModel.swift */,
-			);
-			name = ViemModels;
-			sourceTree = "<group>";
-		};
 		67227EF129F85EDE00E1166C = {
 			isa = PBXGroup;
 			children = (
@@ -89,7 +72,6 @@
 		67227EFC29F85EDE00E1166C /* LyricFy */ = {
 			isa = PBXGroup;
 			children = (
-				0D2CB0DB29FC4EF70080CB8A /* ViemModels */,
 				9F0CECAF29FB0C0800103EFE /* Protocols */,
 				9F0CECAC29FB04E600103EFE /* Views */,
 				781D450929F98CB2005B1ACC /* Managers */,
@@ -140,7 +122,9 @@
 		9F0CECAC29FB04E600103EFE /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				0D2CB0D829FC40F60080CB8A /* Components */,
+				0D2CB0DD29FC4F560080CB8A /* HomeViewModel.swift */,
+				0D2CB0D929FC41210080CB8A /* ProjectsCell.swift */,
+				0D2CB0DF2A039EA10080CB8A /* AddProjectsCell.swift */,
 				9F0CECAA29FAEC7E00103EFE /* CompositionView.swift */,
 				0D2CB0D429FC40A00080CB8A /* HomeView.swift */,
 			);
@@ -397,7 +381,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 83444286UZ;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LyricFy/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -428,7 +412,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 83444286UZ;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LyricFy/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
