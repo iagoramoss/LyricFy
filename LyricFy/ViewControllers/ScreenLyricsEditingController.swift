@@ -45,7 +45,11 @@ class ScreenLyricsEditingController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
-        required init?(coder: NSCoder) {
+    deinit {
+        subscriptions.forEach { $0.cancel() }
+    }
+    
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
