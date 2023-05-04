@@ -18,10 +18,13 @@
 		7807628B29FC323500353A06 /* LyricsEditingScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7807628A29FC323500353A06 /* LyricsEditingScreenView.swift */; };
 		7865F43B2A005F0F0032039C /* NSAttributedString+defaultParagraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7865F43A2A005F0F0032039C /* NSAttributedString+defaultParagraph.swift */; };
 		7882169129FD9D340032A177 /* CGFloat+Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7882169029FD9D340032A177 /* CGFloat+Screen.swift */; };
+		78BE20E62A041A9A003B3AF2 /* KeyboardListenerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BE20E52A041A9A003B3AF2 /* KeyboardListenerProtocol.swift */; };
 		78F391D32A02D92F0097884C /* Composition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F391D22A02D92F0097884C /* Composition.swift */; };
 		78F391D52A02DD610097884C /* Compositions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F391D42A02DD610097884C /* Compositions.swift */; };
 		78F391D72A02DDD20097884C /* CompositionsCrudProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F391D62A02DDD20097884C /* CompositionsCrudProtocol.swift */; };
 		78F391D92A02E0C60097884C /* MockComposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F391D82A02E0C60097884C /* MockComposition.swift */; };
+		78F391DE2A02EF9F0097884C /* ScreenLyricsEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F391DD2A02EF9F0097884C /* ScreenLyricsEditingViewModel.swift */; };
+		78F391E02A02F3400097884C /* UITextView+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F391DF2A02F3400097884C /* UITextView+Combine.swift */; };
 		9F0CECAB29FAEC7E00103EFE /* CompositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0CECAA29FAEC7E00103EFE /* CompositionView.swift */; };
 		9F0CECAE29FB050800103EFE /* CompositionScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0CECAD29FB050800103EFE /* CompositionScreenController.swift */; };
 		9F0CECB129FB0C5B00103EFE /* ViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0CECB029FB0C5B00103EFE /* ViewCode.swift */; };
@@ -41,10 +44,13 @@
 		7807628A29FC323500353A06 /* LyricsEditingScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsEditingScreenView.swift; sourceTree = "<group>"; };
 		7865F43A2A005F0F0032039C /* NSAttributedString+defaultParagraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+defaultParagraph.swift"; sourceTree = "<group>"; };
 		7882169029FD9D340032A177 /* CGFloat+Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Screen.swift"; sourceTree = "<group>"; };
+		78BE20E52A041A9A003B3AF2 /* KeyboardListenerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardListenerProtocol.swift; sourceTree = "<group>"; };
 		78F391D22A02D92F0097884C /* Composition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Composition.swift; sourceTree = "<group>"; };
 		78F391D42A02DD610097884C /* Compositions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Compositions.swift; sourceTree = "<group>"; };
 		78F391D62A02DDD20097884C /* CompositionsCrudProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionsCrudProtocol.swift; sourceTree = "<group>"; };
 		78F391D82A02E0C60097884C /* MockComposition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockComposition.swift; sourceTree = "<group>"; };
+		78F391DD2A02EF9F0097884C /* ScreenLyricsEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenLyricsEditingViewModel.swift; sourceTree = "<group>"; };
+		78F391DF2A02F3400097884C /* UITextView+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Combine.swift"; sourceTree = "<group>"; };
 		9F0CECAA29FAEC7E00103EFE /* CompositionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionView.swift; sourceTree = "<group>"; };
 		9F0CECAD29FB050800103EFE /* CompositionScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionScreenController.swift; sourceTree = "<group>"; };
 		9F0CECB029FB0C5B00103EFE /* ViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCode.swift; sourceTree = "<group>"; };
@@ -85,6 +91,7 @@
 				9F0CECAF29FB0C0800103EFE /* Protocols */,
 				781D450929F98CB2005B1ACC /* Managers */,
 				78F391D12A02D9000097884C /* Models */,
+				78F391DC2A02EF6C0097884C /* ViewModels */,
 				9F0CECAC29FB04E600103EFE /* Views */,
 				781D450829F98C73005B1ACC /* ViewControllers */,
 				67227F0929F85EDF00E1166C /* Assets.xcassets */,
@@ -157,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				7882169029FD9D340032A177 /* CGFloat+Screen.swift */,
+				78F391DF2A02F3400097884C /* UITextView+Combine.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -169,6 +177,14 @@
 				78F391D82A02E0C60097884C /* MockComposition.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		78F391DC2A02EF6C0097884C /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				78F391DD2A02EF9F0097884C /* ScreenLyricsEditingViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		9F0CECAC29FB04E600103EFE /* Views */ = {
@@ -187,6 +203,7 @@
 			children = (
 				9F0CECB029FB0C5B00103EFE /* ViewCode.swift */,
 				78F391D62A02DDD20097884C /* CompositionsCrudProtocol.swift */,
+				78BE20E52A041A9A003B3AF2 /* KeyboardListenerProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -283,6 +300,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78BE20E62A041A9A003B3AF2 /* KeyboardListenerProtocol.swift in Sources */,
 				67227F0229F85EDE00E1166C /* MainViewController.swift in Sources */,
 				78F391D32A02D92F0097884C /* Composition.swift in Sources */,
 				78F391D52A02DD610097884C /* Compositions.swift in Sources */,
@@ -291,6 +309,7 @@
 				7882169129FD9D340032A177 /* CGFloat+Screen.swift in Sources */,
 				7807628B29FC323500353A06 /* LyricsEditingScreenView.swift in Sources */,
 				67227EFE29F85EDE00E1166C /* AppDelegate.swift in Sources */,
+				78F391DE2A02EF9F0097884C /* ScreenLyricsEditingViewModel.swift in Sources */,
 				9F0CECB129FB0C5B00103EFE /* ViewCode.swift in Sources */,
 				7807628829FC30EE00353A06 /* ScreenLyricsEditingController.swift in Sources */,
 				67227F0829F85EDE00E1166C /* LyricFy.xcdatamodeld in Sources */,
@@ -299,6 +318,7 @@
 				67227F0029F85EDE00E1166C /* SceneDelegate.swift in Sources */,
 				78F391D92A02E0C60097884C /* MockComposition.swift in Sources */,
 				78F391D72A02DDD20097884C /* CompositionsCrudProtocol.swift in Sources */,
+				78F391E02A02F3400097884C /* UITextView+Combine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,7 +457,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8Z58DGA5TP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LyricFy/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -468,7 +488,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8Z58DGA5TP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LyricFy/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
