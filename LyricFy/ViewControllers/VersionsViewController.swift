@@ -24,16 +24,6 @@ class VersionsViewController: UIViewController {
 
         versionsView.pickerView.delegate = self as UIPickerViewDelegate
         versionsView.pickerView.dataSource = self as UIPickerViewDataSource
-
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(onTappedDone))
-        doneButton.tintColor = .blue
-
-        navigationItem.rightBarButtonItem = doneButton
-    }
-
-    @objc
-    func onTappedDone() {
-        print("DONE")
     }
 
     required init?(coder: NSCoder) {

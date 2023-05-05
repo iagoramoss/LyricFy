@@ -9,8 +9,6 @@ import UIKit
 
 class CompositionView: UIView {
 
-    var menu: UIMenu?
-
     var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -23,9 +21,10 @@ class CompositionView: UIView {
         let label = UILabel()
         label.text = "Somewhere only we know"
         label.textColor = .black
-        label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 24)
+        label.textAlignment = .left
+        label.font = UIFont.boldSystemFont(ofSize: 34)
         label.numberOfLines = 0
+
         return label
     }()
 
@@ -51,7 +50,6 @@ extension CompositionView: ViewCode {
 
         nameOfMusic.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
         nameOfMusic.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
-        nameOfMusic.adjustsFontSizeToFitWidth = true
 
         setStackViewConstraints()
     }

@@ -18,17 +18,19 @@ class SheetView: UIView {
     var verso: UIButton = {
         var button = UIButton()
         button.setTitle("Verso", for: .normal)
-        button.layer.cornerRadius = 15
-        button.setTitleColor(.black, for: .normal)
+        button.layer.cornerRadius = 23
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         button.backgroundColor = .white
 
         return button
     }()
     var preRefrao: UIButton = {
         var button = UIButton()
-        button.setTitle("Pre Refrão", for: .normal)
-        button.layer.cornerRadius = 15
-        button.setTitleColor(.black, for: .normal)
+        button.setTitle("Pré-Refrão", for: .normal)
+        button.layer.cornerRadius = 23
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         button.backgroundColor = .white
 
         return button
@@ -36,8 +38,9 @@ class SheetView: UIView {
     var refrao: UIButton = {
         var button = UIButton()
         button.setTitle("Refrão", for: .normal)
-        button.layer.cornerRadius = 15
-        button.setTitleColor(.black, for: .normal)
+        button.layer.cornerRadius = 23
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         button.backgroundColor = .white
 
         return button
@@ -45,17 +48,19 @@ class SheetView: UIView {
     var ponte: UIButton = {
         var button = UIButton()
         button.setTitle("Ponte", for: .normal)
-        button.layer.cornerRadius = 15
-        button.setTitleColor(.black, for: .normal)
+        button.layer.cornerRadius = 23
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         button.backgroundColor = .white
 
         return button
     }()
     var outros: UIButton = {
         var button = UIButton()
-        button.setTitle("Outros", for: .normal)
-        button.layer.cornerRadius = 15
-        button.setTitleColor(.black, for: .normal)
+        button.setTitle("Custom", for: .normal)
+        button.layer.cornerRadius = 23
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         button.backgroundColor = .white
 
         return button
@@ -84,32 +89,31 @@ extension SheetView: ViewCode {
         NSLayoutConstraint.activate([
             verso.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
             verso.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            verso.widthAnchor.constraint(equalToConstant: 83),
-            verso.heightAnchor.constraint(equalToConstant: 30),
+            verso.widthAnchor.constraint(equalToConstant: 85),
+            verso.heightAnchor.constraint(equalToConstant: 44),
 
             preRefrao.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
             preRefrao.leadingAnchor.constraint(equalTo: verso.trailingAnchor, constant: 20),
-            preRefrao.widthAnchor.constraint(equalToConstant: 100),
-            preRefrao.heightAnchor.constraint(equalToConstant: 30),
+            preRefrao.widthAnchor.constraint(equalToConstant: 112),
+            preRefrao.heightAnchor.constraint(equalToConstant: 44),
 
             refrao.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
             refrao.leadingAnchor.constraint(equalTo: preRefrao.trailingAnchor, constant: 20),
-            refrao.widthAnchor.constraint(equalToConstant: 83),
-            refrao.heightAnchor.constraint(equalToConstant: 30),
+            refrao.widthAnchor.constraint(equalToConstant: 85),
+            refrao.heightAnchor.constraint(equalToConstant: 44),
 
             ponte.topAnchor.constraint(equalTo: verso.bottomAnchor, constant: 30),
             ponte.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            ponte.widthAnchor.constraint(equalToConstant: 83),
-            ponte.heightAnchor.constraint(equalToConstant: 30),
+            ponte.widthAnchor.constraint(equalToConstant: 85),
+            ponte.heightAnchor.constraint(equalToConstant: 44),
 
             outros.topAnchor.constraint(equalTo: preRefrao.bottomAnchor, constant: 30),
             outros.leadingAnchor.constraint(equalTo: ponte.trailingAnchor, constant: 20),
-            outros.widthAnchor.constraint(equalToConstant: 83),
-            outros.heightAnchor.constraint(equalToConstant: 30)
-
+            outros.widthAnchor.constraint(equalToConstant: 85),
+            outros.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
     func setupAdditionalConfiguration() {
-        backgroundColor = .systemGray
+        backgroundColor = .systemGray3
     }
 }
