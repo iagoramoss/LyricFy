@@ -9,55 +9,57 @@ import UIKit
 
 class CompositionScreenController: UIViewController {
 
-    var compositionView = CompositionView()
+    let compositionView = CompositionView()
+    var versions: [String] = ["versao 1", "versao 2", "versao 3", "versao 4"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view = compositionView
 
-        NotificationCenter.default.addObserver(self, selector: #selector(onTappedButtonAdd),
-                                               name: .init(rawValue: "tappedButton"), object: nil)
-
         let addButton = UIBarButtonItem(image: .init(systemName: "plus"),
-                                        style: .plain, target: self,
-                                        action: #selector(tappedButtonAdd))
+        style: .plain, target: self, action: #selector(onTappedButtonAdd))
         addButton.tintColor = .black
 
         let menuButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"))
-
         menuButton.menu = addMenuItems()
         menuButton.tintColor = .black
-        navigationItem.rightBarButtonItems = [addButton, menuButton]
-    }
 
-    @objc
-    func tappedButtonAdd() {
-        print("NOTIFICACAO ENVIADAAA")
-        NotificationCenter.default.post(.init(name: Notification.Name(rawValue: "tappedButton")))
+        let versionButton = UIBarButtonItem(image: .init(systemName: "rectangle.and.pencil.and.ellipsis"),
+        style: .plain, target: self, action: #selector(onTappedButtonVersion))
+        versionButton.tintColor = .black
+
+        navigationItem.rightBarButtonItems = [addButton, menuButton, versionButton]
     }
 
     @objc
     func onTappedButtonAdd() {
-        print("NOTIFICACAO RECEBIDAAA")
-        let contentVC = SheetViewController()
-        let sheetController = contentVC.sheetPresentationController
-        sheetController?.preferredCornerRadius = 10
-        sheetController?.detents = [.medium()]
-        sheetController?.prefersGrabberVisible = true
-        present(contentVC, animated: true, completion: nil)
+        let sheetVC = SheetViewController()
+        sheetVC.modalPresentationStyle = .pageSheet
+        sheetVC.sheetPresentationController?.detents = [.medium()]
+        sheetVC.sheetPresentationController?.prefersGrabberVisible = true
+        present(sheetVC, animated: true, completion: nil)
+    }
+
+    @objc
+    func onTappedButtonVersion() {
+        let versionsVC = VersionsViewController(versions: versions)
+        versionsVC.modalPresentationStyle = .pageSheet
+        versionsVC.sheetPresentationController?.detents = [.medium()]
+        versionsVC.sheetPresentationController?.prefersGrabberVisible = true
+        present(versionsVC, animated: true, completion: nil)
     }
 
     func addMenuItems() -> UIMenu {
-        let menu = UIMenu(title: "UIMenu", children: [
-            UIAction(title: "Create Version", image: UIImage(systemName: "plus"), state: .off) { _ in
-                print("CREATE VERSION")
+        let menu = UIMenu(children: [
+            UIAction(title: "Create Version", image: UIImage(systemName: "plus"), state: .off) { [weak self] _ in
+                self?.versions.append("teste")
             },
-            UIAction(title: "Delete Version",
-                     image: UIImage(systemName: "trash"),
-                     attributes: .destructive,
-                     state: .off) { _ in
-                print("DELETE VERSION")
+
+            UIAction(title: "Delete Version", image: UIImage(systemName: "trash"), attributes: .destructive,
+            state: .off) { [weak self] _ in
+                self?.versions.removeLast()
             }
+
         ])
         return menu
     }

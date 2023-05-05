@@ -9,6 +9,8 @@ import UIKit
 
 class CompositionView: UIView {
 
+    var menu: UIMenu?
+
     var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -44,7 +46,9 @@ extension CompositionView: ViewCode {
         stackView.addSubview(nameOfMusic)
     }
     func setupConstraints() {
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         nameOfMusic.translatesAutoresizingMaskIntoConstraints = false
+
         nameOfMusic.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
         nameOfMusic.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
         nameOfMusic.adjustsFontSizeToFitWidth = true
@@ -56,10 +60,11 @@ extension CompositionView: ViewCode {
     }
 
     func setStackViewConstraints() {
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
-        stackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -10).isActive = true
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
+            stackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            stackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            stackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -10)
+        ])
     }
 }
