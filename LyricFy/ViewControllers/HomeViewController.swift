@@ -86,8 +86,15 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
                                                 title: "Rename Project",
                                                 textFieldPlaceholder: self.projects[indexPath.row - 1].projectName,
                                                 textFieldDefaultText: "Projeto",
-                                                action: { _ in
-                                                    //
+                                                action: { projectName in
+                                                    
+                                                    let project = Project(
+                                                        projectName: projectName,
+                                                        date: self.projects[indexPath.row - 1].date
+                                                    )
+                                                    self.projects[indexPath.row - 1] = project
+                                                    collectionView.reloadData()
+                                                    
                                                 }), animated: true, completion: nil)
                                          },
                                 UIAction(title: "Delete Project",
@@ -121,16 +128,15 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
                 title: "Create Project",
                 textFieldPlaceholder: "X",
                 textFieldDefaultText: "Projeto",
-                action: { _ in
+                action: { projectName in
                     
-                    //Como pegar o texto contido em um textfield?
-                    
-                    let project: Project = Project(projectName: "A", date: "a")
+                    let project: Project = Project(projectName: projectName, date: "a")
                     self.projects.insert(project, at: self.projects.startIndex)
                     
                     let indexPath = IndexPath(item: 1, section: 0)
                     
                     collectionView.insertItems(at: [indexPath])
+                    
                 }), animated: true, completion: nil)
             
         }

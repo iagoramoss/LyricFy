@@ -23,6 +23,9 @@ class ProjectsCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 2
+        label.lineBreakMode = .byTruncatingTail
+        label.textAlignment = .center
         return label
     }()
     
@@ -38,7 +41,7 @@ class ProjectsCell: UICollectionViewCell {
         stack.axis = .vertical
         stack.spacing = 5
         stack.alignment = .center
-        stack.distribution = .fillEqually
+//        stack.distribution = .fill
         stack.translatesAutoresizingMaskIntoConstraints = false
         [nameProject, date].forEach { stack.addArrangedSubview($0) }
         return stack
@@ -67,7 +70,9 @@ extension ProjectsCell: ViewCode {
             projectComponent.heightAnchor.constraint(equalToConstant: 144),
             
             stackView.centerXAnchor.constraint(equalTo: projectComponent.centerXAnchor),
-            stackView.centerYAnchor.constraint(equalTo: projectComponent.centerYAnchor)
+            stackView.centerYAnchor.constraint(equalTo: projectComponent.centerYAnchor),
+            
+            nameProject.widthAnchor.constraint(equalTo: projectComponent.widthAnchor, constant: -30)
         ])
     }
 }
