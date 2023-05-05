@@ -42,29 +42,29 @@ class CompositionView: UIView {
 extension CompositionView: ViewCode {
 
     func setupHierarchy() {
-        self.addSubview(stackView)
+        addSubview(stackView)
         stackView.addSubview(nameOfMusic)
     }
+    
     func setupConstraints() {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         nameOfMusic.translatesAutoresizingMaskIntoConstraints = false
 
-        nameOfMusic.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
-        nameOfMusic.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
-        nameOfMusic.adjustsFontSizeToFitWidth = true
-
-        setStackViewConstraints()
-    }
-    func setupAdditionalConfiguration() {
-        backgroundColor = .white
-    }
-
-    func setStackViewConstraints() {
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
             stackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
             stackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            stackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -10)
+            stackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            
+            nameOfMusic.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
+            nameOfMusic.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20)
         ])
+        
+        nameOfMusic.adjustsFontSizeToFitWidth = true
     }
+    
+    func setupAdditionalConfiguration() {
+        backgroundColor = .white
+    }
+
 }

@@ -15,9 +15,14 @@ class CompositionScreenController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view = compositionView
-
+        setupNavigationBar()
+    }
+    
+    private func setupNavigationBar() {
         let addButton = UIBarButtonItem(image: .init(systemName: "plus"),
-        style: .plain, target: self, action: #selector(onTappedButtonAdd))
+                                        style: .plain,
+                                        target: self,
+                                        action: #selector(onTappedButtonAdd))
         addButton.tintColor = .black
 
         let menuButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"))
@@ -25,7 +30,9 @@ class CompositionScreenController: UIViewController {
         menuButton.tintColor = .black
 
         let versionButton = UIBarButtonItem(image: .init(systemName: "rectangle.and.pencil.and.ellipsis"),
-        style: .plain, target: self, action: #selector(onTappedButtonVersion))
+                                            style: .plain,
+                                            target: self,
+                                            action: #selector(onTappedButtonVersion))
         versionButton.tintColor = .black
 
         navigationItem.rightBarButtonItems = [addButton, menuButton, versionButton]
@@ -37,7 +44,7 @@ class CompositionScreenController: UIViewController {
         sheetVC.modalPresentationStyle = .pageSheet
         sheetVC.sheetPresentationController?.detents = [.medium()]
         sheetVC.sheetPresentationController?.prefersGrabberVisible = true
-        present(sheetVC, animated: true, completion: nil)
+        present(sheetVC, animated: true)
     }
 
     @objc
@@ -46,7 +53,7 @@ class CompositionScreenController: UIViewController {
         versionsVC.modalPresentationStyle = .pageSheet
         versionsVC.sheetPresentationController?.detents = [.medium()]
         versionsVC.sheetPresentationController?.prefersGrabberVisible = true
-        present(versionsVC, animated: true, completion: nil)
+        present(versionsVC, animated: true)
     }
 
     func addMenuItems() -> UIMenu {
