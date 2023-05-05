@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D2CB0D529FC40A00080CB8A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2CB0D429FC40A00080CB8A /* HomeView.swift */; };
+		0D2CB0D729FC40D30080CB8A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2CB0D629FC40D30080CB8A /* HomeViewController.swift */; };
+		0D2CB0DA29FC41210080CB8A /* ProjectsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2CB0D929FC41210080CB8A /* ProjectsCell.swift */; };
+		0D2CB0DE29FC4F560080CB8A /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2CB0DD29FC4F560080CB8A /* HomeViewModel.swift */; };
+		0D2CB0E02A039EA10080CB8A /* AddProjectsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2CB0DF2A039EA10080CB8A /* AddProjectsCell.swift */; };
 		67227EFE29F85EDE00E1166C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67227EFD29F85EDE00E1166C /* AppDelegate.swift */; };
 		67227F0029F85EDE00E1166C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67227EFF29F85EDE00E1166C /* SceneDelegate.swift */; };
 		67227F0229F85EDE00E1166C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67227F0129F85EDE00E1166C /* MainViewController.swift */; };
@@ -31,6 +36,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D2CB0D429FC40A00080CB8A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		0D2CB0D629FC40D30080CB8A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		0D2CB0D929FC41210080CB8A /* ProjectsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsCell.swift; sourceTree = "<group>"; };
+		0D2CB0DD29FC4F560080CB8A /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		0D2CB0DF2A039EA10080CB8A /* AddProjectsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectsCell.swift; sourceTree = "<group>"; };
 		67227EFA29F85EDE00E1166C /* LyricFy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LyricFy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67227EFD29F85EDE00E1166C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		67227EFF29F85EDE00E1166C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -67,6 +77,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D2CB0E12A042BBB0080CB8A /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				0D2CB0D929FC41210080CB8A /* ProjectsCell.swift */,
+				0D2CB0DF2A039EA10080CB8A /* AddProjectsCell.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		67227EF129F85EDE00E1166C = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +122,7 @@
 		67227F1629FC508100E1166C /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				0D2CB0E12A042BBB0080CB8A /* Home */,
 				67227F1729FC50A300E1166C /* Alert.swift */,
 			);
 			path = Components;
@@ -131,6 +151,7 @@
 			children = (
 				67227F0129F85EDE00E1166C /* MainViewController.swift */,
 				9F0CECAD29FB050800103EFE /* CompositionScreenController.swift */,
+				0D2CB0D629FC40D30080CB8A /* HomeViewController.swift */,
 				7807628729FC30EE00353A06 /* ScreenLyricsEditingController.swift */,
 			);
 			path = ViewControllers;
@@ -182,6 +203,7 @@
 		78F391DC2A02EF6C0097884C /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				0D2CB0DD29FC4F560080CB8A /* HomeViewModel.swift */,
 				78F391DD2A02EF9F0097884C /* ScreenLyricsEditingViewModel.swift */,
 			);
 			path = ViewModels;
@@ -194,6 +216,7 @@
 				7865F4392A005ED20032039C /* Extensions */,
 				7807628929FC31E800353A06 /* LyricsEditing */,
 				9F0CECAA29FAEC7E00103EFE /* CompositionView.swift */,
+				0D2CB0D429FC40A00080CB8A /* HomeView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -302,6 +325,7 @@
 			files = (
 				78BE20E62A041A9A003B3AF2 /* KeyboardListenerProtocol.swift in Sources */,
 				67227F0229F85EDE00E1166C /* MainViewController.swift in Sources */,
+				0D2CB0DE29FC4F560080CB8A /* HomeViewModel.swift in Sources */,
 				78F391D32A02D92F0097884C /* Composition.swift in Sources */,
 				78F391D52A02DD610097884C /* Compositions.swift in Sources */,
 				67227F1829FC50A300E1166C /* Alert.swift in Sources */,
@@ -313,6 +337,10 @@
 				9F0CECB129FB0C5B00103EFE /* ViewCode.swift in Sources */,
 				7807628829FC30EE00353A06 /* ScreenLyricsEditingController.swift in Sources */,
 				67227F0829F85EDE00E1166C /* LyricFy.xcdatamodeld in Sources */,
+				0D2CB0DA29FC41210080CB8A /* ProjectsCell.swift in Sources */,
+				0D2CB0D729FC40D30080CB8A /* HomeViewController.swift in Sources */,
+				0D2CB0E02A039EA10080CB8A /* AddProjectsCell.swift in Sources */,
+				0D2CB0D529FC40A00080CB8A /* HomeView.swift in Sources */,
 				9F0CECAE29FB050800103EFE /* CompositionScreenController.swift in Sources */,
 				7865F43B2A005F0F0032039C /* NSAttributedString+defaultParagraph.swift in Sources */,
 				67227F0029F85EDE00E1166C /* SceneDelegate.swift in Sources */,
