@@ -9,21 +9,30 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    var screen = HomeView()
+    var screen: HomeView?
     
     var projects: [Project] = HomeViewModel().projects
+    
+    override func loadView() {
+        super.loadView()
+        self.screen = HomeView()
+        self.view = screen
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        screen.collectionProjects.delegate = self
-        screen.collectionProjects.dataSource = self
+        setupNavigationBar()
         
-        self.view = screen
-        self.view.backgroundColor = .white
+        screen?.collectionProjects.delegate = self
+        screen?.collectionProjects.dataSource = self
+        
+        view.backgroundColor = .white
+    }
+    
+    private func setupNavigationBar() {
         title = "Projects"
         navigationController?.navigationBar.prefersLargeTitles = true
-
     }
 }
 
@@ -40,23 +49,21 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
+        guard indexPath.item > 0 else { return UICollectionViewCell() }
         
-        let addCell = screen.collectionProjects.dequeueReusableCell(
+        let addCell = screen?.collectionProjects.dequeueReusableCell(
             withReuseIdentifier: AddProjectsCell.identifier,
             for: indexPath
         ) as? AddProjectsCell
         
-        let cell = screen.collectionProjects.dequeueReusableCell(
+        guard let cell = screen?.collectionProjects.dequeueReusableCell(
             withReuseIdentifier: ProjectsCell.identifier,
             for: indexPath
-        ) as? ProjectsCell
-        if indexPath.item > 0 {
-            cell?.nameProject.text = projects[indexPath.row - 1].projectName
-            cell?.date.text = projects[indexPath.row - 1].date
-            return cell ?? UICollectionViewCell()
-        } else {
-            return addCell ?? UICollectionViewCell()
-        }
+        ) as? ProjectsCell else { return UICollectionViewCell() }
+        
+        cell.nameProject.text = projects[indexPath.row - 1].projectName
+        cell.date.text = projects[indexPath.row - 1].date
+        return cell
     }
     
     func collectionView(
@@ -149,5 +156,4 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
     ) -> CGFloat {
         return 30
     }
-    
 }

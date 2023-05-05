@@ -7,9 +7,7 @@
 
 import UIKit
 
-class HomeView: UIView {
-    
-    var projects: [Project] = HomeViewModel().projects
+class HomeView: UIView, ViewCode {
     
     lazy var layout: UICollectionViewFlowLayout = {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -24,8 +22,8 @@ class HomeView: UIView {
         collectionProjects.backgroundColor = .none
         collectionProjects.register(ProjectsCell.self,
                                     forCellWithReuseIdentifier: ProjectsCell.identifier)
-        collectionProjects.register(AddProjectsCell.self, forCellWithReuseIdentifier: AddProjectsCell.identifier)
-        
+        collectionProjects.register(AddProjectsCell.self,
+                                    forCellWithReuseIdentifier: AddProjectsCell.identifier)
         return collectionProjects
     }()
     
@@ -34,21 +32,20 @@ class HomeView: UIView {
         setupView()
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension HomeView: ViewCode {
     func setupHierarchy() {
-        addSubview(self.collectionProjects)
+        addSubview(collectionProjects)
     }
+    
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            collectionProjects.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
-            collectionProjects.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
-            collectionProjects.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
-            collectionProjects.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)
+            collectionProjects.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            collectionProjects.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            collectionProjects.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            collectionProjects.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
