@@ -72,31 +72,44 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         contextMenuConfigurationForItemAt indexPath: IndexPath,
         point: CGPoint
     ) -> UIContextMenuConfiguration? {
-        if indexPath.item > 0 {
-            return UIContextMenuConfiguration(
-                identifier: nil,
-                previewProvider: nil) { _ in
+        guard indexPath.item > 0 else { return nil }
+        
+        return UIContextMenuConfiguration(
+            identifier: nil,
+            previewProvider: nil) { _ in
                 return UIMenu(title: "X",
                               children: [
                                 UIAction(title: "Edit name",
                                          image: UIImage(systemName: "pencil.circle"),
                                          state: .off) { _ in
-                                             //Editar nome
+                                             self.present(Alert(
+                                                title: "Rename Project",
+                                                textFieldPlaceholder: self.projects[indexPath.row - 1].projectName,
+                                                textFieldDefaultText: "Projeto",
+                                                action: { _ in
+                                                    //
+                                                }), animated: true, completion: nil)
                                          },
                                 UIAction(title: "Delete Project",
                                          image: UIImage(systemName: "trash"),
                                          attributes: .destructive,
                                          state: .off) { _ in
-                                             //Deletar versao
+                                             self.present(Alert(
+                                                title: "Delete Project",
+                                                message: "X",
+                                                actionButtonLabel: "Delete",
+                                                actionButtonStyle: .destructive,
+                                                preferredStyle: .actionSheet,
+                                                action: {
+                                                    self.projects.remove(at: indexPath.row-1)
+                                                    collectionView.deleteItems(at: [indexPath])
+                                                }), animated: true, completion: nil)
                                          }
                               ]
                 )
             }
-        } else {
-            return nil
-        }
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
@@ -105,12 +118,21 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
             navigationController?.pushViewController(CompositionScreenController(), animated: true)
         } else {
             self.present(Alert(
-                title: "X",
+                title: "Create Project",
                 textFieldPlaceholder: "X",
                 textFieldDefaultText: "Projeto",
                 action: { _ in
-                    //
+                    
+                    //Como pegar o texto contido em um textfield?
+                    
+                    let project: Project = Project(projectName: "A", date: "a")
+                    self.projects.insert(project, at: self.projects.startIndex)
+                    
+                    let indexPath = IndexPath(item: 1, section: 0)
+                    
+                    collectionView.insertItems(at: [indexPath])
                 }), animated: true, completion: nil)
+            
         }
     }
     
