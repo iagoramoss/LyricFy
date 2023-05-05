@@ -9,12 +9,12 @@ import Foundation
 import UIKit
 
 class SheetView: UIView {
-
-    override init(frame: CGRect = .zero) {
-        super.init(frame: frame)
+    
+    init() {
+        super.init(frame: .zero)
         setupView()
     }
-
+    
     var verso: UIButton = {
         var button = UIButton()
         button.setTitle("Verso", for: .normal)
@@ -22,9 +22,9 @@ class SheetView: UIView {
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         button.backgroundColor = .white
-
         return button
     }()
+    
     var preRefrao: UIButton = {
         var button = UIButton()
         button.setTitle("Pré-Refrão", for: .normal)
@@ -32,9 +32,9 @@ class SheetView: UIView {
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         button.backgroundColor = .white
-
         return button
     }()
+    
     var refrao: UIButton = {
         var button = UIButton()
         button.setTitle("Refrão", for: .normal)
@@ -42,9 +42,9 @@ class SheetView: UIView {
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         button.backgroundColor = .white
-
         return button
     }()
+    
     var ponte: UIButton = {
         var button = UIButton()
         button.setTitle("Ponte", for: .normal)
@@ -52,9 +52,9 @@ class SheetView: UIView {
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         button.backgroundColor = .white
-
         return button
     }()
+    
     var outros: UIButton = {
         var button = UIButton()
         button.setTitle("Custom", for: .normal)
@@ -62,30 +62,31 @@ class SheetView: UIView {
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         button.backgroundColor = .white
-
         return button
     }()
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 extension SheetView: ViewCode {
+    
     func setupHierarchy() {
-        self.addSubview(verso)
-        self.addSubview(preRefrao)
-        self.addSubview(refrao)
-        self.addSubview(ponte)
-        self.addSubview(outros)
+        addSubview(verso)
+        addSubview(preRefrao)
+        addSubview(refrao)
+        addSubview(ponte)
+        addSubview(outros)
     }
+    
     func setupConstraints() {
         verso.translatesAutoresizingMaskIntoConstraints = false
         preRefrao.translatesAutoresizingMaskIntoConstraints = false
         refrao.translatesAutoresizingMaskIntoConstraints = false
         ponte.translatesAutoresizingMaskIntoConstraints = false
         outros.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
             verso.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
             verso.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
@@ -113,6 +114,7 @@ extension SheetView: ViewCode {
             outros.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
+    
     func setupAdditionalConfiguration() {
         backgroundColor = .systemGray3
     }
