@@ -9,13 +9,12 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    var screen: HomeView?
+    var screen = HomeView()
     
     var projects: [Project] = HomeViewModel().projects
     
     override func loadView() {
         super.loadView()
-        self.screen = HomeView()
         self.view = screen
     }
     
@@ -24,8 +23,8 @@ class HomeViewController: UIViewController {
         
         setupNavigationBar()
         
-        screen?.collectionProjects.delegate = self
-        screen?.collectionProjects.dataSource = self
+        screen.collectionProjects.delegate = self
+        screen.collectionProjects.dataSource = self
         
         view.backgroundColor = .white
     }
@@ -49,20 +48,21 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        guard indexPath.item > 0 else { return UICollectionViewCell() }
-        
-        let addCell = screen?.collectionProjects.dequeueReusableCell(
+        guard let addCell = screen.collectionProjects.dequeueReusableCell(
             withReuseIdentifier: AddProjectsCell.identifier,
             for: indexPath
-        ) as? AddProjectsCell
+        ) as? AddProjectsCell else { return UICollectionViewCell() }
         
-        guard let cell = screen?.collectionProjects.dequeueReusableCell(
+        guard let cell = screen.collectionProjects.dequeueReusableCell(
             withReuseIdentifier: ProjectsCell.identifier,
             for: indexPath
         ) as? ProjectsCell else { return UICollectionViewCell() }
         
+        guard indexPath.item > 0 else { return addCell }
+        
         cell.nameProject.text = projects[indexPath.row - 1].projectName
         cell.date.text = projects[indexPath.row - 1].date
+        
         return cell
     }
     
