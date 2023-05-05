@@ -13,13 +13,15 @@ class Alert: UIAlertController {
     convenience init(title: String,
                      message: String,
                      cancelButtonLabel: String = "Cancel",
-                     actioButtonLabel: String = "OK",
+                     actionButtonLabel: String,
+                     actionButtonStyle: UIAlertAction.Style,
+                     preferredStyle: UIAlertController.Style,
                      action: @escaping () -> Void
     ) {
-        self.init(title: title, message: message, preferredStyle: .alert)
-
+        self.init(title: title, message: message, preferredStyle: preferredStyle)
+        
         let cancelButton = UIAlertAction(title: cancelButtonLabel, style: .cancel)
-        let actionButton = UIAlertAction(title: actioButtonLabel, style: .default, handler: { _ in action() })
+        let actionButton = UIAlertAction(title: actionButtonLabel, style: actionButtonStyle, handler: { _ in action() })
 
         self.addAction(cancelButton)
         self.addAction(actionButton)
