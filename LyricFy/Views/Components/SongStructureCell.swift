@@ -69,8 +69,8 @@ class SongStructureCell: UITableViewCell, ViewCode {
         
         NSLayoutConstraint.activate([
             container.topAnchor.constraint(equalTo: topAnchor, constant: 22),
-            container.leadingAnchor.constraint(equalTo: leadingAnchor),
-            container.trailingAnchor.constraint(equalTo: trailingAnchor),
+            container.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            container.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             container.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             title.topAnchor.constraint(equalTo: container.topAnchor, constant: 10),

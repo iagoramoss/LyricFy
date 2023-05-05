@@ -43,9 +43,12 @@ class LyricsEditingScreenView: UIView, ViewCode {
         view.typingAttributes = NSAttributedString.defaultParagraphAttributes
         return view
     }()
+    
+    let keyboardListenerDelegate: KeyboardListener
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(keyboardListener: KeyboardListener) {
+        self.keyboardListenerDelegate = keyboardListener
+        super.init(frame: .zero)
         setupView()
     }
 
@@ -109,11 +112,13 @@ extension LyricsEditingScreenView {
         let keyboardConvertedFrame = convert(keyboardFrame, to: window)
 
         scrollView.contentInset.bottom = keyboardConvertedFrame.size.height
+        keyboardListenerDelegate.keyboardWillAppear()
     }
 
     @objc
     func keyboardWillHide(_ notification: Notification) {
         textView.contentInset = UIEdgeInsets.zero
         textView.contentInset = UIEdgeInsets.zero
+        keyboardListenerDelegate.keyboardWillhide()
     }
 }

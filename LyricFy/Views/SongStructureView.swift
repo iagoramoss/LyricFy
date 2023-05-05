@@ -1,4 +1,3 @@
-
 //
 //  SongStructureView.swift
 //  LyricFy
@@ -9,56 +8,53 @@
 import Foundation
 import UIKit
 
-class SongStructureView: UITableViewController {
-    var songStructures: [SongStructure] = SongStructure.mock
+class SongStructureView: UIView, ViewCode {
+    var delegate: SongStructureTableView
     
-    override func viewDidLoad() {
-        self.tableView.rowHeight = UITableView.automaticDimension
-        self.tableView.estimatedRowHeight = 80
-        self.tableView.register(SongStructureCell.self, forCellReuseIdentifier: "song-structures")
+    lazy var tableView: UITableView = {
+        let tableView = UITableView()
         
-        self.tableView.dragInteractionEnabled = true
-        self.tableView.dragDelegate = self
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 80
+        tableView.register(SongStructureCell.self, forCellReuseIdentifier: SongStructure.reuseIdentifier)
         
-        self.tableView.allowsSelection = false
-        self.tableView.separatorStyle = .none
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return songStructures.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "song-structures", for: indexPath) as? SongStructureCell else {
-            return SongStructureCell()
-        }
+        tableView.dragInteractionEnabled = true
         
-        cell.songStructure = songStructures[indexPath.row]
-        return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.contentView.backgroundColor = .clear
-    }
-}
-
-extension SongStructureView: UITableViewDragDelegate {
-    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        let item = UIDragItem(itemProvider: NSItemProvider())
-        item.localObject = songStructures[indexPath.row]
+        tableView.allowsSelection = false
+        tableView.separatorStyle = .none
         
-        return [item]
-    }
+        return tableView
+    }()
     
-    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let cell = songStructures.remove(at: sourceIndexPath.row)
-        songStructures.insert(cell, at: destinationIndexPath.row)
-    }
-    
-    func tableView(_ tableView: UITableView, dragPreviewParametersForRowAt indexPath: IndexPath) -> UIDragPreviewParameters? {
-        let param = UIDragPreviewParameters()
-        param.backgroundColor = .clear
+    init(delegate: SongStructureTableView) {
+        self.delegate = delegate
         
-        return param
+        super.init(frame: .zero)
+        setupView()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupHierarchy() {
+        addSubview(tableView)
+    }
+    
+    func setupConstraints() {
+        self.tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            self.tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.tableView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
+    }
+    
+    func setupAdditionalConfiguration() {
+        self.tableView.dataSource = delegate
+        self.tableView.delegate = delegate
+        self.tableView.dragDelegate = delegate
     }
 }

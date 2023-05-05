@@ -7,9 +7,9 @@
 
 import Foundation
 
-
-
 class SongStructure {
+    static let reuseIdentifier = "SongStructure"
+    
     let type: StructureType
     let lyric: String
     
