@@ -8,23 +8,118 @@
 import UIKit
 
 class HomeViewController: UIViewController {
+    
     var screen = HomeView()
+    
+    var projects: [Project] = HomeViewModel().projects
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        screen.collectionProjects.delegate = self
+        screen.collectionProjects.dataSource = self
+        
         self.view = screen
         self.view.backgroundColor = .white
         title = "Projects"
         navigationController?.navigationBar.prefersLargeTitles = true
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(escreverTextoNoTerminal),
-                                               name: .init(rawValue: "emptyView"),
-                                               object: nil)
 
     }
-    @objc
-    func escreverTextoNoTerminal() {
-        print("Você apertou o botão!")
-        navigationController?.pushViewController(CompositionScreenController(), animated: true)
+}
+
+extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
+        return projects.count + 1
     }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        
+        let addCell = screen.collectionProjects.dequeueReusableCell(
+            withReuseIdentifier: AddProjectsCell.identifier,
+            for: indexPath
+        ) as? AddProjectsCell
+        
+        let cell = screen.collectionProjects.dequeueReusableCell(
+            withReuseIdentifier: ProjectsCell.identifier,
+            for: indexPath
+        ) as? ProjectsCell
+        if indexPath.item > 0 {
+            cell?.nameProject.text = projects[indexPath.row - 1].projectName
+            cell?.date.text = projects[indexPath.row - 1].date
+            return cell ?? UICollectionViewCell()
+        } else {
+            return addCell ?? UICollectionViewCell()
+        }
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        return CGSize(width: 166, height: 144)
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        contextMenuConfigurationForItemAt indexPath: IndexPath,
+        point: CGPoint
+    ) -> UIContextMenuConfiguration? {
+        if indexPath.item > 0 {
+            return UIContextMenuConfiguration(
+                identifier: nil,
+                previewProvider: nil) { _ in
+                return UIMenu(title: "X",
+                              children: [
+                                UIAction(title: "Edit name",
+                                         image: UIImage(systemName: "pencil.circle"),
+                                         state: .off) { _ in
+                                             //Editar nome
+                                         },
+                                UIAction(title: "Delete Project",
+                                         image: UIImage(systemName: "trash"),
+                                         attributes: .destructive,
+                                         state: .off) { _ in
+                                             //Deletar versao
+                                         }
+                              ]
+                )
+            }
+        } else {
+            return nil
+        }
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        if indexPath.item > 0 {
+            navigationController?.pushViewController(CompositionScreenController(), animated: true)
+        } else {
+            self.present(Alert(
+                title: "X",
+                textFieldPlaceholder: "X",
+                textFieldDefaultText: "Projeto",
+                action: { _ in
+                    //
+                }), animated: true, completion: nil)
+        }
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int
+    ) -> CGFloat {
+        return 30
+    }
+    
 }

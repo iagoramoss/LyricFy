@@ -27,26 +27,16 @@ class AddProjectsCell: UICollectionViewCell {
     }()
     
     override init(frame: CGRect) {
-        super.init(frame: .zero)
+        super.init(frame: frame)
         setupView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    @objc
-    func newScreen() {
-        NotificationCenter.default.post(.init(name: Notification.Name(rawValue: "emptyView")))
-    }
 }
 
 extension AddProjectsCell: ViewCode {
-    func setupView() {
-        setupHierarchy()
-        setupConstraints()
-        setupAdditionalConfiguration()
-    }
 
     func setupHierarchy() {
         projectComponent.addSubview(image)
@@ -64,6 +54,4 @@ extension AddProjectsCell: ViewCode {
             image.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
-
-    func setupAdditionalConfiguration() {}
 }

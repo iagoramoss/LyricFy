@@ -45,26 +45,16 @@ class ProjectsCell: UICollectionViewCell {
     }()
     
     override init(frame: CGRect) {
-        super.init(frame: .zero)
+        super.init(frame: frame)
         setupView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    @objc
-    func newScreen() {
-        NotificationCenter.default.post(.init(name: Notification.Name(rawValue: "emptyView")))
-    }
 }
 
 extension ProjectsCell: ViewCode {
-    func setupView() {
-        setupHierarchy()
-        setupConstraints()
-        setupAdditionalConfiguration()
-    }
 
     func setupHierarchy() {
         projectComponent.addSubview(stackView)
@@ -80,6 +70,4 @@ extension ProjectsCell: ViewCode {
             stackView.centerYAnchor.constraint(equalTo: projectComponent.centerYAnchor)
         ])
     }
-
-    func setupAdditionalConfiguration() {}
 }
