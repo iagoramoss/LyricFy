@@ -19,23 +19,35 @@ class CompositionScreenController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        let addButton = UIBarButtonItem(image: .init(systemName: "plus"),
-                                        style: .plain,
-                                        target: self,
-                                        action: #selector(onTappedButtonAdd))
+        let menu = UIMenu(children: [
+            UIAction(
+                title: "See Versions",
+                image: UIImage(systemName: "arrow.triangle.branch"),
+                state: .off) { [weak self] _ in
+                self?.onTappedButtonVersion()
+            },
+            UIAction(title: "Create Version",
+                     image: UIImage(systemName: "plus"),
+                     state: .off) { [weak self] _ in
+                self?.versions.append("teste")
+            },
+            UIAction(title: "Delete Version",
+                     image: UIImage(systemName: "trash"),
+                     attributes: .destructive,
+                     state: .off) { [weak self] _ in
+                self?.versions.removeLast()
+            }
+        ])
+        
+        let addButton = UIBarButtonItem(image: .init(systemName: "plus"), style: .plain,
+        target: self, action: #selector(onTappedButtonAdd))
         addButton.tintColor = .black
 
         let menuButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"))
-        menuButton.menu = addMenuItems()
+        menuButton.menu = menu
         menuButton.tintColor = .black
 
-        let versionButton = UIBarButtonItem(image: .init(systemName: "rectangle.and.pencil.and.ellipsis"),
-                                            style: .plain,
-                                            target: self,
-                                            action: #selector(onTappedButtonVersion))
-        versionButton.tintColor = .black
-
-        navigationItem.rightBarButtonItems = [addButton, menuButton, versionButton]
+        navigationItem.rightBarButtonItems = [addButton, menuButton]
     }
 
     @objc
@@ -54,20 +66,5 @@ class CompositionScreenController: UIViewController {
         versionsVC.sheetPresentationController?.detents = [.medium()]
         versionsVC.sheetPresentationController?.prefersGrabberVisible = true
         present(versionsVC, animated: true)
-    }
-
-    func addMenuItems() -> UIMenu {
-        let menu = UIMenu(children: [
-            UIAction(title: "Create Version", image: UIImage(systemName: "plus"), state: .off) { [weak self] _ in
-                self?.versions.append("teste")
-            },
-
-            UIAction(title: "Delete Version", image: UIImage(systemName: "trash"), attributes: .destructive,
-            state: .off) { [weak self] _ in
-                self?.versions.removeLast()
-            }
-
-        ])
-        return menu
     }
 }

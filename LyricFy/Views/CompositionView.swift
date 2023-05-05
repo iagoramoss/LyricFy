@@ -22,7 +22,7 @@ class CompositionView: UIView {
         label.text = "Somewhere only we know"
         label.textColor = .black
         label.textAlignment = .left
-        label.font = UIFont.boldSystemFont(ofSize: 34)
+        label.font = UIFont.boldSystemFont(ofSize: 24)
         label.numberOfLines = 0
 
         return label
@@ -49,15 +49,6 @@ extension CompositionView: ViewCode {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         nameOfMusic.translatesAutoresizingMaskIntoConstraints = false
 
-        nameOfMusic.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
-        nameOfMusic.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
-
-        setStackViewConstraints()
-    }
-    func setupAdditionalConfiguration() {
-        backgroundColor = .white
-    }
-
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
             stackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
@@ -66,13 +57,10 @@ extension CompositionView: ViewCode {
             
             nameOfMusic.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
             nameOfMusic.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20)
+
         ])
-        
-        nameOfMusic.adjustsFontSizeToFitWidth = true
     }
-    
     func setupAdditionalConfiguration() {
         backgroundColor = .white
     }
-
 }
