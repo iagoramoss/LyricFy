@@ -9,40 +9,35 @@ import Foundation
 import UIKit
 
 class SongStructureCell: UITableViewCell, ViewCode {
+    
     var songStructure: SongStructure? {
         didSet {
-            self.title.text = songStructure?.type.rawValue.capitalized
-            self.lyric.text = songStructure?.lyric
+            title.text = songStructure?.type.rawValue.capitalized
+            lyric.text = songStructure?.lyric
         }
     }
     
     private lazy var container: UIView = {
         let container = UIView()
-        
         container.layer.cornerRadius = 10
         container.layer.masksToBounds = true
         container.clipsToBounds = true
         container.backgroundColor = UIColor(red: 0.959, green: 0.871, blue: 1, alpha: 1)
-        
         return container
     }()
     
     private lazy var title: UILabel = {
         let title = UILabel()
-        
         title.font = UIFont.preferredFont(for: .title2, weight: .bold)
         title.textColor = .black
-        
         return title
     }()
     
     private lazy var lyric: UILabel = {
         let lyric = UILabel()
-        
         lyric.font = UIFont.preferredFont(for: .subheadline, weight: .regular)
         lyric.textColor = .black
         lyric.numberOfLines = 0
-        
         return lyric
     }()
     
@@ -51,15 +46,11 @@ class SongStructureCell: UITableViewCell, ViewCode {
         setupView()
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     func setupHierarchy() {
-        addSubview(self.container)
+        addSubview(container)
         
-        container.addSubview(self.title)
-        container.addSubview(self.lyric)
+        container.addSubview(title)
+        container.addSubview(lyric)
     }
     
     func setupConstraints() {
@@ -85,7 +76,11 @@ class SongStructureCell: UITableViewCell, ViewCode {
     }
     
     func setupAdditionalConfiguration() {
-        self.backgroundColor = .clear
-        self.layer.cornerRadius = 10
+        backgroundColor = .clear
+        layer.cornerRadius = 10
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

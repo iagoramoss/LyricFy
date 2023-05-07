@@ -8,6 +8,7 @@
 import UIKit
 
 class MainViewController: UIViewController {
+    
     var songStructures: [SongStructure] = SongStructure.mock
     
     override func loadView() {
@@ -18,32 +19,39 @@ class MainViewController: UIViewController {
 
 extension MainViewController: SongStructureTableView {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView,
+                   numberOfRowsInSection section: Int) -> Int {
         return songStructures.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SongStructure.reuseIdentifier, for: indexPath) as? SongStructureCell else {
-            return SongStructureCell()
-        }
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SongStructure.reuseIdentifier,
+                                                       for: indexPath) as? SongStructureCell
+        else { return SongStructureCell() }
         
         cell.songStructure = songStructures[indexPath.row]
         return cell
     }
     
-    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+    func tableView(_ tableView: UITableView,
+                   itemsForBeginning session: UIDragSession,
+                   at indexPath: IndexPath) -> [UIDragItem] {
         let item = UIDragItem(itemProvider: NSItemProvider())
         item.localObject = songStructures[indexPath.row]
         
         return [item]
     }
     
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+    func tableView(_ tableView: UITableView,
+                   moveRowAt sourceIndexPath: IndexPath,
+                   to destinationIndexPath: IndexPath) {
         let cell = songStructures.remove(at: sourceIndexPath.row)
         songStructures.insert(cell, at: destinationIndexPath.row)
     }
     
-    func tableView(_ tableView: UITableView, dragPreviewParametersForRowAt indexPath: IndexPath) -> UIDragPreviewParameters? {
+    func tableView(_ tableView: UITableView,
+                   dragPreviewParametersForRowAt indexPath: IndexPath) -> UIDragPreviewParameters? {
         let param = UIDragPreviewParameters()
         param.backgroundColor = .clear
         
