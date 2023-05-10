@@ -6,3 +6,14 @@
 //
 
 import Foundation
+
+enum AudioState {
+    
+    case recording
+    case pausedRecording
+    case preparedToRecord
+    
+    case preparedToPlay
+    case pausedPlaying
+    case playing
+}
