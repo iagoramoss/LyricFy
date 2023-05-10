@@ -11,7 +11,11 @@ class HomeViewController: UIViewController {
     
     var screen = HomeView()
     
-    var projects: [Project] = HomeViewModel().projects
+    var projects: [ProjectEntity] = {
+        return CoreDataRelationshipViewModel().getProjects()
+    }()
+    
+    var vm = CoreDataRelationshipViewModel()
     
     override func loadView() {
         super.loadView()
@@ -60,8 +64,12 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         
         guard indexPath.item > 0 else { return addCell }
         
-        cell.nameProject.text = projects[indexPath.row - 1].projectName
-        cell.date.text = projects[indexPath.row - 1].date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        let dateString = dateFormatter.string(from: projects[indexPath.row - 1].createdAt ?? Date())
+        
+        cell.nameProject.text = projects[indexPath.row - 1].name
+        cell.date.text = dateString
         
         return cell
     }
@@ -84,42 +92,13 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         return UIContextMenuConfiguration(
             identifier: nil,
             previewProvider: nil) { _ in
-                return UIMenu(title: "X",
-                              children: [
-                                UIAction(title: "Edit name",
-                                         image: UIImage(systemName: "pencil.circle"),
-                                         state: .off) { _ in
-                                             self.present(Alert(
-                                                title: "Rename Project",
-                                                textFieldPlaceholder: self.projects[indexPath.row - 1].projectName,
-                                                textFieldDefaultText: "Projeto",
-                                                action: { projectName in
-                                                    
-                                                    let project = Project(
-                                                        projectName: projectName,
-                                                        date: self.projects[indexPath.row - 1].date
-                                                    )
-                                                    self.projects[indexPath.row - 1] = project
-                                                    collectionView.reloadData()
-                                                    
-                                                }), animated: true, completion: nil)
-                                         },
-                                UIAction(title: "Delete Project",
-                                         image: UIImage(systemName: "trash"),
-                                         attributes: .destructive,
-                                         state: .off) { _ in
-                                             self.present(Alert(
-                                                title: "Delete Project",
-                                                message: "X",
-                                                actionButtonLabel: "Delete",
-                                                actionButtonStyle: .destructive,
-                                                preferredStyle: .actionSheet,
-                                                action: {
-                                                    self.projects.remove(at: indexPath.row-1)
-                                                    collectionView.deleteItems(at: [indexPath])
-                                                }), animated: true, completion: nil)
-                                         }
-                              ]
+                let project = self.projects[indexPath.row - 1]
+                return UIMenu(
+                    title: "X",
+                    children: [
+                        self.updateMenuAction(_: collectionView, project: project),
+                        self.deleteMenuAction(_: collectionView, project: project)
+                    ]
                 )
             }
     }
@@ -135,17 +114,12 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
                 title: "Create Project",
                 textFieldPlaceholder: "X",
                 textFieldDefaultText: "Projeto",
+                projectName: nil,
                 action: { projectName in
-                    
-                    let project: Project = Project(projectName: projectName, date: "a")
-                    self.projects.insert(project, at: self.projects.startIndex)
-                    
-                    let indexPath = IndexPath(item: 1, section: 0)
-                    
-                    collectionView.insertItems(at: [indexPath])
-                    
+                    self.vm.addProject(composition: Composition(name: projectName, versions: []))
+                    self.projects = self.vm.getProjects()
+                    collectionView.reloadData()
                 }), animated: true, completion: nil)
-            
         }
     }
     
@@ -155,5 +129,46 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         minimumLineSpacingForSectionAt section: Int
     ) -> CGFloat {
         return 30
+    }
+    
+    func deleteMenuAction (
+        _ collectionView: UICollectionView,
+        project: ProjectEntity
+    ) -> UIAction {
+        return UIAction(title: "Delete Project",
+                        image: UIImage(systemName: "trash"),
+                        attributes: .destructive,
+                        state: .off) { _ in
+            self.present(Alert(
+                title: "Delete Project",
+                message: "This project will be deleted. And it will not be possible to recover it.",
+                actionButtonLabel: "Delete",
+                actionButtonStyle: .destructive,
+                preferredStyle: .actionSheet,
+                action: {
+                    self.vm.deleteProject(project: project)
+                    self.projects = self.vm.getProjects()
+                    collectionView.reloadData()
+                }), animated: true, completion: nil)
+        }
+    }
+    
+    func updateMenuAction (
+        _ collectionView: UICollectionView,
+        project: ProjectEntity
+    ) -> UIAction {
+        return UIAction(title: "Edit name",
+                        image: UIImage(systemName: "pencil.circle"),
+                        state: .off) { _ in
+        self.present(Alert(
+            title: "Rename Project",
+            textFieldPlaceholder: nil,
+            textFieldDefaultText: project.name!,
+            projectName: project.name!,
+            action: { projectName in
+                self.vm.updateProject(project: project, name: projectName)
+                collectionView.reloadData()
+            }), animated: true, completion: nil)
+    }
     }
 }

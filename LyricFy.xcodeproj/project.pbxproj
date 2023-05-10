@@ -12,6 +12,8 @@
 		0D2CB0DA29FC41210080CB8A /* ProjectsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2CB0D929FC41210080CB8A /* ProjectsCell.swift */; };
 		0D2CB0DE29FC4F560080CB8A /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2CB0DD29FC4F560080CB8A /* HomeViewModel.swift */; };
 		0D2CB0E02A039EA10080CB8A /* AddProjectsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2CB0DF2A039EA10080CB8A /* AddProjectsCell.swift */; };
+		0D2CB1112A0AC13C0080CB8A /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2CB1102A0AC13C0080CB8A /* CoreDataManager.swift */; };
+		0D2CB1142A0AC1CA0080CB8A /* CoreDataRelationshipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2CB1132A0AC1CA0080CB8A /* CoreDataRelationshipViewModel.swift */; };
 		6718403D2A05945C00A92AAF /* SongStructureTableViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6718403C2A05945C00A92AAF /* SongStructureTableViewProtocol.swift */; };
 		67227EFE29F85EDE00E1166C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67227EFD29F85EDE00E1166C /* AppDelegate.swift */; };
 		67227F0029F85EDE00E1166C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67227EFF29F85EDE00E1166C /* SceneDelegate.swift */; };
@@ -50,6 +52,8 @@
 		0D2CB0D929FC41210080CB8A /* ProjectsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsCell.swift; sourceTree = "<group>"; };
 		0D2CB0DD29FC4F560080CB8A /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		0D2CB0DF2A039EA10080CB8A /* AddProjectsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectsCell.swift; sourceTree = "<group>"; };
+		0D2CB1102A0AC13C0080CB8A /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		0D2CB1132A0AC1CA0080CB8A /* CoreDataRelationshipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataRelationshipViewModel.swift; sourceTree = "<group>"; };
 		6718403C2A05945C00A92AAF /* SongStructureTableViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongStructureTableViewProtocol.swift; sourceTree = "<group>"; };
 		67227EFA29F85EDE00E1166C /* LyricFy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LyricFy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67227EFD29F85EDE00E1166C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -182,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				781D450A29F98CD0005B1ACC /* CoreData */,
+				0D2CB1102A0AC13C0080CB8A /* CoreDataManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -228,6 +233,7 @@
 			children = (
 				0D2CB0DD29FC4F560080CB8A /* HomeViewModel.swift */,
 				78F391DD2A02EF9F0097884C /* ScreenLyricsEditingViewModel.swift */,
+				0D2CB1132A0AC1CA0080CB8A /* CoreDataRelationshipViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -354,6 +360,7 @@
 				67227F0229F85EDE00E1166C /* MainViewController.swift in Sources */,
 				9F62B0B72A01A27000A2F91C /* SheetView.swift in Sources */,
 				9F0CECAB29FAEC7E00103EFE /* CompositionView.swift in Sources */,
+				0D2CB1112A0AC13C0080CB8A /* CoreDataManager.swift in Sources */,
 				9F74D1342A04A3B8001017B2 /* VersionsView.swift in Sources */,
 				0D2CB0DE29FC4F560080CB8A /* HomeViewModel.swift in Sources */,
 				78F391D32A02D92F0097884C /* Composition.swift in Sources */,
@@ -368,6 +375,7 @@
 				9F0CECB129FB0C5B00103EFE /* ViewCode.swift in Sources */,
 				9F74D1362A04A4A2001017B2 /* VersionsViewController.swift in Sources */,
 				9F35359229FEE7A600F24950 /* SheetViewController.swift in Sources */,
+				0D2CB1142A0AC1CA0080CB8A /* CoreDataRelationshipViewModel.swift in Sources */,
 				7807628829FC30EE00353A06 /* ScreenLyricsEditingController.swift in Sources */,
 				67227F0829F85EDE00E1166C /* LyricFy.xcdatamodeld in Sources */,
 				673574FD2A05803900C75DB6 /* SongStructureCell.swift in Sources */,
