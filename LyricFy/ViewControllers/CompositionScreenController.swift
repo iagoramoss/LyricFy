@@ -8,13 +8,12 @@
 import UIKit
 
 class CompositionScreenController: UIViewController {
-
-    let compositionView = CompositionView()
+    var songStructures: [SongStructure] = SongStructure.mock
     var versions: [String] = ["versao 1", "versao 2", "versao 3", "versao 4"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view = compositionView
+        view = SongStructureView(delegate: self)
         setupNavigationBar()
     }
     
@@ -47,6 +46,9 @@ class CompositionScreenController: UIViewController {
         menuButton.menu = menu
         menuButton.tintColor = .black
 
+        navigationItem.title = "Song"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
         navigationItem.rightBarButtonItems = [addButton, menuButton]
     }
 
@@ -66,5 +68,75 @@ class CompositionScreenController: UIViewController {
         versionsVC.sheetPresentationController?.detents = [.medium()]
         versionsVC.sheetPresentationController?.prefersGrabberVisible = true
         present(versionsVC, animated: true)
+    }
+}
+
+extension CompositionScreenController: SongStructureTableView {
+    
+    func tableView(_ tableView: UITableView,
+                   numberOfRowsInSection section: Int) -> Int {
+        return songStructures.count
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SongStructure.reuseIdentifier,
+                                                       for: indexPath) as? SongStructureCell
+        else { return SongStructureCell() }
+        
+        cell.songStructure = songStructures[indexPath.row]
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   itemsForBeginning session: UIDragSession,
+                   at indexPath: IndexPath) -> [UIDragItem] {
+        let item = UIDragItem(itemProvider: NSItemProvider())
+        item.localObject = songStructures[indexPath.row]
+        
+        return [item]
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   moveRowAt sourceIndexPath: IndexPath,
+                   to destinationIndexPath: IndexPath) {
+        let cell = songStructures.remove(at: sourceIndexPath.row)
+        songStructures.insert(cell, at: destinationIndexPath.row)
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   dragPreviewParametersForRowAt indexPath: IndexPath) -> UIDragPreviewParameters? {
+        let param = UIDragPreviewParameters()
+        param.backgroundColor = .clear
+        
+        return param
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   contextMenuConfigurationForRowAt indexPath: IndexPath,
+                   point: CGPoint
+    ) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+            return UIMenu(children: [
+                
+                UIAction(title: "Duplicate") { _ in
+                    
+                    self.songStructures.insert(self.songStructures[indexPath.row], at: indexPath.row)
+                    tableView.reloadData()
+                },
+                UIAction(title: "Delete", attributes: .destructive) {[weak self] _ in
+                    self?.present(
+                        Alert(title: "",
+                              message: "This section will be deleted. And it will not be possible to recover it.",
+                              actionButtonLabel: "Delete",
+                              actionButtonStyle: .destructive,
+                              preferredStyle: .actionSheet) { [weak self] in
+                                  
+                                self?.songStructures.remove(at: indexPath.row)
+                                tableView.reloadData()
+                    }, animated: true)
+                }
+            ])
+        }
     }
 }
