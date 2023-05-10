@@ -22,12 +22,11 @@ class DAOService: ObservableObject {
         }
     }
     
-    func addProject(composition: ProjectEntity) {
+    func addProject(project: ProjectCellModel) {
         let newProject = ProjectEntity(context: manager.context)
-        newProject.id = composition.id
-        newProject.name = composition.name
-        newProject.lastAccess = composition.lastAccess
-        newProject.createdAt = composition.createdAt
+        newProject.id = project.id
+        newProject.name = project.name
+        newProject.createdAt = project.date
         
         manager.save()
     }
@@ -40,5 +39,12 @@ class DAOService: ObservableObject {
     func updateProject(project: ProjectEntity, name: String) {
         project.name = name
         manager.save()
+    }
+    
+    func getProjectById(id: UUID) -> ProjectEntity {
+        let fetched = getProjects()?.filter({ entity in
+            return entity.id == id
+        })
+        return fetched!.first!
     }
 }
