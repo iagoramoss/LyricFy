@@ -46,6 +46,9 @@ class CompositionScreenController: UIViewController {
         menuButton.menu = menu
         menuButton.tintColor = .black
 
+        navigationItem.title = "Song"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
         navigationItem.rightBarButtonItems = [addButton, menuButton]
     }
 
