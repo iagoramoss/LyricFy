@@ -13,7 +13,7 @@
 		0D2CB0DE29FC4F560080CB8A /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2CB0DD29FC4F560080CB8A /* HomeViewModel.swift */; };
 		0D2CB0E02A039EA10080CB8A /* AddProjectsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2CB0DF2A039EA10080CB8A /* AddProjectsCell.swift */; };
 		0D2CB1112A0AC13C0080CB8A /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2CB1102A0AC13C0080CB8A /* CoreDataManager.swift */; };
-		0D2CB1142A0AC1CA0080CB8A /* CoreDataRelationshipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2CB1132A0AC1CA0080CB8A /* CoreDataRelationshipViewModel.swift */; };
+		0D2CB1142A0AC1CA0080CB8A /* DAOService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2CB1132A0AC1CA0080CB8A /* DAOService.swift */; };
 		6718403D2A05945C00A92AAF /* SongStructureTableViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6718403C2A05945C00A92AAF /* SongStructureTableViewProtocol.swift */; };
 		67227EFE29F85EDE00E1166C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67227EFD29F85EDE00E1166C /* AppDelegate.swift */; };
 		67227F0029F85EDE00E1166C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67227EFF29F85EDE00E1166C /* SceneDelegate.swift */; };
@@ -30,6 +30,7 @@
 		7807628B29FC323500353A06 /* LyricsEditingScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7807628A29FC323500353A06 /* LyricsEditingScreenView.swift */; };
 		7865F43B2A005F0F0032039C /* NSAttributedString+defaultParagraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7865F43A2A005F0F0032039C /* NSAttributedString+defaultParagraph.swift */; };
 		7882169129FD9D340032A177 /* CGFloat+Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7882169029FD9D340032A177 /* CGFloat+Screen.swift */; };
+		78AAFD322A0C22870028265E /* ProjectCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AAFD312A0C22870028265E /* ProjectCellModel.swift */; };
 		78BE20E62A041A9A003B3AF2 /* KeyboardListenerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BE20E52A041A9A003B3AF2 /* KeyboardListenerProtocol.swift */; };
 		78F391D32A02D92F0097884C /* Composition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F391D22A02D92F0097884C /* Composition.swift */; };
 		78F391D52A02DD610097884C /* Compositions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F391D42A02DD610097884C /* Compositions.swift */; };
@@ -53,7 +54,7 @@
 		0D2CB0DD29FC4F560080CB8A /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		0D2CB0DF2A039EA10080CB8A /* AddProjectsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectsCell.swift; sourceTree = "<group>"; };
 		0D2CB1102A0AC13C0080CB8A /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		0D2CB1132A0AC1CA0080CB8A /* CoreDataRelationshipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataRelationshipViewModel.swift; sourceTree = "<group>"; };
+		0D2CB1132A0AC1CA0080CB8A /* DAOService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAOService.swift; sourceTree = "<group>"; };
 		6718403C2A05945C00A92AAF /* SongStructureTableViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongStructureTableViewProtocol.swift; sourceTree = "<group>"; };
 		67227EFA29F85EDE00E1166C /* LyricFy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LyricFy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67227EFD29F85EDE00E1166C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -72,6 +73,7 @@
 		7807628A29FC323500353A06 /* LyricsEditingScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsEditingScreenView.swift; sourceTree = "<group>"; };
 		7865F43A2A005F0F0032039C /* NSAttributedString+defaultParagraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+defaultParagraph.swift"; sourceTree = "<group>"; };
 		7882169029FD9D340032A177 /* CGFloat+Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Screen.swift"; sourceTree = "<group>"; };
+		78AAFD312A0C22870028265E /* ProjectCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCellModel.swift; sourceTree = "<group>"; };
 		78BE20E52A041A9A003B3AF2 /* KeyboardListenerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardListenerProtocol.swift; sourceTree = "<group>"; };
 		78F391D22A02D92F0097884C /* Composition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Composition.swift; sourceTree = "<group>"; };
 		78F391D42A02DD610097884C /* Compositions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Compositions.swift; sourceTree = "<group>"; };
@@ -186,7 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				781D450A29F98CD0005B1ACC /* CoreData */,
-				0D2CB1102A0AC13C0080CB8A /* CoreDataManager.swift */,
+				0D2CB1132A0AC1CA0080CB8A /* DAOService.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -194,6 +196,7 @@
 		781D450A29F98CD0005B1ACC /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				0D2CB1102A0AC13C0080CB8A /* CoreDataManager.swift */,
 				67227F0629F85EDE00E1166C /* LyricFy.xcdatamodeld */,
 			);
 			path = CoreData;
@@ -224,6 +227,7 @@
 				78F391D22A02D92F0097884C /* Composition.swift */,
 				78F391D42A02DD610097884C /* Compositions.swift */,
 				78F391D82A02E0C60097884C /* MockComposition.swift */,
+				78AAFD312A0C22870028265E /* ProjectCellModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -233,7 +237,6 @@
 			children = (
 				0D2CB0DD29FC4F560080CB8A /* HomeViewModel.swift */,
 				78F391DD2A02EF9F0097884C /* ScreenLyricsEditingViewModel.swift */,
-				0D2CB1132A0AC1CA0080CB8A /* CoreDataRelationshipViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 				0D2CB0DE29FC4F560080CB8A /* HomeViewModel.swift in Sources */,
 				78F391D32A02D92F0097884C /* Composition.swift in Sources */,
 				78F391D52A02DD610097884C /* Compositions.swift in Sources */,
+				78AAFD322A0C22870028265E /* ProjectCellModel.swift in Sources */,
 				67227F1829FC50A300E1166C /* Alert.swift in Sources */,
 				7882169129FD9D340032A177 /* CGFloat+Screen.swift in Sources */,
 				7807628B29FC323500353A06 /* LyricsEditingScreenView.swift in Sources */,
@@ -375,7 +379,7 @@
 				9F0CECB129FB0C5B00103EFE /* ViewCode.swift in Sources */,
 				9F74D1362A04A4A2001017B2 /* VersionsViewController.swift in Sources */,
 				9F35359229FEE7A600F24950 /* SheetViewController.swift in Sources */,
-				0D2CB1142A0AC1CA0080CB8A /* CoreDataRelationshipViewModel.swift in Sources */,
+				0D2CB1142A0AC1CA0080CB8A /* DAOService.swift in Sources */,
 				7807628829FC30EE00353A06 /* ScreenLyricsEditingController.swift in Sources */,
 				67227F0829F85EDE00E1166C /* LyricFy.xcdatamodeld in Sources */,
 				673574FD2A05803900C75DB6 /* SongStructureCell.swift in Sources */,

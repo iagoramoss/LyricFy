@@ -9,6 +9,7 @@ import Foundation
 import CoreData
 
 class CoreDataManager {
+    
     static let shared = CoreDataManager()
     
     let container: NSPersistentContainer
@@ -16,7 +17,7 @@ class CoreDataManager {
     
     init() {
         container = NSPersistentContainer(name: "LyricFy")
-        container.loadPersistentStores { description, error in
+        container.loadPersistentStores { _, error in
             if let error = error {
                 #if DEBUG
                     print("Error loading Core Data: \(error.localizedDescription)")

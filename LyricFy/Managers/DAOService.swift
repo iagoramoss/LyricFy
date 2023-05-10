@@ -1,5 +1,5 @@
 //
-//  CoreDataRelationshipViewModel.swift
+//  DAOService.swift
 //  LyricFy
 //
 //  Created by Marcos Costa on 09/05/23.
@@ -8,20 +8,21 @@
 import Foundation
 import CoreData
 
-class CoreDataRelationshipViewModel: ObservableObject {
+class DAOService: ObservableObject {
+    
     let manager = CoreDataManager.shared
     
-    func getProjects() -> [ProjectEntity] {
+    func getProjects() -> [ProjectEntity]? {
         let request: NSFetchRequest<ProjectEntity> = ProjectEntity.fetchRequest()
         
         do {
             return try manager.context.fetch(request)
         } catch {
-            return []
+            return nil
         }
     }
     
-    func addProject(composition: Composition) {
+    func addProject(composition: ProjectEntity) {
         let newProject = ProjectEntity(context: manager.context)
         newProject.id = composition.id
         newProject.name = composition.name

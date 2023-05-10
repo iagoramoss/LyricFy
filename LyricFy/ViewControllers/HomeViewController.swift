@@ -11,11 +11,12 @@ class HomeViewController: UIViewController {
     
     var screen = HomeView()
     
-    var projects: [ProjectEntity] = {
-        return CoreDataRelationshipViewModel().getProjects()
-    }()
+    var viewModel: HomeViewModel
     
-    var vm = CoreDataRelationshipViewModel()
+    init(homeViewModel: HomeViewModel) {
+        viewModel = homeViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
     
     override func loadView() {
         super.loadView()
@@ -30,12 +31,22 @@ class HomeViewController: UIViewController {
         screen.collectionProjects.delegate = self
         screen.collectionProjects.dataSource = self
         
+        viewModel.setupViewData()
+        
         view.backgroundColor = .white
+    }
+    
+    private func setupBindings() {
+        
     }
     
     private func setupNavigationBar() {
         title = "Projects"
         navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
@@ -45,7 +56,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return projects.count + 1
+        return viewModel.projects.count + 1
     }
     
     func collectionView(
@@ -64,11 +75,12 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         
         guard indexPath.item > 0 else { return addCell }
         
+        let projectDate = viewModel.projects[indexPath.row - 1].date
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
-        let dateString = dateFormatter.string(from: projects[indexPath.row - 1].createdAt ?? Date())
+        let dateString = dateFormatter.string(from: projectDate)
         
-        cell.nameProject.text = projects[indexPath.row - 1].name
+        cell.nameProject.text = viewModel.projects[indexPath.row - 1].name
         cell.date.text = dateString
         
         return cell
@@ -91,18 +103,18 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         
         return UIContextMenuConfiguration(
             identifier: nil,
-            previewProvider: nil) { _ in
-                let project = self.projects[indexPath.row - 1]
+            previewProvider: nil) { [weak self] _ in
+                let project = self!.viewModel.projects[indexPath.row - 1]
                 return UIMenu(
                     title: "X",
                     children: [
-                        self.updateMenuAction(_: collectionView, project: project),
-                        self.deleteMenuAction(_: collectionView, project: project)
+                        self!.updateMenuAction(_: collectionView, project: project),
+                        self!.deleteMenuAction(_: collectionView, project: project)
                     ]
                 )
             }
     }
-
+    
     func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
@@ -115,11 +127,11 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
                 textFieldPlaceholder: "X",
                 textFieldDefaultText: "Projeto",
                 projectName: nil,
-                action: { projectName in
-                    self.vm.addProject(composition: Composition(name: projectName, versions: []))
-                    self.projects = self.vm.getProjects()
-                    collectionView.reloadData()
-                }), animated: true, completion: nil)
+                action: { [weak self] projectName in
+                    self?.viewModel.createProject(name: projectName)
+                    
+                }
+            ), animated: true, completion: collectionView.reloadData)
         }
     }
     
@@ -133,42 +145,41 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
     
     func deleteMenuAction (
         _ collectionView: UICollectionView,
-        project: ProjectEntity
+        project: ProjectCellModel
     ) -> UIAction {
         return UIAction(title: "Delete Project",
                         image: UIImage(systemName: "trash"),
                         attributes: .destructive,
-                        state: .off) { _ in
-            self.present(Alert(
+                        state: .off) { [weak self] _ in
+            self?.present(Alert(
                 title: "Delete Project",
                 message: "This project will be deleted. And it will not be possible to recover it.",
                 actionButtonLabel: "Delete",
                 actionButtonStyle: .destructive,
                 preferredStyle: .actionSheet,
-                action: {
-                    self.vm.deleteProject(project: project)
-                    self.projects = self.vm.getProjects()
-                    collectionView.reloadData()
-                }), animated: true, completion: nil)
+                action: { [weak self] in
+                    self?.viewModel.deleteProject(projectId: project.id)
+                }
+            ), animated: true, completion: collectionView.reloadData)
         }
     }
     
     func updateMenuAction (
         _ collectionView: UICollectionView,
-        project: ProjectEntity
+        project: ProjectCellModel
     ) -> UIAction {
         return UIAction(title: "Edit name",
                         image: UIImage(systemName: "pencil.circle"),
-                        state: .off) { _ in
-        self.present(Alert(
-            title: "Rename Project",
-            textFieldPlaceholder: nil,
-            textFieldDefaultText: project.name!,
-            projectName: project.name!,
-            action: { projectName in
-                self.vm.updateProject(project: project, name: projectName)
-                collectionView.reloadData()
-            }), animated: true, completion: nil)
-    }
+                        state: .off) { [weak self] _ in
+            self?.present(Alert(
+                title: "Rename Project",
+                textFieldPlaceholder: nil,
+                textFieldDefaultText: project.name,
+                projectName: project.name,
+                action: { [weak self] name in
+                    self?.viewModel.updateProjectName(projectId: project.id, newName: name)
+                }
+            ), animated: true, completion: collectionView.reloadData)
+        }
     }
 }
