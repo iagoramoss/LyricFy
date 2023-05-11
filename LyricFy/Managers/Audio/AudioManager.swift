@@ -166,3 +166,18 @@ extension AudioManager {
         audioControlState = .playing
     }
 }
+
+// MARK: - File functions
+extension AudioManager {
+    
+    func deleteAudio() {
+        guard audioExists else { return }
+        
+        do {
+            try FileManager.default.removeItem(at: getFileUrl())
+            audioControlState = .preparedToRecord
+        } catch let error {
+            print("Error while deleting file: \(error)")
+        }
+    }
+}

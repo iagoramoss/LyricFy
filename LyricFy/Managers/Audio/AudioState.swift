@@ -10,7 +10,6 @@ import Foundation
 enum AudioState {
     
     case recording
-    case pausedRecording
     case preparedToRecord
     
     case preparedToPlay
