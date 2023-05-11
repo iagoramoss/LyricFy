@@ -9,59 +9,63 @@ import UIKit
 import Combine
 
 class ScreenLyricsEditingController: UIViewController {
-    
+
     private var screen: LyricsEditingScreenView? { didSet { setupView() } }
-    
+
     private var viewModel: ScreenLyricsEditingViewModel?
-    
+
     private var subscriptions = Set<AnyCancellable>()
-    
-    private var buttonTapCount = 0
-    private var buttonPlayCount = 0
 
     override func loadView() {
         super.loadView()
         self.screen = LyricsEditingScreenView(keyboardListener: self)
         self.view = screen
-        NotificationCenter.default.addObserver(self, selector: #selector(actionRecordButton),
-        name: .init(rawValue: "tapped"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(actionTrash),
-        name: .init(rawValue: "tappedTrash"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(actionPlay),
-        name: .init(rawValue: "tappedPlay"), object: nil)
-//        MockRecorder.sharedRecord.audioControlState = .preparedToRecord
     }
-    
+
     init(viewModel: ScreenLyricsEditingViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        screen?.recorderView.recorderButton.addTarget(self, action: #selector(actionRecordButton), for: .touchUpInside)
+        screen?.recorderView.playButton.addTarget(self, action: #selector(actionPlay), for: .touchUpInside)
+        screen?.recorderView.trashButton.addTarget(self, action: #selector(actionTrash), for: .touchUpInside)
     }
 
     @objc
     func actionRecordButton() {
-        buttonTapCount += 1
+        viewModel?.buttonTapCount += 1
 
-        switch buttonTapCount {
+        switch viewModel?.buttonTapCount {
         case 1:
-//            MockRecorder.sharedRecord.audioControlState = .recording
             screen?.recorderView.labelRecording.isHidden = false
             screen?.recorderView.labelTimer.isHidden = false
             screen?.recorderView.recorderButton.layer.cornerRadius = 10
             screen?.recorderView.recorderButton.backgroundColor = .yellow
         default:
-//            MockRecorder.sharedRecord.audioControlState = .preparedToPlay
             screen?.recorderView.labelRecording.isHidden = true
             screen?.recorderView.labelTimer.isHidden = true
             screen?.recorderView.recorderButton.isHidden = true
             screen?.recorderView.labelPlay.isHidden = false
             screen?.recorderView.playButton.isHidden = false
             screen?.recorderView.trashButton.isHidden = false
-            buttonTapCount = 0
+            viewModel?.buttonTapCount = 0
         }
     }
+
+    @objc
+    func actionPlay() {
+        viewModel?.buttonPlayCount += 1
+
+        switch viewModel?.buttonPlayCount {
+        case 1:
+            screen?.recorderView.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+        default:
+            screen?.recorderView.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+            viewModel?.buttonPlayCount = 0
+        }
+    }
+
     @objc
     func actionTrash() {
-//        MockRecorder.sharedRecord.audioControlState = .preparedToRecord
         screen?.recorderView.playButton.isHidden = true
         screen?.recorderView.trashButton.isHidden = true
         screen?.recorderView.recorderButton.layer.cornerRadius = 30
@@ -69,20 +73,7 @@ class ScreenLyricsEditingController: UIViewController {
         screen?.recorderView.recorderButton.isHidden = false
         screen?.recorderView.labelPlay.isHidden = true
     }
-    @objc
-    func actionPlay() {
-        buttonPlayCount += 1
-        switch buttonPlayCount {
-        case 1:
-//            MockRecorder.sharedRecord.audioControlState = .playing
-            screen?.recorderView.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-        default:
-//            MockRecorder.sharedRecord.audioControlState = .pausedPlaying
-            screen?.recorderView.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-            buttonPlayCount = 0
-        }
-    }
-    
+
     private func setupView() {
         setupNavigationBar()
         setupBindings()
