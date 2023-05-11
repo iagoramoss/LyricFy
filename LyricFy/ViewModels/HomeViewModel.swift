@@ -28,7 +28,7 @@ class HomeViewModel {
     }
     
     func createProject(name: String) {
-        dataService.addProject(id: UUID(), name: name)
+        dataService.addProject(name: name)
         updateProjectsArray()
     }
     

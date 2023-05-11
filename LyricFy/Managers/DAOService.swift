@@ -22,9 +22,9 @@ class DAOService: ObservableObject {
         }
     }
     
-    func addProject(id: UUID, name: String) {
+    func addProject(name: String) {
         let newProject = ProjectEntity(context: manager.context)
-        newProject.id = id
+        newProject.id = UUID()
         newProject.name = name
         newProject.createdAt = Date.now
         
