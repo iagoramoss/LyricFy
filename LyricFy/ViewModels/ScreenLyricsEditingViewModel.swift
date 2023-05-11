@@ -14,6 +14,9 @@ class ScreenLyricsEditingViewModel {
     
     var lyricsType: String
     var lyricsText: String
+    
+    var audioManager: AudioManager
+    
     var buttonTapCount: Int = 0
     var buttonPlayCount: Int = 0
     
@@ -22,6 +25,7 @@ class ScreenLyricsEditingViewModel {
         self.didEditLyrics = didEditAction
         self.lyricsText = compositionPart.lyrics
         self.lyricsType = compositionPart.type
+        self.audioManager = AudioManager(partID: compositionPart.id)
     }
     
     func saveLyricsEdition() {
