@@ -48,6 +48,8 @@
 		9F62B0B72A01A27000A2F91C /* SheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F62B0B62A01A27000A2F91C /* SheetView.swift */; };
 		9F74D1342A04A3B8001017B2 /* VersionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F74D1332A04A3B8001017B2 /* VersionsView.swift */; };
 		9F74D1362A04A4A2001017B2 /* VersionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F74D1352A04A4A2001017B2 /* VersionsViewController.swift */; };
+		9F80E86E2A0C39DF0007E4A8 /* MockRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F80E86D2A0C39DF0007E4A8 /* MockRecorder.swift */; };
+		9F8F0B982A0AE6F40063297F /* RecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F0B972A0AE6F40063297F /* RecorderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,6 +96,8 @@
 		9F62B0B62A01A27000A2F91C /* SheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetView.swift; sourceTree = "<group>"; };
 		9F74D1332A04A3B8001017B2 /* VersionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionsView.swift; sourceTree = "<group>"; };
 		9F74D1352A04A4A2001017B2 /* VersionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionsViewController.swift; sourceTree = "<group>"; };
+		9F80E86D2A0C39DF0007E4A8 /* MockRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRecorder.swift; sourceTree = "<group>"; };
+		9F8F0B972A0AE6F40063297F /* RecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -268,6 +272,7 @@
 				9F62B0B62A01A27000A2F91C /* SheetView.swift */,
 				9F74D1332A04A3B8001017B2 /* VersionsView.swift */,
 				0D2CB0D429FC40A00080CB8A /* HomeView.swift */,
+				9F8F0B972A0AE6F40063297F /* RecorderView.swift */,
 				673574FA2A05801F00C75DB6 /* SongStructureView.swift */,
 			);
 			path = Views;
@@ -397,6 +402,7 @@
 				9F0CECB129FB0C5B00103EFE /* ViewCode.swift in Sources */,
 				9F74D1362A04A4A2001017B2 /* VersionsViewController.swift in Sources */,
 				9F35359229FEE7A600F24950 /* SheetViewController.swift in Sources */,
+				9F8F0B982A0AE6F40063297F /* RecorderView.swift in Sources */,
 				0D2CB1142A0AC1CA0080CB8A /* DAOService.swift in Sources */,
 				7807628829FC30EE00353A06 /* ScreenLyricsEditingController.swift in Sources */,
 				67227F0829F85EDE00E1166C /* LyricFy.xcdatamodeld in Sources */,

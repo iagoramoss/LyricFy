@@ -14,6 +14,8 @@ class ScreenLyricsEditingViewModel {
     
     var lyricsType: String
     var lyricsText: String
+    var buttonTapCount: Int = 0
+    var buttonPlayCount: Int = 0
     
     init(compositionPart: CompositionPart, didEditAction: @escaping (CompositionPart) -> Void) {
         self.compositionPart = compositionPart
