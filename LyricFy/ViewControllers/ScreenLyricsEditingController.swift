@@ -32,9 +32,9 @@ class ScreenLyricsEditingController: UIViewController {
 
     @objc
     func actionRecordButton() {
-        viewModel?.buttonTapCount += 1
+        viewModel.buttonTapCount += 1
 
-        switch viewModel?.buttonTapCount {
+        switch viewModel.buttonTapCount {
         case 1:
             screen?.recorderView.labelRecording.isHidden = false
             screen?.recorderView.labelTimer.isHidden = false
@@ -47,20 +47,20 @@ class ScreenLyricsEditingController: UIViewController {
             screen?.recorderView.labelPlay.isHidden = false
             screen?.recorderView.playButton.isHidden = false
             screen?.recorderView.trashButton.isHidden = false
-            viewModel?.buttonTapCount = 0
+            viewModel.buttonTapCount = 0
         }
     }
 
     @objc
     func actionPlay() {
-        viewModel?.buttonPlayCount += 1
+        viewModel.buttonPlayCount += 1
 
-        switch viewModel?.buttonPlayCount {
+        switch viewModel.buttonPlayCount {
         case 1:
             screen?.recorderView.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
         default:
             screen?.recorderView.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-            viewModel?.buttonPlayCount = 0
+            viewModel.buttonPlayCount = 0
         }
     }
 
