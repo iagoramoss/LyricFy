@@ -9,7 +9,7 @@ import Foundation
 
 struct ProjectCellModel: Identifiable {
     
-    var id: UUID
+    var id: UUID = UUID()
     var name: String
-    var date: Date
+    var date: Date = Date.now
 }

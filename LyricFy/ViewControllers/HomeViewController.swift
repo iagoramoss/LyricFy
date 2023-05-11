@@ -129,9 +129,9 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
                 projectName: nil,
                 action: { [weak self] projectName in
                     self?.viewModel.createProject(name: projectName)
-                    
+                    collectionView.reloadData()
                 }
-            ), animated: true, completion: collectionView.reloadData)
+            ), animated: true, completion: nil)
         }
     }
     
@@ -159,8 +159,9 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
                 preferredStyle: .actionSheet,
                 action: { [weak self] in
                     self?.viewModel.deleteProject(projectId: project.id)
+                    collectionView.reloadData()
                 }
-            ), animated: true, completion: collectionView.reloadData)
+            ), animated: true, completion: nil)
         }
     }
     
@@ -178,8 +179,9 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
                 projectName: project.name,
                 action: { [weak self] name in
                     self?.viewModel.updateProjectName(projectId: project.id, newName: name)
+                    collectionView.reloadData()
                 }
-            ), animated: true, completion: collectionView.reloadData)
+            ), animated: true, completion: nil)
         }
     }
 }
