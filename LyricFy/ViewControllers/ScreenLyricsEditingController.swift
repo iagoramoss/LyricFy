@@ -29,7 +29,7 @@ class ScreenLyricsEditingController: UIViewController {
         name: .init(rawValue: "tappedTrash"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(actionPlay),
         name: .init(rawValue: "tappedPlay"), object: nil)
-        MockRecorder.sharedRecord.audioControlState = .preparedToRecord
+//        MockRecorder.sharedRecord.audioControlState = .preparedToRecord
     }
     
     init(viewModel: ScreenLyricsEditingViewModel) {
@@ -43,13 +43,13 @@ class ScreenLyricsEditingController: UIViewController {
 
         switch buttonTapCount {
         case 1:
-            MockRecorder.sharedRecord.audioControlState = .recording
+//            MockRecorder.sharedRecord.audioControlState = .recording
             screen?.recorderView.labelRecording.isHidden = false
             screen?.recorderView.labelTimer.isHidden = false
             screen?.recorderView.recorderButton.layer.cornerRadius = 10
             screen?.recorderView.recorderButton.backgroundColor = .yellow
         default:
-            MockRecorder.sharedRecord.audioControlState = .preparedToPlay
+//            MockRecorder.sharedRecord.audioControlState = .preparedToPlay
             screen?.recorderView.labelRecording.isHidden = true
             screen?.recorderView.labelTimer.isHidden = true
             screen?.recorderView.recorderButton.isHidden = true
@@ -61,7 +61,7 @@ class ScreenLyricsEditingController: UIViewController {
     }
     @objc
     func actionTrash() {
-        MockRecorder.sharedRecord.audioControlState = .preparedToRecord
+//        MockRecorder.sharedRecord.audioControlState = .preparedToRecord
         screen?.recorderView.playButton.isHidden = true
         screen?.recorderView.trashButton.isHidden = true
         screen?.recorderView.recorderButton.layer.cornerRadius = 30
@@ -74,10 +74,10 @@ class ScreenLyricsEditingController: UIViewController {
         buttonPlayCount += 1
         switch buttonPlayCount {
         case 1:
-            MockRecorder.sharedRecord.audioControlState = .playing
+//            MockRecorder.sharedRecord.audioControlState = .playing
             screen?.recorderView.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
         default:
-            MockRecorder.sharedRecord.audioControlState = .pausedPlaying
+//            MockRecorder.sharedRecord.audioControlState = .pausedPlaying
             screen?.recorderView.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
             buttonPlayCount = 0
         }
@@ -149,9 +149,3 @@ extension ScreenLyricsEditingController: KeyboardListener {
         view.endEditing(true)
     }
 }
-
-//        UIView.animate(withDuration: 0.5) { [self] in
-//            screen?.recorderView.frame = CGRect(x: 0, y: self.view.frame.height,
-//            width: self.view.bounds.width, height: self.view.bounds.height + 300)
-//            screen?.recorderView.layoutIfNeeded()
-//        }
