@@ -11,9 +11,9 @@ import Combine
 class ScreenLyricsEditingController: UIViewController {
 
     private var screen: LyricsEditingScreenView? { didSet { setupView() } }
-
-    private var viewModel: ScreenLyricsEditingViewModel?
-
+    
+    private var viewModel: ScreenLyricsEditingViewModel
+    
     private var subscriptions = Set<AnyCancellable>()
 
     override func loadView() {
@@ -77,18 +77,18 @@ class ScreenLyricsEditingController: UIViewController {
     private func setupView() {
         setupNavigationBar()
         setupBindings()
-        screen?.textView.text = viewModel?.lyricsText
+        screen?.textView.text = viewModel.lyricsText
     }
     
     private func setupBindings() {
         screen?.textView.delegate = self
         screen?.textView.textPublisher
-            .assign(to: \.lyricsText, on: self.viewModel!)
+            .assign(to: \.lyricsText, on: self.viewModel)
             .store(in: &subscriptions)
     }
     
     private func setupNavigationBar() {
-        navigationItem.title = viewModel?.lyricsType
+        navigationItem.title = viewModel.lyricsType
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.tintColor = .black
     }
@@ -117,7 +117,7 @@ extension ScreenLyricsEditingController: UITextViewDelegate {
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        viewModel?.saveLyricsEdition()
+        viewModel.saveLyricsEdition()
     }
 }
 

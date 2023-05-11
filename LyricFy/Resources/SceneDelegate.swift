@@ -18,7 +18,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         let window = UIWindow(windowScene: windowScene)
-        let mainNav = UINavigationController(rootViewController: MainViewController())
+        let homeViewModel = HomeViewModel(dataService: DAOService())
+        let mainNav = UINavigationController(
+            rootViewController: HomeViewController(homeViewModel: homeViewModel)
+        )
 
         window.rootViewController = mainNav
         window.makeKeyAndVisible()
@@ -34,8 +37,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func sceneWillEnterForeground(_ scene: UIScene) {}
 
-    func sceneDidEnterBackground(_ scene: UIScene) {
-        (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
-    }
+    func sceneDidEnterBackground(_ scene: UIScene) {}
 
 }

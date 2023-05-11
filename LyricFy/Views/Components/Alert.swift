@@ -30,13 +30,15 @@ class Alert: UIAlertController {
     convenience init(title: String,
                      cancelButtonLabel: String = "Cancel",
                      actionButtonLabel: String = "Create",
-                     textFieldPlaceholder: String,
+                     textFieldPlaceholder: String?,
                      textFieldDefaultText: String,
+                     projectName: String?,
                      action: @escaping (String) -> Void
     ) {
         self.init(title: title, message: nil, preferredStyle: .alert)
         self.addTextField { textField in
             textField.placeholder = textFieldPlaceholder
+            textField.text = projectName
         }
 
         let cancelButton = UIAlertAction(title: cancelButtonLabel, style: .cancel)

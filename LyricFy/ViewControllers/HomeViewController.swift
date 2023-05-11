@@ -11,7 +11,12 @@ class HomeViewController: UIViewController {
     
     var screen = HomeView()
     
-    var projects: [Project] = HomeViewModel().projects
+    var viewModel: HomeViewModel
+    
+    init(homeViewModel: HomeViewModel) {
+        viewModel = homeViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
     
     override func loadView() {
         super.loadView()
@@ -26,12 +31,22 @@ class HomeViewController: UIViewController {
         screen.collectionProjects.delegate = self
         screen.collectionProjects.dataSource = self
         
+        viewModel.setupViewData()
+        
         view.backgroundColor = .white
+    }
+    
+    private func setupBindings() {
+        
     }
     
     private func setupNavigationBar() {
         title = "Projects"
         navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
@@ -41,7 +56,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return projects.count + 1
+        return viewModel.projects.count + 1
     }
     
     func collectionView(
@@ -60,8 +75,13 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         
         guard indexPath.item > 0 else { return addCell }
         
-        cell.nameProject.text = projects[indexPath.row - 1].projectName
-        cell.date.text = projects[indexPath.row - 1].date
+        let projectDate = viewModel.projects[indexPath.row - 1].date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        let dateString = dateFormatter.string(from: projectDate)
+        
+        cell.nameProject.text = viewModel.projects[indexPath.row - 1].name
+        cell.date.text = dateString
         
         return cell
     }
@@ -83,47 +103,18 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         
         return UIContextMenuConfiguration(
             identifier: nil,
-            previewProvider: nil) { _ in
-                return UIMenu(title: "X",
-                              children: [
-                                UIAction(title: "Edit name",
-                                         image: UIImage(systemName: "pencil.circle"),
-                                         state: .off) { _ in
-                                             self.present(Alert(
-                                                title: "Rename Project",
-                                                textFieldPlaceholder: self.projects[indexPath.row - 1].projectName,
-                                                textFieldDefaultText: "Projeto",
-                                                action: { projectName in
-                                                    
-                                                    let project = Project(
-                                                        projectName: projectName,
-                                                        date: self.projects[indexPath.row - 1].date
-                                                    )
-                                                    self.projects[indexPath.row - 1] = project
-                                                    collectionView.reloadData()
-                                                    
-                                                }), animated: true, completion: nil)
-                                         },
-                                UIAction(title: "Delete Project",
-                                         image: UIImage(systemName: "trash"),
-                                         attributes: .destructive,
-                                         state: .off) { _ in
-                                             self.present(Alert(
-                                                title: "Delete Project",
-                                                message: "X",
-                                                actionButtonLabel: "Delete",
-                                                actionButtonStyle: .destructive,
-                                                preferredStyle: .actionSheet,
-                                                action: {
-                                                    self.projects.remove(at: indexPath.row-1)
-                                                    collectionView.deleteItems(at: [indexPath])
-                                                }), animated: true, completion: nil)
-                                         }
-                              ]
+            previewProvider: nil) { [weak self] _ in
+                let project = self!.viewModel.projects[indexPath.row - 1]
+                return UIMenu(
+                    title: "X",
+                    children: [
+                        self!.updateMenuAction(_: collectionView, project: project),
+                        self!.deleteMenuAction(_: collectionView, project: project)
+                    ]
                 )
             }
     }
-
+    
     func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
@@ -135,17 +126,12 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
                 title: "Create Project",
                 textFieldPlaceholder: "X",
                 textFieldDefaultText: "Projeto",
-                action: { projectName in
-                    
-                    let project: Project = Project(projectName: projectName, date: "a")
-                    self.projects.insert(project, at: self.projects.startIndex)
-                    
-                    let indexPath = IndexPath(item: 1, section: 0)
-                    
-                    collectionView.insertItems(at: [indexPath])
-                    
-                }), animated: true, completion: nil)
-            
+                projectName: nil,
+                action: { [weak self] projectName in
+                    self?.viewModel.createProject(name: projectName)
+                    collectionView.reloadData()
+                }
+            ), animated: true, completion: nil)
         }
     }
     
@@ -155,5 +141,47 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         minimumLineSpacingForSectionAt section: Int
     ) -> CGFloat {
         return 30
+    }
+    
+    func deleteMenuAction (
+        _ collectionView: UICollectionView,
+        project: ProjectCellModel
+    ) -> UIAction {
+        return UIAction(title: "Delete Project",
+                        image: UIImage(systemName: "trash"),
+                        attributes: .destructive,
+                        state: .off) { [weak self] _ in
+            self?.present(Alert(
+                title: "Delete Project",
+                message: "This project will be deleted. And it will not be possible to recover it.",
+                actionButtonLabel: "Delete",
+                actionButtonStyle: .destructive,
+                preferredStyle: .actionSheet,
+                action: { [weak self] in
+                    self?.viewModel.deleteProject(projectId: project.id)
+                    collectionView.reloadData()
+                }
+            ), animated: true, completion: nil)
+        }
+    }
+    
+    func updateMenuAction (
+        _ collectionView: UICollectionView,
+        project: ProjectCellModel
+    ) -> UIAction {
+        return UIAction(title: "Edit name",
+                        image: UIImage(systemName: "pencil.circle"),
+                        state: .off) { [weak self] _ in
+            self?.present(Alert(
+                title: "Rename Project",
+                textFieldPlaceholder: nil,
+                textFieldDefaultText: project.name,
+                projectName: project.name,
+                action: { [weak self] name in
+                    self?.viewModel.updateProjectName(projectId: project.id, newName: name)
+                    collectionView.reloadData()
+                }
+            ), animated: true, completion: nil)
+        }
     }
 }

@@ -7,17 +7,51 @@
 
 import Foundation
 
-struct Project {
-    let projectName: String
-    let date: String
-}
+class HomeViewModel {
+    
+    private var dataService: DAOService
+    
+    var projects: [ProjectCellModel] = []
 
-class HomeViewModel: ObservableObject {
-    var projects: [Project] = [
-        Project(projectName: "Oi", date: "21/12/12"),
-        Project(projectName: "hi", date: "21/12/12"),
-        Project(projectName: "buenas", date: "21/12/12"),
-        Project(projectName: "dia", date: "21/12/12"),
-        Project(projectName: "ok", date: "21/12/12")
-    ]
+    init(dataService: DAOService) {
+        self.dataService = dataService
+    }
+    
+    func setupViewData() {
+        guard let fetched = dataService.getProjects() else { return }
+        self.projects.removeAll()
+        for currentProject in fetched {
+            projects.append(ProjectCellModel(id: currentProject.id!,
+                                             name: currentProject.name!,
+                                             date: currentProject.createdAt!))
+        }
+    }
+    
+    func createProject(name: String) {
+        dataService.addProject(name: name)
+        updateProjectsArray()
+    }
+    
+    func updateProjectName(projectId id: UUID, newName: String) {
+        let project = dataService.getProjectById(id: id)
+        dataService.updateProject(project: project, name: newName)
+        updateProjectsArray()
+    }
+    
+    func deleteProject(projectId id: UUID) {
+        let project = dataService.getProjectById(id: id)
+        dataService.deleteProject(project: project)
+        updateProjectsArray()
+    }
+    
+    func updateProjectsArray() {
+        self.projects.removeAll()
+        guard let fetched = dataService.getProjects() else { return }
+        
+        for currentProject in fetched {
+            projects.append(ProjectCellModel(id: currentProject.id!,
+                                             name: currentProject.name!,
+                                             date: currentProject.createdAt!))
+        }
+    }
 }
