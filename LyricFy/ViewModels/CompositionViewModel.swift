@@ -124,6 +124,14 @@ extension CompositionViewModel {
         self.parts = self.getVersionParts(versionId: self.selectedVersionID!)
     }
     
+    func savePart(part: Part) {
+        self.service.addPart(type: part.type,
+                             lyric: part.lyrics,
+                             version: self.service.getVersionById(id: self.selectedVersionID!))
+        
+        self.parts = self.getVersionParts(versionId: self.selectedVersionID!)
+    }
+    
     func duplicatePart(index: IndexPath) {
         let part = parts[index.row]
         

@@ -12,6 +12,10 @@ class CompositionScreenController: UIViewController {
     private var viewModel: CompositionViewModel
     private var subscriptions = Set<AnyCancellable>()
     
+    private var part: Part?
+    
+    var songStructure: SongStructureView?
+    
     init(viewModel: CompositionViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -29,7 +33,10 @@ class CompositionScreenController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view = SongStructureView(delegate: self)
+        
+        self.songStructure = SongStructureView(delegate: self)
+        self.view = songStructure
+        
         setupNavigationBar()
     }
     
@@ -92,6 +99,26 @@ class CompositionScreenController: UIViewController {
     @objc
     func onTappedButtonAdd() {
         let sheetVC = SheetViewController()
+        
+        sheetVC.action = { [weak self] partType in
+            
+            self?.dismiss(animated: true)
+            self?.part = Part(id: UUID(), type: partType, lyrics: "")
+            
+            let lyricsViewModel = ScreenLyricsEditingViewModel(
+                    compositionPart: .init(id: UUID(),
+                    type: self?.part!.type ?? "",
+                    lyrics: self?.part?.lyrics ?? "")) { part in
+                        
+                        self?.viewModel.savePart(part: part)
+                        self?.songStructure?.tableView.reloadData()
+            }
+            
+            self?.navigationController?.pushViewController(
+                ScreenLyricsEditingController(viewModel: lyricsViewModel),
+                animated: true)
+        }
+        
         sheetVC.modalPresentationStyle = .pageSheet
         sheetVC.sheetPresentationController?.detents = [.medium()]
         sheetVC.sheetPresentationController?.prefersGrabberVisible = true
