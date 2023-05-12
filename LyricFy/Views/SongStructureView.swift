@@ -18,7 +18,6 @@ class SongStructureView: UIView, ViewCode {
         tableView.estimatedRowHeight = 80
         tableView.register(SongStructureCell.self, forCellReuseIdentifier: SongStructure.reuseIdentifier)
         tableView.dragInteractionEnabled = true
-        tableView.allowsSelection = false
         tableView.separatorStyle = .none
         return tableView
     }()

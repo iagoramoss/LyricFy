@@ -125,9 +125,19 @@ extension CompositionViewModel {
     }
     
     func savePart(part: Part) {
-        self.service.addPart(type: part.type,
-                             lyric: part.lyrics,
-                             version: self.service.getVersionById(id: self.selectedVersionID!))
+        let isNewPart = self.parts.filter {
+            return part.id == $0.id
+        }.isEmpty
+        
+        if isNewPart {
+            self.service.addPart(type: part.type,
+                                 lyric: part.lyrics,
+                                 version: self.service.getVersionById(id: self.selectedVersionID!))
+        } else {
+            self.service.updatePart(part: self.service.getPartById(id: part.id),
+                                    type: part.type,
+                                    lyric: part.lyrics)
+        }
         
         self.parts = self.getVersionParts(versionId: self.selectedVersionID!)
     }

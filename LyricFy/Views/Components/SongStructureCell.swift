@@ -78,6 +78,11 @@ class SongStructureCell: UITableViewCell, ViewCode {
     func setupAdditionalConfiguration() {
         backgroundColor = .clear
         layer.cornerRadius = 10
+        
+        let selectedView = UIView()
+        selectedView.backgroundColor = .clear
+        
+        selectedBackgroundView = selectedView
     }
     
     required init?(coder: NSCoder) {

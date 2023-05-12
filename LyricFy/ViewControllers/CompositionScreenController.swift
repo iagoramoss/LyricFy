@@ -12,9 +12,7 @@ class CompositionScreenController: UIViewController {
     private var viewModel: CompositionViewModel
     private var subscriptions = Set<AnyCancellable>()
     
-    private var part: Part?
-    
-    var songStructure: SongStructureView?
+    private var songStructureView: SongStructureView?
     
     init(viewModel: CompositionViewModel) {
         self.viewModel = viewModel
@@ -34,8 +32,8 @@ class CompositionScreenController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.songStructure = SongStructureView(delegate: self)
-        self.view = songStructure
+        self.songStructureView = SongStructureView(delegate: self)
+        self.view = songStructureView
         
         setupNavigationBar()
     }
@@ -95,28 +93,30 @@ class CompositionScreenController: UIViewController {
         
         navigationItem.rightBarButtonItems = [addButton, menuButton]
     }
+    
+    private func editPart(part: Part) {
+        let lyricsViewModel = ScreenLyricsEditingViewModel(compositionPart: .init(id: part.id,
+                                                           type: part.type,
+                                                           lyrics: part.lyrics)) { part in
+                    
+                    self.viewModel.savePart(part: part)
+                    self.songStructureView?.tableView.reloadData()
+        }
+        
+        self.navigationController?.pushViewController(ScreenLyricsEditingController(
+            viewModel: lyricsViewModel),
+            animated: true)
+    }
 
     @objc
     func onTappedButtonAdd() {
         let sheetVC = SheetViewController()
         
         sheetVC.action = { [weak self] partType in
-            
             self?.dismiss(animated: true)
-            self?.part = Part(id: UUID(), type: partType, lyrics: "")
             
-            let lyricsViewModel = ScreenLyricsEditingViewModel(
-                    compositionPart: .init(id: UUID(),
-                    type: self?.part!.type ?? "",
-                    lyrics: self?.part?.lyrics ?? "")) { part in
-                        
-                        self?.viewModel.savePart(part: part)
-                        self?.songStructure?.tableView.reloadData()
-            }
-            
-            self?.navigationController?.pushViewController(
-                ScreenLyricsEditingController(viewModel: lyricsViewModel),
-                animated: true)
+            let part = Part(id: UUID(), type: partType, lyrics: "")
+            self?.editPart(part: part)
         }
         
         sheetVC.modalPresentationStyle = .pageSheet
@@ -210,5 +210,10 @@ extension CompositionScreenController: SongStructureTableView {
                 }
             ])
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let part = self.viewModel.parts[indexPath.row]
+        self.editPart(part: part)
     }
 }
