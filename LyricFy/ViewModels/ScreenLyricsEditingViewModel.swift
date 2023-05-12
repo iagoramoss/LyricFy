@@ -9,15 +9,15 @@ import Foundation
 
 class ScreenLyricsEditingViewModel {
     
-    private var compositionPart: CompositionPart
-    private var didEditLyrics: (CompositionPart) -> Void
+    private var compositionPart: Part
+    private var didEditLyrics: (Part) -> Void
     
     var lyricsType: String
     var lyricsText: String
     var buttonTapCount: Int = 0
     var buttonPlayCount: Int = 0
     
-    init(compositionPart: CompositionPart, didEditAction: @escaping (CompositionPart) -> Void) {
+    init(compositionPart: Part, didEditAction: @escaping (Part) -> Void) {
         self.compositionPart = compositionPart
         self.didEditLyrics = didEditAction
         self.lyricsText = compositionPart.lyrics
@@ -25,8 +25,8 @@ class ScreenLyricsEditingViewModel {
     }
     
     func saveLyricsEdition() {
-        didEditLyrics(CompositionPart(id: compositionPart.id,
-                                      type: lyricsType,
-                                      lyrics: lyricsText))
+        didEditLyrics(Part(id: compositionPart.id,
+                           type: lyricsType,
+                           lyrics: lyricsText))
     }
 }
