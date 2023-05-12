@@ -10,6 +10,8 @@ import UIKit
 
 class LyricsEditingScreenView: UIView, ViewCode {
 
+    var recorderView = RecorderView()
+
     lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -43,7 +45,7 @@ class LyricsEditingScreenView: UIView, ViewCode {
         view.typingAttributes = NSAttributedString.defaultParagraphAttributes
         return view
     }()
-    
+
     let keyboardListenerDelegate: KeyboardListener
 
     init(keyboardListener: KeyboardListener) {
@@ -61,9 +63,12 @@ class LyricsEditingScreenView: UIView, ViewCode {
         contentView.addSubview(textView)
         scrollView.addSubview(contentView)
         addSubview(scrollView)
+        self.addSubview(recorderView)
     }
 
     func setupConstraints() {
+        recorderView.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
             scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -81,7 +86,12 @@ class LyricsEditingScreenView: UIView, ViewCode {
             textView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             textView.topAnchor.constraint(equalTo: contentView.topAnchor),
             textView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            textView.heightAnchor.constraint(greaterThanOrEqualToConstant: .screenHeight/3)
+            textView.heightAnchor.constraint(greaterThanOrEqualToConstant: .screenHeight/3),
+
+            recorderView.widthAnchor.constraint(equalTo: self.widthAnchor),
+            recorderView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.2),
+            recorderView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            recorderView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
 
