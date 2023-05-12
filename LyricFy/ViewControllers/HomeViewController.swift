@@ -43,6 +43,12 @@ class HomeViewController: UIViewController {
     private func setupNavigationBar() {
         title = "Projects"
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.largeTitleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.black,
+            NSAttributedString.Key.font: .fontCustom( fontName: .ralewayBold, size: 45) ?? UIFont.systemFont(ofSize: 45)
+        ]
+        navigationController
+        UINavigationBar.appearance().layoutMargins.left = 80
     }
     
     required init?(coder: NSCoder) {
@@ -91,7 +97,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        return CGSize(width: 166, height: 144)
+        return CGSize(width: 168, height: 162)
     }
     
     func collectionView(
@@ -140,7 +146,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         layout collectionViewLayout: UICollectionViewLayout,
         minimumLineSpacingForSectionAt section: Int
     ) -> CGFloat {
-        return 30
+        return 20
     }
     
     func deleteMenuAction (
