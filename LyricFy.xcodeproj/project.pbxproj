@@ -26,6 +26,8 @@
 		673574FD2A05803900C75DB6 /* SongStructureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673574FC2A05803900C75DB6 /* SongStructureCell.swift */; };
 		673574FF2A05805F00C75DB6 /* UIFont+PreferredFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673574FE2A05805F00C75DB6 /* UIFont+PreferredFont.swift */; };
 		673575012A0580BD00C75DB6 /* SongStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673575002A0580BD00C75DB6 /* SongStructure.swift */; };
+		67E0A7062A0C12AD00ED72C1 /* CompositionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E0A7052A0C12AD00ED72C1 /* CompositionViewModel.swift */; };
+		67E0A7092A0C148E00ED72C1 /* CompositionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E0A7082A0C148E00ED72C1 /* CompositionService.swift */; };
 		7807628829FC30EE00353A06 /* ScreenLyricsEditingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7807628729FC30EE00353A06 /* ScreenLyricsEditingController.swift */; };
 		7807628B29FC323500353A06 /* LyricsEditingScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7807628A29FC323500353A06 /* LyricsEditingScreenView.swift */; };
 		78451FB62A0D7AC600F4C744 /* CompositionPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78451FB52A0D7AC600F4C744 /* CompositionPart.swift */; };
@@ -74,6 +76,8 @@
 		673574FC2A05803900C75DB6 /* SongStructureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongStructureCell.swift; sourceTree = "<group>"; };
 		673574FE2A05805F00C75DB6 /* UIFont+PreferredFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+PreferredFont.swift"; sourceTree = "<group>"; };
 		673575002A0580BD00C75DB6 /* SongStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongStructure.swift; sourceTree = "<group>"; };
+		67E0A7052A0C12AD00ED72C1 /* CompositionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionViewModel.swift; sourceTree = "<group>"; };
+		67E0A7082A0C148E00ED72C1 /* CompositionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionService.swift; sourceTree = "<group>"; };
 		7807628729FC30EE00353A06 /* ScreenLyricsEditingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenLyricsEditingController.swift; sourceTree = "<group>"; };
 		7807628A29FC323500353A06 /* LyricsEditingScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsEditingScreenView.swift; sourceTree = "<group>"; };
 		78451FB52A0D7AC600F4C744 /* CompositionPart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionPart.swift; sourceTree = "<group>"; };
@@ -144,6 +148,7 @@
 				9F0CECAF29FB0C0800103EFE /* Protocols */,
 				781D450929F98CB2005B1ACC /* Managers */,
 				78F391D12A02D9000097884C /* Models */,
+				67E0A7072A0C146C00ED72C1 /* Services */,
 				78F391DC2A02EF6C0097884C /* ViewModels */,
 				9F0CECAC29FB04E600103EFE /* Views */,
 				781D450829F98C73005B1ACC /* ViewControllers */,
@@ -161,6 +166,14 @@
 				673574FC2A05803900C75DB6 /* SongStructureCell.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		67E0A7072A0C146C00ED72C1 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				67E0A7082A0C148E00ED72C1 /* CompositionService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		7807628929FC31E800353A06 /* LyricsEditing */ = {
@@ -258,6 +271,7 @@
 			children = (
 				0D2CB0DD29FC4F560080CB8A /* HomeViewModel.swift */,
 				78F391DD2A02EF9F0097884C /* ScreenLyricsEditingViewModel.swift */,
+				67E0A7052A0C12AD00ED72C1 /* CompositionViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -401,6 +415,8 @@
 				78F391DE2A02EF9F0097884C /* ScreenLyricsEditingViewModel.swift in Sources */,
 				9F0CECB129FB0C5B00103EFE /* ViewCode.swift in Sources */,
 				9F74D1362A04A4A2001017B2 /* VersionsViewController.swift in Sources */,
+				67E0A7092A0C148E00ED72C1 /* CompositionService.swift in Sources */,
+				67E0A7062A0C12AD00ED72C1 /* CompositionViewModel.swift in Sources */,
 				9F35359229FEE7A600F24950 /* SheetViewController.swift in Sources */,
 				9F8F0B982A0AE6F40063297F /* RecorderView.swift in Sources */,
 				0D2CB1142A0AC1CA0080CB8A /* DAOService.swift in Sources */,

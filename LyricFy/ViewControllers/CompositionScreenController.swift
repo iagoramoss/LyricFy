@@ -6,15 +6,35 @@
 //
 
 import UIKit
+import Combine
 
 class CompositionScreenController: UIViewController {
-    var songStructures: [SongStructure] = SongStructure.mock
-    var versions: [String] = ["versao 1", "versao 2", "versao 3", "versao 4"]
-
+    private var viewModel: CompositionViewModel
+    private var subscriptions = Set<AnyCancellable>()
+    
+    init(viewModel: CompositionViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    deinit {
+        self.subscriptions.forEach {
+            $0.cancel()
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view = SongStructureView(delegate: self)
         setupNavigationBar()
+    }
+    
+    private func setupBindings() {
+//        self.viewModel.$name.store
     }
     
     private func setupNavigationBar() {
@@ -28,13 +48,14 @@ class CompositionScreenController: UIViewController {
             UIAction(title: "Create Version",
                      image: UIImage(systemName: "plus"),
                      state: .off) { [weak self] _ in
-                self?.versions.append("teste")
+//                self?.versions.append("teste")
+                self?.viewModel.createVersion()
             },
             UIAction(title: "Delete Version",
                      image: UIImage(systemName: "trash"),
                      attributes: .destructive,
                      state: .off) { [weak self] _ in
-                self?.versions.removeLast()
+                self?.viewModel.deleteVersion()
             }
         ])
         
@@ -63,11 +84,20 @@ class CompositionScreenController: UIViewController {
 
     @objc
     func onTappedButtonVersion() {
-        let versionsVC = VersionsViewController(versions: versions)
+        let versionsVC = VersionsViewController(versions: self.viewModel.versions.map({
+            return $0.name
+        }))
+        
+        versionsVC.doneAction = { [weak self] in
+            self?.viewModel.switchVersion(to: versionsVC.versionsView.pickerView.selectedRow(inComponent: 0))
+        }
+        
         versionsVC.modalPresentationStyle = .pageSheet
         versionsVC.sheetPresentationController?.detents = [.medium()]
         versionsVC.sheetPresentationController?.prefersGrabberVisible = true
+        
         present(versionsVC, animated: true)
+        versionsVC.selectRow(row: self.viewModel.selectedVersionIndex)
     }
 }
 
@@ -75,7 +105,7 @@ extension CompositionScreenController: SongStructureTableView {
     
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
-        return songStructures.count
+        return self.viewModel.parts.count
     }
     
     func tableView(_ tableView: UITableView,
@@ -84,7 +114,7 @@ extension CompositionScreenController: SongStructureTableView {
                                                        for: indexPath) as? SongStructureCell
         else { return SongStructureCell() }
         
-        cell.songStructure = songStructures[indexPath.row]
+        cell.songStructure = self.viewModel.parts[indexPath.row]
         return cell
     }
     
@@ -92,7 +122,7 @@ extension CompositionScreenController: SongStructureTableView {
                    itemsForBeginning session: UIDragSession,
                    at indexPath: IndexPath) -> [UIDragItem] {
         let item = UIDragItem(itemProvider: NSItemProvider())
-        item.localObject = songStructures[indexPath.row]
+        item.localObject = self.viewModel.parts[indexPath.row]
         
         return [item]
     }
@@ -100,8 +130,7 @@ extension CompositionScreenController: SongStructureTableView {
     func tableView(_ tableView: UITableView,
                    moveRowAt sourceIndexPath: IndexPath,
                    to destinationIndexPath: IndexPath) {
-        let cell = songStructures.remove(at: sourceIndexPath.row)
-        songStructures.insert(cell, at: destinationIndexPath.row)
+        self.viewModel.dragAndDrop(from: sourceIndexPath, to: destinationIndexPath)
     }
     
     func tableView(_ tableView: UITableView,
@@ -121,7 +150,7 @@ extension CompositionScreenController: SongStructureTableView {
                 
                 UIAction(title: "Duplicate") { _ in
                     
-                    self.songStructures.insert(self.songStructures[indexPath.row], at: indexPath.row)
+                    self.viewModel.duplicatePart(index: indexPath)
                     tableView.reloadData()
                 },
                 UIAction(title: "Delete", attributes: .destructive) {[weak self] _ in
@@ -132,7 +161,7 @@ extension CompositionScreenController: SongStructureTableView {
                               actionButtonStyle: .destructive,
                               preferredStyle: .actionSheet) { [weak self] in
                                   
-                                self?.songStructures.remove(at: indexPath.row)
+                                self?.viewModel.deletePart(index: indexPath)
                                 tableView.reloadData()
                     }, animated: true)
                 }

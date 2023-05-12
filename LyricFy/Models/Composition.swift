@@ -9,26 +9,18 @@ import Foundation
 
 class Composition: Codable, Identifiable {
     
-    var id = UUID()
+    var id: UUID
     var name: String
     var versions: [Version]
-    var lastAccess: Date = Date.now
-    var createdAt: Date = Date.now
     
-    init(name: String, versions: [Version]) {
+    init(id: UUID, name: String = "Song", versions: [Version] = []) {
+        self.id = id
         self.name = name
         self.versions = versions
     }
-    
-    init(name: String) {
-        self.name = name
-        self.versions = []
-        
-        versions.append(Version(versionName: "v1"))
-    }
 }
 
-class Version: Codable, Identifiable {
+class Version1: Codable, Identifiable {
     
     var id = UUID()
     var name: String
@@ -40,14 +32,20 @@ class Version: Codable, Identifiable {
     }
 }
 
+struct Version: Codable, Identifiable {
+    var id: UUID
+    var name: String
+    var compositionParts: [Part]
+}
+
 class Part: Codable, Identifiable {
     
-    var index: Int
+    var id: UUID
     var type: String
     var lyrics: String
     
-    init(index: Int, type: String, lyrics: String) {
-        self.index = index
+    init(id: UUID, type: String, lyrics: String) {
+        self.id = id
         self.type = type
         self.lyrics = lyrics
     }

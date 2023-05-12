@@ -10,10 +10,10 @@ import UIKit
 
 class SongStructureCell: UITableViewCell, ViewCode {
     
-    var songStructure: SongStructure? {
+    var songStructure: Part? {
         didSet {
-            title.text = songStructure?.type.rawValue.capitalized
-            lyric.text = songStructure?.lyric
+            title.text = songStructure?.type.capitalized
+            lyric.text = songStructure?.lyrics
         }
     }
     

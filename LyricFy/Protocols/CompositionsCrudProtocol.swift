@@ -10,6 +10,7 @@ import Foundation
 protocol CompositionCRUD {
     
     func createNewComposition(compositionName: String)
-//    func updateComposition(compositionID: UUID)
-//    func deleteComposition(compositionID: UUID)
+    func getCompositions() -> [Composition]
+    func updateComposition(compositionID: UUID)
+    func deleteComposition(compositionID: UUID)
 }

@@ -120,7 +120,10 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         didSelectItemAt indexPath: IndexPath
     ) {
         if indexPath.item > 0 {
-            navigationController?.pushViewController(CompositionScreenController(), animated: true)
+            let compositionViewModel = CompositionViewModel(projectID: viewModel.projects[indexPath.item - 1].id)
+            
+            navigationController?.pushViewController(CompositionScreenController(viewModel: compositionViewModel),
+                                                     animated: true)
         } else {
             self.present(Alert(
                 title: "Create Project",
