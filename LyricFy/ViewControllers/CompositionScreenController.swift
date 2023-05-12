@@ -38,6 +38,9 @@ class CompositionScreenController: UIViewController {
     }
     
     private func setupNavigationBar() {
+        let isProject = self.viewModel.versions.count == 1
+        let deleteItem = isProject ? "project" : "version"
+        
         let menu = UIMenu(children: [
             UIAction(
                 title: "See Versions",
@@ -48,14 +51,27 @@ class CompositionScreenController: UIViewController {
             UIAction(title: "Create Version",
                      image: UIImage(systemName: "plus"),
                      state: .off) { [weak self] _ in
-//                self?.versions.append("teste")
                 self?.viewModel.createVersion()
             },
-            UIAction(title: "Delete Version",
+            UIAction(title: "Delete \(deleteItem.capitalized)",
                      image: UIImage(systemName: "trash"),
                      attributes: .destructive,
                      state: .off) { [weak self] _ in
-                self?.viewModel.deleteVersion()
+                         self?.present(
+                            Alert(title: "Do you want to delete this \(deleteItem)?",
+                                  message: "The \(deleteItem) will be deleted and you will not be able to recover it.",
+                                  actionButtonLabel: "Delete",
+                                  actionButtonStyle: .destructive,
+                                  preferredStyle: .alert, action: {
+                                      if isProject {
+                                          self?.viewModel.deleteProject()
+                                          self?.navigationController?.popViewController(animated: true)
+                                          
+                                          return
+                                      }
+                                      
+                                      self?.viewModel.deleteVersion()
+                         }), animated: true)
             }
         ])
         

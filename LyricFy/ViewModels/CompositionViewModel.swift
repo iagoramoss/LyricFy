@@ -82,15 +82,23 @@ extension CompositionViewModel {
     }
     
     func deleteVersion() {
+        let index = self.versions.firstIndex {
+            $0.id == self.selectedVersionID!
+        }!
+        
         self.service.deleteVersion(version: self.service.getVersionById(id: self.selectedVersionID!))
         self.versions = self.getVersions()
+        
+        self.switchVersion(to: index - 1)
+    }
+    
+    func deleteProject() {
+        self.service.deleteProject(project: self.service.getProjectById(id: self.projectID))
     }
     
     func switchVersion(to version: Int) {
         self.selectedVersionID = self.versions[version].id
         self.parts = self.getVersionParts(versionId: self.selectedVersionID!)
-        
-//        let selectedVersion = self.versions
         
         self.selectedVersionIndex = self.versions.firstIndex {
             $0.id == self.selectedVersionID

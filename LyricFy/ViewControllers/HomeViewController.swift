@@ -23,8 +23,8 @@ class HomeViewController: UIViewController {
         self.view = screen
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         setupNavigationBar()
         
@@ -32,6 +32,7 @@ class HomeViewController: UIViewController {
         screen.collectionProjects.dataSource = self
         
         viewModel.setupViewData()
+        screen.collectionProjects.reloadData()
         
         view.backgroundColor = .white
     }
