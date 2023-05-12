@@ -15,7 +15,7 @@ class AddProjectsCell: UICollectionViewCell {
     lazy var projectComponent: UIView = {
         let projectComponent = UIView()
         projectComponent.translatesAutoresizingMaskIntoConstraints = false
-        projectComponent.backgroundColor = .cyan
+        projectComponent.backgroundColor = .colors(name: .sheetColor)
         projectComponent.layer.cornerRadius = 10
         return projectComponent
     }()
@@ -23,6 +23,7 @@ class AddProjectsCell: UICollectionViewCell {
     lazy var image: UIImageView = {
         let image = UIImageView(image: UIImage(systemName: "plus"))
         image.translatesAutoresizingMaskIntoConstraints = false
+        image.tintColor = .colors(name: .orangeLabel)
         return image
     }()
     

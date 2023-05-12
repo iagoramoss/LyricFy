@@ -33,7 +33,7 @@ class HomeViewController: UIViewController {
         
         viewModel.setupViewData()
         
-        view.backgroundColor = .white
+        view.backgroundColor = .colors(name: .bgColor)
     }
     
     private func setupBindings() {

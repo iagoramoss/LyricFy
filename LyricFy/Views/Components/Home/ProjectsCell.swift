@@ -14,7 +14,7 @@ class ProjectsCell: UICollectionViewCell {
     lazy var projectComponent: UIView = {
         let projectComponent = UIView()
         projectComponent.translatesAutoresizingMaskIntoConstraints = false
-        projectComponent.backgroundColor = .lightGray
+        projectComponent.backgroundColor = .colors(name: .buttonsColor)
         projectComponent.layer.cornerRadius = 10
         return projectComponent
     }()
@@ -22,6 +22,7 @@ class ProjectsCell: UICollectionViewCell {
     lazy var nameProject: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20)
+        label.textColor = .colors(name: .buttonsLabel)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 2
         label.lineBreakMode = .byTruncatingTail
@@ -31,6 +32,7 @@ class ProjectsCell: UICollectionViewCell {
     
     lazy var date: UILabel = {
         let label = UILabel()
+        label.textColor = .colors(name: .buttonsLabel)
         label.font = .systemFont(ofSize: 11)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -41,7 +43,6 @@ class ProjectsCell: UICollectionViewCell {
         stack.axis = .vertical
         stack.spacing = 5
         stack.alignment = .center
-//        stack.distribution = .fill
         stack.translatesAutoresizingMaskIntoConstraints = false
         [nameProject, date].forEach { stack.addArrangedSubview($0) }
         return stack

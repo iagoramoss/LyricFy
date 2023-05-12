@@ -61,6 +61,6 @@ extension CompositionView: ViewCode {
         ])
     }
     func setupAdditionalConfiguration() {
-        backgroundColor = .white
+        backgroundColor = .colors(name: .bgColor)
     }
 }
