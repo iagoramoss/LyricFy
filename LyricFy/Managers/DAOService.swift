@@ -29,7 +29,7 @@ class DAOService: ObservableObject {
         newProject.createdAt = Date.now
         
         addVersion(version: "Version 1", project: newProject, parts: [])
-        newProject.versions = NSSet(array: getVersions()!)
+        newProject.versions = NSSet(array: getVersionsOfProjectById(projectId: newProject.id!)!)
         
         manager.save()
     }
