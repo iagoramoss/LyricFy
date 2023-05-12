@@ -49,6 +49,7 @@
 		9F0CECAE29FB050800103EFE /* CompositionScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0CECAD29FB050800103EFE /* CompositionScreenController.swift */; };
 		9F0CECB129FB0C5B00103EFE /* ViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0CECB029FB0C5B00103EFE /* ViewCode.swift */; };
 		9F35359229FEE7A600F24950 /* SheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35359129FEE7A600F24950 /* SheetViewController.swift */; };
+		9F46596D2A0EB4840032B471 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F46596C2A0EB4840032B471 /* UIColor.swift */; };
 		9F62B0B72A01A27000A2F91C /* SheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F62B0B62A01A27000A2F91C /* SheetView.swift */; };
 		9F74D1342A04A3B8001017B2 /* VersionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F74D1332A04A3B8001017B2 /* VersionsView.swift */; };
 		9F74D1362A04A4A2001017B2 /* VersionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F74D1352A04A4A2001017B2 /* VersionsViewController.swift */; };
@@ -100,6 +101,7 @@
 		9F0CECAD29FB050800103EFE /* CompositionScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionScreenController.swift; sourceTree = "<group>"; };
 		9F0CECB029FB0C5B00103EFE /* ViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCode.swift; sourceTree = "<group>"; };
 		9F35359129FEE7A600F24950 /* SheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetViewController.swift; sourceTree = "<group>"; };
+		9F46596C2A0EB4840032B471 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		9F62B0B62A01A27000A2F91C /* SheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetView.swift; sourceTree = "<group>"; };
 		9F74D1332A04A3B8001017B2 /* VersionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionsView.swift; sourceTree = "<group>"; };
 		9F74D1352A04A4A2001017B2 /* VersionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionsViewController.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				7882169029FD9D340032A177 /* CGFloat+Screen.swift */,
 				673574FE2A05805F00C75DB6 /* UIFont+PreferredFont.swift */,
 				78F391DF2A02F3400097884C /* UITextView+Combine.swift */,
+				9F46596C2A0EB4840032B471 /* UIColor.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -432,6 +435,7 @@
 				673574FD2A05803900C75DB6 /* SongStructureCell.swift in Sources */,
 				673574FF2A05805F00C75DB6 /* UIFont+PreferredFont.swift in Sources */,
 				0D2CB0DA29FC41210080CB8A /* ProjectsCell.swift in Sources */,
+				9F46596D2A0EB4840032B471 /* UIColor.swift in Sources */,
 				0D2CB0D729FC40D30080CB8A /* HomeViewController.swift in Sources */,
 				0D2CB0E02A039EA10080CB8A /* AddProjectsCell.swift in Sources */,
 				0D2CB0D529FC40A00080CB8A /* HomeView.swift in Sources */,

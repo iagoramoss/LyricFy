@@ -14,15 +14,14 @@ class ProjectsCell: UICollectionViewCell {
     lazy var projectComponent: UIView = {
         let projectComponent = UIView()
         projectComponent.translatesAutoresizingMaskIntoConstraints = false
-        projectComponent.backgroundColor = .colors(name: .buttonsColor)
-        projectComponent.layer.cornerRadius = 28
+        projectComponent.backgroundColor = .lightGray
+        projectComponent.layer.cornerRadius = 10
         return projectComponent
     }()
     
     lazy var nameProject: UILabel = {
         let label = UILabel()
-        label.font = .fontCustom(fontName: .ralewaySemibold, size: 17)
-        label.textColor = .colors(name: .buttonsLabel)
+        label.font = .systemFont(ofSize: 20)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 2
         label.lineBreakMode = .byTruncatingTail
@@ -32,18 +31,17 @@ class ProjectsCell: UICollectionViewCell {
     
     lazy var date: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 13)
-        label.font = .systemFont(ofSize: 13)
-        label.textColor = .colors(name: .buttonsLabel)
         label.font = .systemFont(ofSize: 11)
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     lazy var stackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.spacing = 8
+        stack.spacing = 5
         stack.alignment = .center
+//        stack.distribution = .fill
         stack.translatesAutoresizingMaskIntoConstraints = false
         [nameProject, date].forEach { stack.addArrangedSubview($0) }
         return stack
@@ -68,8 +66,8 @@ extension ProjectsCell: ViewCode {
 
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            projectComponent.widthAnchor.constraint(equalToConstant: 168),
-            projectComponent.heightAnchor.constraint(equalToConstant: 162),
+            projectComponent.widthAnchor.constraint(equalToConstant: 166),
+            projectComponent.heightAnchor.constraint(equalToConstant: 144),
             
             stackView.centerXAnchor.constraint(equalTo: projectComponent.centerXAnchor),
             stackView.centerYAnchor.constraint(equalTo: projectComponent.centerYAnchor),

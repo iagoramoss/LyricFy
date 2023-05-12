@@ -20,17 +20,17 @@ class CompositionScreenController: UIViewController {
     private func setupNavigationBar() {
         let menu = UIMenu(children: [
             UIAction(
-                title: "See Versions",
+                title: "Change version",
                 image: UIImage(systemName: "arrow.triangle.branch"),
                 state: .off) { [weak self] _ in
                 self?.onTappedButtonVersion()
             },
-            UIAction(title: "Create Version",
-                     image: UIImage(systemName: "plus"),
+            UIAction(title: "Duplicate version",
+                     image: UIImage(systemName: "doc.on.doc"),
                      state: .off) { [weak self] _ in
                 self?.versions.append("teste")
             },
-            UIAction(title: "Delete Version",
+            UIAction(title: "Delete version",
                      image: UIImage(systemName: "trash"),
                      attributes: .destructive,
                      state: .off) { [weak self] _ in
