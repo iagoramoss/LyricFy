@@ -1,5 +1,5 @@
 //
-//  SongStructureCell.swift
+//  PartCell.swift
 //  LyricFy
 //
 //  Created by Iago Ramos on 04/05/23.
@@ -8,12 +8,12 @@
 import Foundation
 import UIKit
 
-class SongStructureCell: UITableViewCell, ViewCode {
+class PartCell: UITableViewCell, ViewCode {
     
-    var songStructure: Part? {
+    var part: Part? {
         didSet {
-            title.text = songStructure?.type.capitalized
-            lyric.text = songStructure?.lyrics
+            title.text = part?.type.capitalized
+            lyric.text = part?.lyrics
         }
     }
     

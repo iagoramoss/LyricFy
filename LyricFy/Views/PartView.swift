@@ -1,5 +1,5 @@
 //
-//  SongStructureView.swift
+//  PartView.swift
 //  LyricFy
 //
 //  Created by Iago Ramos on 01/05/23.
@@ -8,21 +8,21 @@
 import Foundation
 import UIKit
 
-class SongStructureView: UIView, ViewCode {
+class PartView: UIView, ViewCode {
     
-    var delegate: SongStructureTableView
+    var delegate: PartTableView
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 80
-        tableView.register(SongStructureCell.self, forCellReuseIdentifier: Composition.reuseIdentifier)
+        tableView.register(PartCell.self, forCellReuseIdentifier: Composition.reuseIdentifier)
         tableView.dragInteractionEnabled = true
         tableView.separatorStyle = .none
         return tableView
     }()
     
-    init(delegate: SongStructureTableView) {
+    init(delegate: PartTableView) {
         self.delegate = delegate
         super.init(frame: .zero)
         setupView()

@@ -12,7 +12,7 @@ class CompositionScreenController: UIViewController {
     private var viewModel: CompositionViewModel
     private var subscriptions = Set<AnyCancellable>()
     
-    private var songStructureView: SongStructureView?
+    private var partView: PartView?
     
     init(viewModel: CompositionViewModel) {
         
@@ -33,15 +33,15 @@ class CompositionScreenController: UIViewController {
         
         super.viewDidLoad()
         
-        self.songStructureView = SongStructureView(delegate: self)
-        self.view = songStructureView
+        self.partView = PartView(delegate: self)
+        self.view = partView
         
         setupNavigationBar()
     }
     
     private func reloadData() {
         
-        self.songStructureView?.tableView.reloadData()
+        self.partView?.tableView.reloadData()
     }
     
     private func setupNavigationBar() {
@@ -106,7 +106,7 @@ class CompositionScreenController: UIViewController {
     private func editPart(part: Part) {
         let lyricsViewModel = ScreenLyricsEditingViewModel(compositionPart: part) { [weak self] editedPart in
             self?.viewModel.updatePart(part: editedPart)
-            self?.songStructureView?.tableView.reloadData()
+            self?.partView?.tableView.reloadData()
         }
         
         self.navigationController?.pushViewController(ScreenLyricsEditingController(viewModel: lyricsViewModel),
@@ -151,7 +151,7 @@ class CompositionScreenController: UIViewController {
     }
 }
 
-extension CompositionScreenController: SongStructureTableView {
+extension CompositionScreenController: PartTableView {
     
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
@@ -161,10 +161,10 @@ extension CompositionScreenController: SongStructureTableView {
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Composition.reuseIdentifier,
-                                                       for: indexPath) as? SongStructureCell
-        else { return SongStructureCell() }
+                                                       for: indexPath) as? PartCell
+        else { return PartCell() }
         
-        cell.songStructure = self.viewModel.parts[indexPath.row]
+        cell.part = self.viewModel.parts[indexPath.row]
         return cell
     }
     
