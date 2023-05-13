@@ -94,33 +94,25 @@ class CompositionScreenController: UIViewController {
     }
     
     private func editPart(part: Part) {
-        let lyricsViewModel = ScreenLyricsEditingViewModel(compositionPart: Part(id: part.id,
-                                                                                 index: self.viewModel.parts.count,
-                                                                                 type: part.type,
-                                                                                 lyrics: part.lyrics)) { part in
-                    
-                    self.viewModel.savePart(part: part)
-                    self.songStructureView?.tableView.reloadData()
+        let lyricsViewModel = ScreenLyricsEditingViewModel(compositionPart: part) { [weak self] editedPart in
+            self?.viewModel.updatePart(part: editedPart)
+            self?.songStructureView?.tableView.reloadData()
         }
         
-        self.navigationController?.pushViewController(ScreenLyricsEditingController(
-            viewModel: lyricsViewModel),
-            animated: true)
+        self.navigationController?.pushViewController(ScreenLyricsEditingController(viewModel: lyricsViewModel),
+                                                      animated: true)
     }
 
     @objc
     func onTappedButtonAdd() {
         let sheetVC = SheetViewController()
         
-        sheetVC.action = { [weak self] partType in
-            self?.dismiss(animated: true)
+        sheetVC.action = { partType in
+            self.dismiss(animated: true)
+            self.viewModel.createPart(type: partType)
             
-            let part = Part(id: UUID(),
-                            index: self?.viewModel.parts.count ?? 0,
-                            type: partType,
-                            lyrics: "")
-            
-            self?.editPart(part: part)
+            let part = self.viewModel.parts.last!
+            self.editPart(part: part)
         }
         
         sheetVC.modalPresentationStyle = .pageSheet

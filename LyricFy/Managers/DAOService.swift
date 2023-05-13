@@ -42,10 +42,6 @@ class DAOService {
         }
     }
     
-    func getCompositionByID(id: UUID) -> Composition {
-        return getCompositions().first(where: { $0.id == id })!
-    }
-    
     func createComposition(name: String) {
         let project = ProjectEntity(context: manager.context)
         project.id = UUID()
