@@ -15,14 +15,14 @@ class CompositionScreenController: UIViewController {
     private var songStructureView: SongStructureView?
     
     init(viewModel: CompositionViewModel) {
+        
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
     deinit {
-        self.subscriptions.forEach {
-            $0.cancel()
-        }
+        
+        self.subscriptions.forEach { $0.cancel() }
     }
     
     required init?(coder: NSCoder) {
@@ -30,6 +30,7 @@ class CompositionScreenController: UIViewController {
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         self.songStructureView = SongStructureView(delegate: self)
@@ -38,34 +39,41 @@ class CompositionScreenController: UIViewController {
         setupNavigationBar()
     }
     
-    private func setupBindings() {
-//        self.viewModel.$name.store
+    private func reloadData() {
+        
+        self.songStructureView?.tableView.reloadData()
     }
     
     private func setupNavigationBar() {
+        
         let menu = UIMenu(children: [
-            UIAction(
-                title: "See Versions",
-                image: UIImage(systemName: "arrow.triangle.branch"),
-                state: .off) { [weak self] _ in
-                self?.onTappedButtonVersion()
-            },
-            UIAction(title: "Create Version",
+            UIAction(title: "See Versions",
+                     image: UIImage(systemName: "arrow.triangle.branch"),
+                     state: .off,
+                     handler: { [weak self] _ in
+                         self?.onTappedButtonVersion()
+                     }),
+            
+            UIAction(title: "Create Versions",
                      image: UIImage(systemName: "plus"),
-                     state: .off) { [weak self] _ in
-                self?.viewModel.createVersion()
-                self?.songStructureView?.tableView.reloadData()
-            },
-            UIAction(title: "Delete Version",
+                     state: .off,
+                     handler: { [weak self] _ in
+                         self?.viewModel.createVersion()
+                         self?.reloadData()
+                     }),
+            
+            UIAction(title: "Delete Versions",
                      image: UIImage(systemName: "trash"),
                      attributes: .destructive,
-                     state: .off) { [weak self] _ in
+                     state: .off,
+                     handler: { [weak self] _ in
                          self?.present(
                             Alert(title: "Do you want to delete this version?",
                                   message: "The version will be deleted and you will not be able to recover it.",
                                   actionButtonLabel: "Delete",
                                   actionButtonStyle: .destructive,
-                                  preferredStyle: .alert, action: {
+                                  preferredStyle: .alert,
+                                  action: {
                                       if self?.viewModel.versions.count == 1 {
                                           self?.viewModel.deleteProject()
                                           self?.navigationController?.popViewController(animated: true)
@@ -74,9 +82,11 @@ class CompositionScreenController: UIViewController {
                                       }
                                       
                                       self?.viewModel.deleteVersion()
-                                      self?.songStructureView?.tableView.reloadData()
-                         }), animated: true)
-            }
+                                      self?.reloadData()
+                                  }
+                                 ),
+                            animated: true)
+                     }),
         ])
         
         let addButton = UIBarButtonItem(image: .init(systemName: "plus"), style: .plain,
@@ -129,7 +139,7 @@ class CompositionScreenController: UIViewController {
         
         versionsVC.doneAction = { [weak self] in
             self?.viewModel.switchVersion(to: versionsVC.versionsView.pickerView.selectedRow(inComponent: 0))
-            self?.songStructureView?.tableView.reloadData()
+            self?.reloadData()
         }
         
         versionsVC.modalPresentationStyle = .pageSheet
@@ -199,17 +209,20 @@ extension CompositionScreenController: SongStructureTableView {
                               message: "This section will be deleted. And it will not be possible to recover it.",
                               actionButtonLabel: "Delete",
                               actionButtonStyle: .destructive,
-                              preferredStyle: .actionSheet) { [weak self] in
+                              preferredStyle: .actionSheet,
+                              action: { [weak self] in
                                   
-                                self?.viewModel.deletePart(index: indexPath)
-                                tableView.reloadData()
-                    }, animated: true)
+                                  self?.viewModel.deletePart(index: indexPath)
+                                  tableView.reloadData()
+                              }),
+                        animated: true)
                 }
             ])
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         let part = self.viewModel.parts[indexPath.row]
         self.editPart(part: part)
     }
