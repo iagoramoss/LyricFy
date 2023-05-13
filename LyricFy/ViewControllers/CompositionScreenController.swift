@@ -160,7 +160,7 @@ extension CompositionScreenController: SongStructureTableView {
     
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SongStructure.reuseIdentifier,
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Composition.reuseIdentifier,
                                                        for: indexPath) as? SongStructureCell
         else { return SongStructureCell() }
         
