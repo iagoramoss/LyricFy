@@ -32,7 +32,6 @@
 		787998832A0EBBDB0072BBE6 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787998822A0EBBDB0072BBE6 /* Version.swift */; };
 		787998852A0EBC1B0072BBE6 /* Part.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787998842A0EBC1B0072BBE6 /* Part.swift */; };
 		7882169129FD9D340032A177 /* CGFloat+Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7882169029FD9D340032A177 /* CGFloat+Screen.swift */; };
-		78AAFD322A0C22870028265E /* ProjectCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AAFD312A0C22870028265E /* ProjectCellModel.swift */; };
 		78BE20E62A041A9A003B3AF2 /* KeyboardListenerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BE20E52A041A9A003B3AF2 /* KeyboardListenerProtocol.swift */; };
 		78C9686F2A0975E5009054D0 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C9686E2A0975E5009054D0 /* AudioManager.swift */; };
 		78C968712A09760F009054D0 /* AudioState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C968702A09760F009054D0 /* AudioState.swift */; };
@@ -69,13 +68,12 @@
 		673574FE2A05805F00C75DB6 /* UIFont+PreferredFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+PreferredFont.swift"; sourceTree = "<group>"; };
 		67E0A7052A0C12AD00ED72C1 /* CompositionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionViewModel.swift; sourceTree = "<group>"; };
 		7807628729FC30EE00353A06 /* ScreenLyricsEditingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenLyricsEditingController.swift; sourceTree = "<group>"; };
-		7807628A29FC323500353A06 /* LyricsEditingScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsEditingScreenView.swift; sourceTree = "<group>"; };
-		7865F43A2A005F0F0032039C /* NSAttributedString+defaultParagraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+defaultParagraph.swift"; sourceTree = "<group>"; };
-		787998802A0EBABF0072BBE6 /* Composition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Composition.swift; sourceTree = "<group>"; };
-		787998822A0EBBDB0072BBE6 /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
-		787998842A0EBC1B0072BBE6 /* Part.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Part.swift; sourceTree = "<group>"; };
+		7807628A29FC323500353A06 /* LyricsEditingScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LyricsEditingScreenView.swift; path = LyricsEditing/LyricsEditingScreenView.swift; sourceTree = "<group>"; };
+		7865F43A2A005F0F0032039C /* NSAttributedString+defaultParagraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSAttributedString+defaultParagraph.swift"; path = "../Views/Extensions/NSAttributedString+defaultParagraph.swift"; sourceTree = "<group>"; };
+		787998802A0EBABF0072BBE6 /* Composition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Composition.swift; path = Project/Composition.swift; sourceTree = "<group>"; };
+		787998822A0EBBDB0072BBE6 /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Version.swift; path = Project/Version.swift; sourceTree = "<group>"; };
+		787998842A0EBC1B0072BBE6 /* Part.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Part.swift; path = Project/Part.swift; sourceTree = "<group>"; };
 		7882169029FD9D340032A177 /* CGFloat+Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Screen.swift"; sourceTree = "<group>"; };
-		78AAFD312A0C22870028265E /* ProjectCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCellModel.swift; sourceTree = "<group>"; };
 		78BE20E52A041A9A003B3AF2 /* KeyboardListenerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardListenerProtocol.swift; sourceTree = "<group>"; };
 		78C9686E2A0975E5009054D0 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		78C968702A09760F009054D0 /* AudioState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioState.swift; sourceTree = "<group>"; };
@@ -101,13 +99,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0D2CB0E12A042BBB0080CB8A /* Home */ = {
+		0D2CB0E12A042BBB0080CB8A /* Cells */ = {
 			isa = PBXGroup;
 			children = (
 				0D2CB0D929FC41210080CB8A /* ProjectsCell.swift */,
 				0D2CB0DF2A039EA10080CB8A /* AddProjectsCell.swift */,
+				673574FC2A05803900C75DB6 /* SongStructureCell.swift */,
 			);
-			path = Home;
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		67227EF129F85EDE00E1166C = {
@@ -146,19 +145,10 @@
 		67227F1629FC508100E1166C /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				0D2CB0E12A042BBB0080CB8A /* Home */,
+				0D2CB0E12A042BBB0080CB8A /* Cells */,
 				67227F1729FC50A300E1166C /* Alert.swift */,
-				673574FC2A05803900C75DB6 /* SongStructureCell.swift */,
 			);
 			path = Components;
-			sourceTree = "<group>";
-		};
-		7807628929FC31E800353A06 /* LyricsEditing */ = {
-			isa = PBXGroup;
-			children = (
-				7807628A29FC323500353A06 /* LyricsEditingScreenView.swift */,
-			);
-			path = LyricsEditing;
 			sourceTree = "<group>";
 		};
 		781D450729F98C5E005B1ACC /* Resources */ = {
@@ -202,30 +192,13 @@
 			path = CoreData;
 			sourceTree = "<group>";
 		};
-		7865F4392A005ED20032039C /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				7865F43A2A005F0F0032039C /* NSAttributedString+defaultParagraph.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		7879987F2A0EBAAA0072BBE6 /* Project */ = {
-			isa = PBXGroup;
-			children = (
-				787998802A0EBABF0072BBE6 /* Composition.swift */,
-				787998822A0EBBDB0072BBE6 /* Version.swift */,
-				787998842A0EBC1B0072BBE6 /* Part.swift */,
-			);
-			path = Project;
-			sourceTree = "<group>";
-		};
 		7882168F29FD9D1D0032A177 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				7882169029FD9D340032A177 /* CGFloat+Screen.swift */,
 				673574FE2A05805F00C75DB6 /* UIFont+PreferredFont.swift */,
 				78F391DF2A02F3400097884C /* UITextView+Combine.swift */,
+				7865F43A2A005F0F0032039C /* NSAttributedString+defaultParagraph.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -242,8 +215,9 @@
 		78F391D12A02D9000097884C /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				7879987F2A0EBAAA0072BBE6 /* Project */,
-				78AAFD312A0C22870028265E /* ProjectCellModel.swift */,
+				787998802A0EBABF0072BBE6 /* Composition.swift */,
+				787998822A0EBBDB0072BBE6 /* Version.swift */,
+				787998842A0EBC1B0072BBE6 /* Part.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -262,13 +236,12 @@
 			isa = PBXGroup;
 			children = (
 				67227F1629FC508100E1166C /* Components */,
-				7865F4392A005ED20032039C /* Extensions */,
-				7807628929FC31E800353A06 /* LyricsEditing */,
 				9F62B0B62A01A27000A2F91C /* SheetView.swift */,
 				9F74D1332A04A3B8001017B2 /* VersionsView.swift */,
 				0D2CB0D429FC40A00080CB8A /* HomeView.swift */,
 				9F8F0B972A0AE6F40063297F /* RecorderView.swift */,
 				673574FA2A05801F00C75DB6 /* SongStructureView.swift */,
+				7807628A29FC323500353A06 /* LyricsEditingScreenView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -381,7 +354,6 @@
 				0D2CB1112A0AC13C0080CB8A /* CoreDataManager.swift in Sources */,
 				9F74D1342A04A3B8001017B2 /* VersionsView.swift in Sources */,
 				0D2CB0DE29FC4F560080CB8A /* HomeViewModel.swift in Sources */,
-				78AAFD322A0C22870028265E /* ProjectCellModel.swift in Sources */,
 				67227F1829FC50A300E1166C /* Alert.swift in Sources */,
 				7882169129FD9D340032A177 /* CGFloat+Screen.swift in Sources */,
 				7807628B29FC323500353A06 /* LyricsEditingScreenView.swift in Sources */,
