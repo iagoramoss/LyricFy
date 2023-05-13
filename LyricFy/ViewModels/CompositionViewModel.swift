@@ -101,10 +101,14 @@ extension CompositionViewModel {
 // MARK: Part functions
 extension CompositionViewModel {
     func dragAndDrop(from source: IndexPath, to destination: IndexPath) {
-        var parts = self.service.getPartsByVersionID(versionID: self.selectedVersionID!)
+        var parts = self.getVersionParts(versionId: self.selectedVersionID!)
         
         let part = parts.remove(at: source.row)
         parts.insert(part, at: destination.row)
+        
+        for index in 0..<parts.count {
+            parts[index].index = index
+        }
     
         self.service.updateCompositionPartsByVersionID(versionID: self.selectedVersionID!,
                                                        parts: parts)
