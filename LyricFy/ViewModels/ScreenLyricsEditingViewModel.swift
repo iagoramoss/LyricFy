@@ -26,6 +26,7 @@ class ScreenLyricsEditingViewModel {
     
     func saveLyricsEdition() {
         didEditLyrics(Part(id: compositionPart.id,
+                           index: 0,
                            type: lyricsType,
                            lyrics: lyricsText))
     }

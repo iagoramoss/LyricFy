@@ -94,9 +94,10 @@ class CompositionScreenController: UIViewController {
     }
     
     private func editPart(part: Part) {
-        let lyricsViewModel = ScreenLyricsEditingViewModel(compositionPart: .init(id: part.id,
-                                                           type: part.type,
-                                                           lyrics: part.lyrics)) { part in
+        let lyricsViewModel = ScreenLyricsEditingViewModel(compositionPart: Part(id: part.id,
+                                                                                 index: self.viewModel.parts.count,
+                                                                                 type: part.type,
+                                                                                 lyrics: part.lyrics)) { part in
                     
                     self.viewModel.savePart(part: part)
                     self.songStructureView?.tableView.reloadData()
@@ -114,7 +115,11 @@ class CompositionScreenController: UIViewController {
         sheetVC.action = { [weak self] partType in
             self?.dismiss(animated: true)
             
-            let part = Part(id: UUID(), type: partType, lyrics: "")
+            let part = Part(id: UUID(),
+                            index: self?.viewModel.parts.count ?? 0,
+                            type: partType,
+                            lyrics: "")
+            
             self?.editPart(part: part)
         }
         

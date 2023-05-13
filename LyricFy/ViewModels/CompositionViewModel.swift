@@ -52,8 +52,13 @@ extension CompositionViewModel {
     }
     
     func getVersionParts(versionId: UUID) -> [Part] {
-        // TODO: adicionar o index no Core Data e fazer o sort
-        return self.service.getPartsByVersionID(versionID: self.selectedVersionID!)
+        var parts = self.service.getPartsByVersionID(versionID: self.selectedVersionID!)
+        
+        parts.sort {
+            return $0.index < $1.index
+        }
+        
+        return parts
     }
 }
 
@@ -113,11 +118,13 @@ extension CompositionViewModel {
         }.isEmpty
         
         if isNewPart {
-            self.service.createPartByVersionID(type: part.type,
+            self.service.createPartByVersionID(index: part.index,
+                                               type: part.type,
                                                lyric: part.lyrics,
                                                versionID: self.selectedVersionID!)
         } else {
             self.service.updatePartByID(partID: part.id,
+                                        index: part.index,
                                         type: part.type,
                                         lyric: part.lyrics)
         }
@@ -128,7 +135,8 @@ extension CompositionViewModel {
     func duplicatePart(index: IndexPath) {
         let part = parts[index.row]
         
-        self.service.createPartByVersionID(type: part.type,
+        self.service.createPartByVersionID(index: self.parts.count,
+                                           type: part.type,
                                            lyric: part.lyrics,
                                            versionID: self.selectedVersionID!)
         
