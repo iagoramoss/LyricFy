@@ -86,7 +86,7 @@ class CompositionScreenController: UIViewController {
                                   }
                                  ),
                             animated: true)
-                     }),
+                     })
         ])
         
         let addButton = UIBarButtonItem(image: .init(systemName: "plus"), style: .plain,
