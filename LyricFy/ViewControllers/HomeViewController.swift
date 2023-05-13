@@ -120,7 +120,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         didSelectItemAt indexPath: IndexPath
     ) {
         if indexPath.item > 0 {
-            let compositionViewModel = CompositionViewModel(projectID: viewModel.projects[indexPath.item - 1].id)
+            let compositionViewModel = CompositionViewModel(composition: viewModel.projects[indexPath.item - 1])
             
             navigationController?.pushViewController(CompositionScreenController(viewModel: compositionViewModel),
                                                      animated: true)

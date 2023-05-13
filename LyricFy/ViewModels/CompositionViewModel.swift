@@ -16,12 +16,11 @@ class CompositionViewModel: ObservableObject {
     @Published private(set) var parts: [Part] = []
     @Published private(set) var selectedVersionIndex = 0
     
-    private var composition: Composition?
-    private let projectID: UUID
+    private let composition: Composition
     private var selectedVersionID: UUID?
     
-    init(projectID: UUID) {
-        self.projectID = projectID
+    init(composition: Composition) {
+        self.composition = composition
         self.setupProject()
     }
 }
@@ -29,9 +28,7 @@ class CompositionViewModel: ObservableObject {
 // MARK: Conversão das entidades do Projeto, Versão e Parte do CoreData para seus models
 extension CompositionViewModel {
     func setupProject() {
-        self.composition = self.service.getCompositionByID(id: self.projectID)
-        
-        self.name = self.composition!.name
+        self.name = self.composition.name
         self.versions = self.getVersions()
         
         self.switchVersion(to: self.versions.count - 1)
@@ -39,7 +36,7 @@ extension CompositionViewModel {
     
     func getVersions() -> [Version] {
         
-        var versions = self.service.getCompositionVersionsByCompositionID(compositionID: self.projectID)
+        var versions = self.service.getCompositionVersionsByCompositionID(compositionID: self.composition.id)
 
         versions.sort {
             let v1 = Int($0.name.split(separator: " ").last!)!
@@ -66,7 +63,7 @@ extension CompositionViewModel {
 extension CompositionViewModel {
     func createVersion() {
         self.service.createVersionWithCompositionID(name: "Version \(self.versions.count + 1)",
-                                                    compositionID: self.projectID,
+                                                    compositionID: self.composition.id,
                                                     parts: self.parts)
         
         self.versions = self.getVersions()
@@ -85,7 +82,7 @@ extension CompositionViewModel {
     }
     
     func deleteProject() {
-        self.service.deleteCompositionByID(compositionID: self.projectID)
+        self.service.deleteCompositionByID(compositionID: self.composition.id)
     }
     
     func switchVersion(to version: Int) {
