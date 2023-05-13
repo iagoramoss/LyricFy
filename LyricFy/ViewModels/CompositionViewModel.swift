@@ -16,6 +16,7 @@ class CompositionViewModel: ObservableObject {
     @Published private(set) var parts: [Part] = []
     @Published private(set) var selectedVersionIndex = 0
     
+    private var composition: Composition?
     private let projectID: UUID
     private var selectedVersionID: UUID?
     
@@ -28,24 +29,18 @@ class CompositionViewModel: ObservableObject {
 // MARK: Conversão das entidades do Projeto, Versão e Parte do CoreData para seus models
 extension CompositionViewModel {
     func setupProject() {
-        self.name = self.service.getProjectById(id: self.projectID).name ?? "Song"
+        self.composition = self.service.getCompositionByID(id: self.projectID)
+        
+        self.name = self.composition!.name
         self.versions = self.getVersions()
         
         self.switchVersion(to: self.versions.count - 1)
     }
     
     func getVersions() -> [Version] {
-        let versionsEntity = self.service.getVersionsOfProjectById(projectId: self.projectID)
         
-        guard let versionsEntity = versionsEntity else {
-            return []
-        }
-        
-        var versions = versionsEntity.map { version in
-            // TODO: Mudar o ID e version para não-optional
-            return Version(id: version.id ?? UUID(), name: version.version ?? "version", compositionParts: self.getVersionParts(versionId: version.id ?? UUID()))
-        }
-        
+        var versions = self.service.getCompositionVersionsByCompositionID(compositionID: self.projectID)
+
         versions.sort {
             let v1 = Int($0.name.split(separator: " ").last!)!
             let v2 = Int($1.name.split(separator: " ").last!)!
@@ -57,25 +52,17 @@ extension CompositionViewModel {
     }
     
     func getVersionParts(versionId: UUID) -> [Part] {
-        let partsEntity = self.service.getPartsOfVersionById(versionId: versionId)
-        
-        guard let partsEntity = partsEntity else {
-            return []
-        }
-        
-        return partsEntity.map { part in
-            // TODO: Mudar ID, type e lyric para não-optional
-            return Part(id: part.id ?? UUID(), type: part.type ?? "Verse", lyrics: part.lyric ?? "")
-        }
+        // TODO: adicionar o index no Core Data e fazer o sort
+        return self.service.getPartsByVersionID(versionID: self.selectedVersionID!)
     }
 }
 
 // MARK: Version functions
 extension CompositionViewModel {
     func createVersion() {
-        self.service.addVersion(version: "Version \(self.versions.count + 1)",
-                                project: self.service.getProjectById(id: self.projectID),
-                                parts: self.service.getPartsOfVersionById(versionId: self.selectedVersionID!) ?? [])
+        self.service.createVersionWithCompositionID(name: "Version \(self.versions.count + 1)",
+                                                    compositionID: self.projectID,
+                                                    parts: self.parts)
         
         self.versions = self.getVersions()
         self.switchVersion(to: self.versions.count - 1)
@@ -86,14 +73,14 @@ extension CompositionViewModel {
             $0.id == self.selectedVersionID!
         }!
         
-        self.service.deleteVersion(version: self.service.getVersionById(id: self.selectedVersionID!))
+        self.service.deleteVersionByID(versionID: self.selectedVersionID!)
         self.versions = self.getVersions()
         
         self.switchVersion(to: index - 1)
     }
     
     func deleteProject() {
-        self.service.deleteProject(project: self.service.getProjectById(id: self.projectID))
+        self.service.deleteCompositionByID(compositionID: self.projectID)
     }
     
     func switchVersion(to version: Int) {
@@ -109,17 +96,13 @@ extension CompositionViewModel {
 // MARK: Part functions
 extension CompositionViewModel {
     func dragAndDrop(from source: IndexPath, to destination: IndexPath) {
-        var parts = self.service.getPartsOfVersionById(versionId: self.selectedVersionID!)
+        var parts = self.service.getPartsByVersionID(versionID: self.selectedVersionID!)
         
-        guard parts != nil else {
-            return
-        }
-        
-        let part = parts!.remove(at: source.row)
-        parts!.insert(part, at: destination.row)
+        let part = parts.remove(at: source.row)
+        parts.insert(part, at: destination.row)
     
-        self.service.updatePartsArray(version: self.service.getVersionById(id: self.selectedVersionID!),
-                                      parts: parts!)
+        self.service.updateCompositionPartsByVersionID(versionID: self.selectedVersionID!,
+                                                       parts: parts)
         
         self.parts = self.getVersionParts(versionId: self.selectedVersionID!)
     }
@@ -130,13 +113,13 @@ extension CompositionViewModel {
         }.isEmpty
         
         if isNewPart {
-            self.service.addPart(type: part.type,
-                                 lyric: part.lyrics,
-                                 version: self.service.getVersionById(id: self.selectedVersionID!))
+            self.service.createPartByVersionID(type: part.type,
+                                               lyric: part.lyrics,
+                                               versionID: self.selectedVersionID!)
         } else {
-            self.service.updatePart(part: self.service.getPartById(id: part.id),
-                                    type: part.type,
-                                    lyric: part.lyrics)
+            self.service.updatePartByID(partID: part.id,
+                                        type: part.type,
+                                        lyric: part.lyrics)
         }
         
         self.parts = self.getVersionParts(versionId: self.selectedVersionID!)
@@ -145,14 +128,15 @@ extension CompositionViewModel {
     func duplicatePart(index: IndexPath) {
         let part = parts[index.row]
         
-        self.service.addPart(type: part.type, lyric: part.lyrics,
-                             version: self.service.getVersionById(id: self.selectedVersionID!))
+        self.service.createPartByVersionID(type: part.type,
+                                           lyric: part.lyrics,
+                                           versionID: self.selectedVersionID!)
         
         self.parts = self.getVersionParts(versionId: self.selectedVersionID!)
     }
     
     func deletePart(index: IndexPath) {
-        self.service.deletePart(part: self.service.getPartById(id: self.parts[index.row].id))
+        self.service.deletePartByID(partID: self.parts[index.row].id)
         self.parts = self.getVersionParts(versionId: self.selectedVersionID!)
     }
 }

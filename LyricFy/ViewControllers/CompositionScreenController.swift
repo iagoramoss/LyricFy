@@ -43,9 +43,6 @@ class CompositionScreenController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        let isProject = self.viewModel.versions.count == 1
-        let deleteItem = isProject ? "project" : "version"
-        
         let menu = UIMenu(children: [
             UIAction(
                 title: "See Versions",
@@ -57,18 +54,19 @@ class CompositionScreenController: UIViewController {
                      image: UIImage(systemName: "plus"),
                      state: .off) { [weak self] _ in
                 self?.viewModel.createVersion()
+                self?.songStructureView?.tableView.reloadData()
             },
-            UIAction(title: "Delete \(deleteItem.capitalized)",
+            UIAction(title: "Delete Version",
                      image: UIImage(systemName: "trash"),
                      attributes: .destructive,
                      state: .off) { [weak self] _ in
                          self?.present(
-                            Alert(title: "Do you want to delete this \(deleteItem)?",
-                                  message: "The \(deleteItem) will be deleted and you will not be able to recover it.",
+                            Alert(title: "Do you want to delete this version?",
+                                  message: "The version will be deleted and you will not be able to recover it.",
                                   actionButtonLabel: "Delete",
                                   actionButtonStyle: .destructive,
                                   preferredStyle: .alert, action: {
-                                      if isProject {
+                                      if self?.viewModel.versions.count == 1 {
                                           self?.viewModel.deleteProject()
                                           self?.navigationController?.popViewController(animated: true)
                                           
@@ -76,6 +74,7 @@ class CompositionScreenController: UIViewController {
                                       }
                                       
                                       self?.viewModel.deleteVersion()
+                                      self?.songStructureView?.tableView.reloadData()
                          }), animated: true)
             }
         ])
@@ -133,6 +132,7 @@ class CompositionScreenController: UIViewController {
         
         versionsVC.doneAction = { [weak self] in
             self?.viewModel.switchVersion(to: versionsVC.versionsView.pickerView.selectedRow(inComponent: 0))
+            self?.songStructureView?.tableView.reloadData()
         }
         
         versionsVC.modalPresentationStyle = .pageSheet

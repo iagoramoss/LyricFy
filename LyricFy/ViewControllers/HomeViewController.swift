@@ -31,7 +31,6 @@ class HomeViewController: UIViewController {
         screen.collectionProjects.delegate = self
         screen.collectionProjects.dataSource = self
         
-        viewModel.setupViewData()
         screen.collectionProjects.reloadData()
         
         view.backgroundColor = .white
@@ -76,7 +75,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         
         guard indexPath.item > 0 else { return addCell }
         
-        let projectDate = viewModel.projects[indexPath.row - 1].date
+        let projectDate = viewModel.projects[indexPath.row - 1].createdAt
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         let dateString = dateFormatter.string(from: projectDate)
@@ -149,7 +148,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
     
     func deleteMenuAction (
         _ collectionView: UICollectionView,
-        project: ProjectCellModel
+        project: Composition
     ) -> UIAction {
         return UIAction(title: "Delete Project",
                         image: UIImage(systemName: "trash"),
@@ -171,7 +170,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
     
     func updateMenuAction (
         _ collectionView: UICollectionView,
-        project: ProjectCellModel
+        project: Composition
     ) -> UIAction {
         return UIAction(title: "Edit name",
                         image: UIImage(systemName: "pencil.circle"),
