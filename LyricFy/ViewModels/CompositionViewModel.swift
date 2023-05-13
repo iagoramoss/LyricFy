@@ -21,16 +21,26 @@ class CompositionViewModel: ObservableObject {
     
     init(composition: Composition) {
         self.composition = composition
-        self.setupProject()
+        self.setupComposition()
     }
-}
-
-// MARK: Conversão das entidades do Projeto, Versão e Parte do CoreData para seus models
-extension CompositionViewModel {
-    func setupProject() {
+    
+    func setupComposition() {
         self.name = self.composition.name
         self.versions = self.getVersions()
         
+        self.switchVersion(to: self.versions.count - 1)
+    }
+}
+
+extension CompositionViewModel {
+    
+    // MARK: - Version functions
+    func createVersion() {
+        self.service.createVersionWithCompositionID(name: "Version \(self.versions.count + 1)",
+                                                    compositionID: self.composition.id,
+                                                    parts: self.parts)
+        
+        self.versions = self.getVersions()
         self.switchVersion(to: self.versions.count - 1)
     }
     
@@ -46,28 +56,6 @@ extension CompositionViewModel {
         }
         
         return versions
-    }
-    
-    func getVersionParts(versionId: UUID) -> [Part] {
-        var parts = self.service.getPartsByVersionID(versionID: self.selectedVersionID!)
-        
-        parts.sort {
-            return $0.index < $1.index
-        }
-        
-        return parts
-    }
-}
-
-// MARK: Version functions
-extension CompositionViewModel {
-    func createVersion() {
-        self.service.createVersionWithCompositionID(name: "Version \(self.versions.count + 1)",
-                                                    compositionID: self.composition.id,
-                                                    parts: self.parts)
-        
-        self.versions = self.getVersions()
-        self.switchVersion(to: self.versions.count - 1)
     }
     
     func deleteVersion() {
@@ -93,24 +81,16 @@ extension CompositionViewModel {
             $0.id == self.selectedVersionID
         }!
     }
-}
-
-// MARK: Part functions
-extension CompositionViewModel {
-    func dragAndDrop(from source: IndexPath, to destination: IndexPath) {
-        var parts = self.getVersionParts(versionId: self.selectedVersionID!)
-        
-        let part = parts.remove(at: source.row)
-        parts.insert(part, at: destination.row)
-        
-        for index in 0..<parts.count {
-            parts[index].index = index
-        }
     
-        self.service.updateCompositionPartsByVersionID(versionID: self.selectedVersionID!,
-                                                       parts: parts)
+    // MARK: - Part functions
+    func getVersionParts(versionId: UUID) -> [Part] {
+        var parts = self.service.getPartsByVersionID(versionID: self.selectedVersionID!)
         
-        self.parts = self.getVersionParts(versionId: self.selectedVersionID!)
+        parts.sort {
+            return $0.index < $1.index
+        }
+        
+        return parts
     }
     
     func savePart(part: Part) {
@@ -133,6 +113,11 @@ extension CompositionViewModel {
         self.parts = self.getVersionParts(versionId: self.selectedVersionID!)
     }
     
+    func deletePart(index: IndexPath) {
+        self.service.deletePartByID(partID: self.parts[index.row].id)
+        self.parts = self.getVersionParts(versionId: self.selectedVersionID!)
+    }
+    
     func duplicatePart(index: IndexPath) {
         let part = parts[index.row]
         
@@ -144,8 +129,19 @@ extension CompositionViewModel {
         self.parts = self.getVersionParts(versionId: self.selectedVersionID!)
     }
     
-    func deletePart(index: IndexPath) {
-        self.service.deletePartByID(partID: self.parts[index.row].id)
+    func dragAndDrop(from source: IndexPath, to destination: IndexPath) {
+        var parts = self.getVersionParts(versionId: self.selectedVersionID!)
+        
+        let part = parts.remove(at: source.row)
+        parts.insert(part, at: destination.row)
+        
+        for index in 0..<parts.count {
+            parts[index].index = index
+        }
+    
+        self.service.updateCompositionPartsByVersionID(versionID: self.selectedVersionID!,
+                                                       parts: parts)
+        
         self.parts = self.getVersionParts(versionId: self.selectedVersionID!)
     }
 }
