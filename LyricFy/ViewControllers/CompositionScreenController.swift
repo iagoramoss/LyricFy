@@ -36,7 +36,7 @@ class CompositionScreenController: UIViewController {
     private func reloadData() {
         partView?.tableView.reloadData()
     }
-    
+
     private func setupNavigationBar() {
         let menu = UIMenu(children: [
             UIAction(title: "Change version",

@@ -51,8 +51,13 @@ class HomeViewController: UIViewController {
         
         navigationController?.pushViewController(CompositionScreenController(viewModel: compositionViewModel),
                                                  animated: true)
+
+//        NSAttributedString.Key.foregroundColor: UIColor.colors(name: .buttonsColor) ?? nil,
+//            NSAttributedString.Key.font: .fontCustom( fontName: .ralewayBold, size: 45) ?? UIFont.systemFont(ofSize: 45)
+
+        UINavigationBar.appearance().layoutMargins.left = 80
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -99,7 +104,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        return CGSize(width: 166, height: 144)
+        return CGSize(width: 168, height: 162)
     }
     
     func collectionView(
@@ -147,7 +152,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         layout collectionViewLayout: UICollectionViewLayout,
         minimumLineSpacingForSectionAt section: Int
     ) -> CGFloat {
-        return 30
+        return 20
     }
     
     func deleteMenuAction (

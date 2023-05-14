@@ -15,13 +15,13 @@ class ProjectsCell: UICollectionViewCell {
         let projectComponent = UIView()
         projectComponent.translatesAutoresizingMaskIntoConstraints = false
         projectComponent.backgroundColor = .colors(name: .buttonsColor)
-        projectComponent.layer.cornerRadius = 10
+        projectComponent.layer.cornerRadius = 28
         return projectComponent
     }()
     
     lazy var nameProject: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 20)
+        label.font = .fontCustom(fontName: .ralewaySemibold, size: 17)
         label.textColor = .colors(name: .buttonsLabel)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 2
@@ -32,8 +32,9 @@ class ProjectsCell: UICollectionViewCell {
     
     lazy var date: UILabel = {
         let label = UILabel()
+        label.font = .systemFont(ofSize: 13)
+        label.font = .systemFont(ofSize: 13)
         label.textColor = .colors(name: .buttonsLabel)
-        label.font = .systemFont(ofSize: 11)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -41,7 +42,7 @@ class ProjectsCell: UICollectionViewCell {
     lazy var stackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.spacing = 5
+        stack.spacing = 8
         stack.alignment = .center
         stack.translatesAutoresizingMaskIntoConstraints = false
         [nameProject, date].forEach { stack.addArrangedSubview($0) }
@@ -67,8 +68,8 @@ extension ProjectsCell: ViewCode {
 
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            projectComponent.widthAnchor.constraint(equalToConstant: 166),
-            projectComponent.heightAnchor.constraint(equalToConstant: 144),
+            projectComponent.widthAnchor.constraint(equalToConstant: 168),
+            projectComponent.heightAnchor.constraint(equalToConstant: 162),
             
             stackView.centerXAnchor.constraint(equalTo: projectComponent.centerXAnchor),
             stackView.centerYAnchor.constraint(equalTo: projectComponent.centerYAnchor),

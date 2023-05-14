@@ -15,15 +15,18 @@ class AddProjectsCell: UICollectionViewCell {
     lazy var projectComponent: UIView = {
         let projectComponent = UIView()
         projectComponent.translatesAutoresizingMaskIntoConstraints = false
+        projectComponent.layer.cornerRadius = 28
+        projectComponent.layer.borderWidth = 1
+        projectComponent.layer.borderColor = UIColor.colors(name: .buttonsColor)?.cgColor
         projectComponent.backgroundColor = .colors(name: .sheetColor)
-        projectComponent.layer.cornerRadius = 10
+        projectComponent.layer.cornerRadius = 28
         return projectComponent
     }()
     
     lazy var image: UIImageView = {
         let image = UIImageView(image: UIImage(systemName: "plus"))
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.tintColor = .colors(name: .sheetButtonColor)
+        image.tintColor = .colors(name: .buttonsColor)
         return image
     }()
     
@@ -46,13 +49,13 @@ extension AddProjectsCell: ViewCode {
 
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            projectComponent.widthAnchor.constraint(equalToConstant: 166),
-            projectComponent.heightAnchor.constraint(equalToConstant: 144),
+            projectComponent.widthAnchor.constraint(equalToConstant: 168),
+            projectComponent.heightAnchor.constraint(equalToConstant: 162),
             
             image.centerXAnchor.constraint(equalTo: projectComponent.centerXAnchor),
             image.centerYAnchor.constraint(equalTo: projectComponent.centerYAnchor),
-            image.widthAnchor.constraint(equalToConstant: 50),
-            image.heightAnchor.constraint(equalToConstant: 50)
+            image.widthAnchor.constraint(equalToConstant: 33),
+            image.heightAnchor.constraint(equalToConstant: 33)
         ])
     }
 }
