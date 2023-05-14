@@ -16,28 +16,38 @@ class ScreenLyricsEditingController: UIViewController {
     
     private var subscriptions = Set<AnyCancellable>()
     
+    init(viewModel: ScreenLyricsEditingViewModel) {
+        self.viewModel = viewModel
+        self.viewModel.audioManager.prepareViewModel()
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        screen?.recorderView.recorderButton.addTarget(self, action: #selector(actionRecord), for: .touchUpInside)
+        screen?.recorderView.playButton.addTarget(self, action: #selector(actionPlay), for: .touchUpInside)
+        screen?.recorderView.trashButton.addTarget(self, action: #selector(actionTrash), for: .touchUpInside)
+    }
+    
     override func loadView() {
         super.loadView()
         self.screen = LyricsEditingScreenView(keyboardListener: self)
         self.view = screen
     }
     
-    init(viewModel: ScreenLyricsEditingViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-        screen?.recorderView.recorderButton.addTarget(self, action: #selector(actionRecord), for: .touchUpInside)
-        screen?.recorderView.playButton.addTarget(self, action: #selector(actionPlay), for: .touchUpInside)
-        screen?.recorderView.trashButton.addTarget(self, action: #selector(actionTrash), for: .touchUpInside)
+    @objc
+    func actionRecord() {
+        viewModel.audioManager.startRecording()
     }
     
     @objc
-    func actionRecord() {
-        
+    func actionStopRecord() {
+        viewModel.audioManager.stopRecording()
     }
     
     @objc
     func actionPlay() {
-        
+        viewModel.audioManager.playAudio()
     }
     
     @objc
@@ -57,6 +67,9 @@ class ScreenLyricsEditingController: UIViewController {
             screen?.recorderView.labelTimer.isHidden = false
             screen?.recorderView.recorderButton.layer.cornerRadius = 10
             screen?.recorderView.recorderButton.backgroundColor = .yellow
+            screen?.recorderView.recorderButton.addTarget(self,
+                                                          action: #selector(actionStopRecord),
+                                                          for: .touchUpInside)
             
         case .preparedToRecord:
             screen?.recorderView.playButton.isHidden = true
@@ -65,6 +78,9 @@ class ScreenLyricsEditingController: UIViewController {
             screen?.recorderView.recorderButton.backgroundColor = .red
             screen?.recorderView.recorderButton.isHidden = false
             screen?.recorderView.labelPlay.isHidden = true
+            screen?.recorderView.recorderButton.addTarget(self,
+                                                          action: #selector(actionRecord),
+                                                          for: .touchUpInside)
             
         case .preparedToPlay:
             screen?.recorderView.labelRecording.isHidden = true
@@ -73,14 +89,12 @@ class ScreenLyricsEditingController: UIViewController {
             screen?.recorderView.labelPlay.isHidden = false
             screen?.recorderView.playButton.isHidden = false
             screen?.recorderView.trashButton.isHidden = false
-            viewModel.buttonTapCount = 0
             
         case .pausedPlaying:
             screen?.recorderView.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
             
         case .playing:
             screen?.recorderView.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-            viewModel.buttonPlayCount = 0
         }
     }
     
@@ -97,7 +111,16 @@ class ScreenLyricsEditingController: UIViewController {
             .store(in: &subscriptions)
         
         viewModel.audioManager.$audioControlState
-            .sink(receiveValue: audioStateChange(state:))
+            .sink { state in
+                self.audioStateChange(state: state)
+            }
+            .store(in: &subscriptions)
+        
+        viewModel.audioManager.$recordingTimeLabel
+            .sink { counterLabel in
+                self.screen?.recorderView.labelTimer.text = counterLabel ?? "00:00"
+            }
+            .store(in: &subscriptions)
     }
     
     private func setupNavigationBar() {
