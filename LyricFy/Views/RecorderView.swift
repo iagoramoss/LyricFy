@@ -41,8 +41,10 @@ class RecorderView: UIView {
 
     lazy var recorderButton: UIButton = {
         let button = UIButton()
-        button.layer.cornerRadius = 30
+        button.layer.cornerRadius = 25
         button.backgroundColor = .red
+        button.layer.borderWidth = 5
+        button.layer.borderColor = .init(red: 0.27, green: 0.3, blue: 0.48, alpha: 1.0)
         return button
     }()
     
@@ -81,6 +83,7 @@ extension RecorderView: ViewCode {
         self.addSubview(playButton)
         self.addSubview(trashButton)
         self.addSubview(labelPlay)
+
     }
 
     func setupConstraints() {
@@ -107,10 +110,11 @@ extension RecorderView: ViewCode {
             trashButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -30),
             trashButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
 
-            recorderButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -40),
+            recorderButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -60),
             recorderButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            recorderButton.widthAnchor.constraint(equalToConstant: 65),
-            recorderButton.heightAnchor.constraint(equalToConstant: 65)
+            recorderButton.widthAnchor.constraint(equalToConstant: 55),
+            recorderButton.heightAnchor.constraint(equalToConstant: 55),
+
         ])
     }
 

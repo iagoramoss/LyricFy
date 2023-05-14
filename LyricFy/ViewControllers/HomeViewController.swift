@@ -42,8 +42,10 @@ class HomeViewController: UIViewController {
         title = "Projects"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.largeTitleTextAttributes = [
-            .foregroundColor: UIColor.colors(name: .buttonsColor)!
+            NSAttributedString.Key.foregroundColor: UIColor.colors(name: .buttonsColor)!,
+            NSAttributedString.Key.font: .fontCustom( fontName: .ralewayBold, size: 45) ?? UIFont.systemFont(ofSize: 45)
         ]
+        UINavigationBar.appearance().layoutMargins.left = 80
     }
     
     private func navigateToComposition(composition: Composition) {
@@ -52,10 +54,6 @@ class HomeViewController: UIViewController {
         navigationController?.pushViewController(CompositionScreenController(viewModel: compositionViewModel),
                                                  animated: true)
 
-//        NSAttributedString.Key.foregroundColor: UIColor.colors(name: .buttonsColor) ?? nil,
-//            NSAttributedString.Key.font: .fontCustom( fontName: .ralewayBold, size: 45) ?? UIFont.systemFont(ofSize: 45)
-
-        UINavigationBar.appearance().layoutMargins.left = 80
     }
 
     required init?(coder: NSCoder) {
@@ -137,7 +135,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
             present(Alert(
                 title: "Create Project",
                 textFieldPlaceholder: "Ex: My Song",
-                textFieldDefaultText: "Projeto",
+                textFieldDefaultText: "Project",
                 projectName: nil,
                 action: { [weak self] projectName in
                     self?.viewModel.createProject(name: projectName)

@@ -26,7 +26,7 @@ class AddProjectsCell: UICollectionViewCell {
     lazy var image: UIImageView = {
         let image = UIImageView(image: UIImage(systemName: "plus"))
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.tintColor = .colors(name: .buttonsColor)
+        image.tintColor = .colors(name: .sheetButtonColor)
         return image
     }()
     

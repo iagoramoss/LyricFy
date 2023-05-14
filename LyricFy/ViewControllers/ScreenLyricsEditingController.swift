@@ -27,6 +27,7 @@ class ScreenLyricsEditingController: UIViewController {
         screen?.recorderView.recorderButton.addTarget(self, action: #selector(actionRecord), for: .touchUpInside)
         screen?.recorderView.playButton.addTarget(self, action: #selector(actionPlay), for: .touchUpInside)
         screen?.recorderView.trashButton.addTarget(self, action: #selector(actionTrash), for: .touchUpInside)
+
     }
     
     override func loadView() {
@@ -54,7 +55,7 @@ class ScreenLyricsEditingController: UIViewController {
     func actionTrash() {
         screen?.recorderView.playButton.isHidden = true
         screen?.recorderView.trashButton.isHidden = true
-        screen?.recorderView.recorderButton.layer.cornerRadius = 30
+        screen?.recorderView.recorderButton.layer.cornerRadius = 25
         screen?.recorderView.recorderButton.backgroundColor = .red
         screen?.recorderView.recorderButton.isHidden = false
         screen?.recorderView.labelPlay.isHidden = true
@@ -74,7 +75,7 @@ class ScreenLyricsEditingController: UIViewController {
         case .preparedToRecord:
             screen?.recorderView.playButton.isHidden = true
             screen?.recorderView.trashButton.isHidden = true
-            screen?.recorderView.recorderButton.layer.cornerRadius = 30
+            screen?.recorderView.recorderButton.layer.cornerRadius = 25
             screen?.recorderView.recorderButton.backgroundColor = .red
             screen?.recorderView.recorderButton.isHidden = false
             screen?.recorderView.labelPlay.isHidden = true
@@ -177,3 +178,4 @@ extension ScreenLyricsEditingController: KeyboardListener {
         view.endEditing(true)
     }
 }
+
