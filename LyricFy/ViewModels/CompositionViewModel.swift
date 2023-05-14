@@ -83,7 +83,7 @@ extension CompositionViewModel {
     func switchVersion(to version: Int) {
         
         self.selectedVersionID = self.versions[version].id
-        self.parts = self.getVersionParts(versionId: self.selectedVersionID!)
+        self.updateParts()
         
         self.selectedVersionIndex = self.versions.firstIndex {
             $0.id == self.selectedVersionID
