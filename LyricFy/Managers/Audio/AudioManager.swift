@@ -70,7 +70,7 @@ class AudioManager: NSObject, AudioControl {
     }
     
     private func getFileUrl() -> URL {
-        let filename = "\(audioID).mp3"
+        let filename = "\(audioID).m4a"
         let filePath = getDocumentsDirectory().appendingPathComponent(filename)
         return filePath
     }
@@ -98,7 +98,7 @@ extension AudioManager {
         
         let output = getFileUrl()
         let settings = [
-            AVFormatIDKey: Int(kAudioFormatMPEGLayer3),
+            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
             AVSampleRateKey: 44100,
             AVNumberOfChannelsKey: 2,
             AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue

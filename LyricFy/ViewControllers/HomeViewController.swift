@@ -9,13 +9,19 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    var screen = HomeView()
+    private var screen = HomeView()
     
-    var viewModel: HomeViewModel
+    private var viewModel: HomeViewModel
     
     init(homeViewModel: HomeViewModel) {
         viewModel = homeViewModel
         super.init(nibName: nil, bundle: nil)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupNavigationBar()
+        setupView()
     }
     
     override func loadView() {
@@ -23,21 +29,13 @@ class HomeViewController: UIViewController {
         self.view = screen
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setupNavigationBar()
-        
+    private func setupView() {
         screen.collectionProjects.delegate = self
         screen.collectionProjects.dataSource = self
         
-        viewModel.setupViewData()
+        screen.collectionProjects.reloadData()
         
         view.backgroundColor = .colors(name: .bgColor)
-    }
-    
-    private func setupBindings() {
-        
     }
     
     private func setupNavigationBar() {
@@ -49,6 +47,13 @@ class HomeViewController: UIViewController {
         ]
         navigationController
         UINavigationBar.appearance().layoutMargins.left = 80
+    }
+    
+    private func navigateToComposition(composition: Composition) {
+        let compositionViewModel = CompositionViewModel(composition: composition)
+        
+        navigationController?.pushViewController(CompositionScreenController(viewModel: compositionViewModel),
+                                                 animated: true)
     }
     
     required init?(coder: NSCoder) {
@@ -81,7 +86,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         
         guard indexPath.item > 0 else { return addCell }
         
-        let projectDate = viewModel.projects[indexPath.row - 1].date
+        let projectDate = viewModel.projects[indexPath.row - 1].createdAt
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         let dateString = dateFormatter.string(from: projectDate)
@@ -126,9 +131,9 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         didSelectItemAt indexPath: IndexPath
     ) {
         if indexPath.item > 0 {
-            navigationController?.pushViewController(CompositionScreenController(), animated: true)
+            navigateToComposition(composition: viewModel.projects[indexPath.item - 1])
         } else {
-            self.present(Alert(
+            present(Alert(
                 title: "Create Project",
                 textFieldPlaceholder: "X",
                 textFieldDefaultText: "Projeto",
@@ -151,7 +156,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
     
     func deleteMenuAction (
         _ collectionView: UICollectionView,
-        project: ProjectCellModel
+        project: Composition
     ) -> UIAction {
         return UIAction(title: "Delete Project",
                         image: UIImage(systemName: "trash"),
@@ -173,7 +178,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
     
     func updateMenuAction (
         _ collectionView: UICollectionView,
-        project: ProjectCellModel
+        project: Composition
     ) -> UIAction {
         return UIAction(title: "Edit name",
                         image: UIImage(systemName: "pencil.circle"),

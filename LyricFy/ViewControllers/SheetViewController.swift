@@ -10,9 +10,20 @@ import UIKit
 class SheetViewController: UIViewController {
 
     var sheetView = SheetView()
+    var action: ((String) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view = sheetView
+        
+        sheetView.subviews.forEach { subview in
+            guard let button = subview as? UIButton else {
+                return
+            }
+            
+            button.addAction(UIAction(handler: { [weak self] _ in
+                self?.action?(button.titleLabel!.text!)
+            }), for: .touchUpInside)
+        }
     }
 }
