@@ -9,61 +9,47 @@ import UIKit
 import Combine
 
 class ScreenLyricsEditingController: UIViewController {
-
+    
     private var screen: LyricsEditingScreenView? { didSet { setupView() } }
     
     private var viewModel: ScreenLyricsEditingViewModel
     
     private var subscriptions = Set<AnyCancellable>()
-
+    
+    init(viewModel: ScreenLyricsEditingViewModel) {
+        self.viewModel = viewModel
+        self.viewModel.audioManager.prepareViewModel()
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        screen?.recorderView.recorderButton.addTarget(self, action: #selector(actionRecord), for: .touchUpInside)
+        screen?.recorderView.playButton.addTarget(self, action: #selector(actionPlay), for: .touchUpInside)
+        screen?.recorderView.trashButton.addTarget(self, action: #selector(actionTrash), for: .touchUpInside)
+    }
+    
     override func loadView() {
         super.loadView()
         self.screen = LyricsEditingScreenView(keyboardListener: self)
         self.view = screen
     }
-
-    init(viewModel: ScreenLyricsEditingViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-        screen?.recorderView.recorderButton.addTarget(self, action: #selector(actionRecordButton), for: .touchUpInside)
-        screen?.recorderView.playButton.addTarget(self, action: #selector(actionPlay), for: .touchUpInside)
-        screen?.recorderView.trashButton.addTarget(self, action: #selector(actionTrash), for: .touchUpInside)
-    }
-
+    
     @objc
-    func actionRecordButton() {
-        viewModel.buttonTapCount += 1
-
-        switch viewModel.buttonTapCount {
-        case 1:
-            screen?.recorderView.labelRecording.isHidden = false
-            screen?.recorderView.labelTimer.isHidden = false
-            screen?.recorderView.recorderButton.layer.cornerRadius = 10
-            screen?.recorderView.recorderButton.backgroundColor = .yellow
-        default:
-            screen?.recorderView.labelRecording.isHidden = true
-            screen?.recorderView.labelTimer.isHidden = true
-            screen?.recorderView.recorderButton.isHidden = true
-            screen?.recorderView.labelPlay.isHidden = false
-            screen?.recorderView.playButton.isHidden = false
-            screen?.recorderView.trashButton.isHidden = false
-            viewModel.buttonTapCount = 0
-        }
+    func actionRecord() {
+        viewModel.audioManager.startRecording()
     }
-
+    
+    @objc
+    func actionStopRecord() {
+        viewModel.audioManager.stopRecording()
+    }
+    
     @objc
     func actionPlay() {
-        viewModel.buttonPlayCount += 1
-
-        switch viewModel.buttonPlayCount {
-        case 1:
-            screen?.recorderView.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-        default:
-            screen?.recorderView.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-            viewModel.buttonPlayCount = 0
-        }
+        viewModel.audioManager.playAudio()
     }
-
+    
     @objc
     func actionTrash() {
         screen?.recorderView.playButton.isHidden = true
@@ -73,7 +59,45 @@ class ScreenLyricsEditingController: UIViewController {
         screen?.recorderView.recorderButton.isHidden = false
         screen?.recorderView.labelPlay.isHidden = true
     }
-
+    
+    private func audioStateChange(state: AudioState) {
+        switch state {
+        case .recording:
+            screen?.recorderView.labelRecording.isHidden = false
+            screen?.recorderView.labelTimer.isHidden = false
+            screen?.recorderView.recorderButton.layer.cornerRadius = 10
+            screen?.recorderView.recorderButton.backgroundColor = .red
+            screen?.recorderView.recorderButton.addTarget(self,
+                                                          action: #selector(actionStopRecord),
+                                                          for: .touchUpInside)
+            
+        case .preparedToRecord:
+            screen?.recorderView.playButton.isHidden = true
+            screen?.recorderView.trashButton.isHidden = true
+            screen?.recorderView.recorderButton.layer.cornerRadius = 30
+            screen?.recorderView.recorderButton.backgroundColor = .red
+            screen?.recorderView.recorderButton.isHidden = false
+            screen?.recorderView.labelPlay.isHidden = true
+            screen?.recorderView.recorderButton.addTarget(self,
+                                                          action: #selector(actionRecord),
+                                                          for: .touchUpInside)
+            
+        case .preparedToPlay:
+            screen?.recorderView.labelRecording.isHidden = true
+            screen?.recorderView.labelTimer.isHidden = true
+            screen?.recorderView.recorderButton.isHidden = true
+            screen?.recorderView.labelPlay.isHidden = false
+            screen?.recorderView.playButton.isHidden = false
+            screen?.recorderView.trashButton.isHidden = false
+            
+        case .pausedPlaying:
+            screen?.recorderView.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+            
+        case .playing:
+            screen?.recorderView.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+        }
+    }
+    
     private func setupView() {
         setupNavigationBar()
         setupBindings()
@@ -85,6 +109,18 @@ class ScreenLyricsEditingController: UIViewController {
         screen?.textView.textPublisher
             .assign(to: \.lyricsText, on: self.viewModel)
             .store(in: &subscriptions)
+        
+        viewModel.audioManager.$audioControlState
+            .sink { state in
+                self.audioStateChange(state: state)
+            }
+            .store(in: &subscriptions)
+        
+        viewModel.audioManager.$recordingTimeLabel
+            .sink { counterLabel in
+                self.screen?.recorderView.labelTimer.text = counterLabel ?? "00:00"
+            }
+            .store(in: &subscriptions)
     }
     
     private func setupNavigationBar() {
@@ -92,7 +128,7 @@ class ScreenLyricsEditingController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.tintColor = .black
     }
-
+    
     deinit {
         subscriptions.forEach { $0.cancel() }
     }
@@ -128,6 +164,7 @@ extension ScreenLyricsEditingController: KeyboardListener {
                                          style: .done,
                                          target: self,
                                          action: #selector(doneClicked))
+        doneButton.tintColor = .colors(name: .sheetButtonColor)
         navigationItem.rightBarButtonItem = doneButton
     }
     

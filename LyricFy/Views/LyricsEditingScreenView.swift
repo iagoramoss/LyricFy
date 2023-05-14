@@ -41,7 +41,7 @@ class LyricsEditingScreenView: UIView, ViewCode {
         view.isScrollEnabled = false
         view.font = UIFont.systemFont(ofSize: 17)
         view.textAlignment = .left
-        view.backgroundColor = .colors(name: .barButtonColor)
+        view.backgroundColor = .clear
         view.typingAttributes = NSAttributedString.defaultParagraphAttributes
         return view
     }()
@@ -89,7 +89,7 @@ class LyricsEditingScreenView: UIView, ViewCode {
             textView.heightAnchor.constraint(greaterThanOrEqualToConstant: .screenHeight/3),
 
             recorderView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            recorderView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.2),
+            recorderView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.25),
             recorderView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             recorderView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])

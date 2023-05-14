@@ -1,15 +1,16 @@
 //
-//  CompositionPart.swift
+//  Part.swift
 //  LyricFy
 //
-//  Created by Afonso Lucas on 11/05/23.
+//  Created by Afonso Lucas on 12/05/23.
 //
 
 import Foundation
 
-struct CompositionPart: Identifiable {
+struct Part: Identifiable {
     
     var id: UUID
+    var index: Int
     var type: String
     var lyrics: String
 }

@@ -14,17 +14,17 @@ class RecorderView: UIView {
         label.text = "Recording"
         label.textAlignment = .center
         label.isHidden = true
-        label.textColor = .black
+        label.textColor = .white
         label.font = UIFont.boldSystemFont(ofSize: 21)
         return label
     }()
 
     lazy var labelPlay: UILabel = {
         let label = UILabel()
-        label.text = "Record 01"
+        label.text = "Record"
         label.textAlignment = .left
         label.isHidden = true
-        label.textColor = .black
+        label.textColor = .white
         label.font = UIFont.boldSystemFont(ofSize: 17)
         return label
     }()
@@ -34,8 +34,8 @@ class RecorderView: UIView {
         label.text = "00:00"
         label.textAlignment = .center
         label.isHidden = true
-        label.textColor = .black
-        label.font = UIFont.boldSystemFont(ofSize: 21)
+        label.textColor = .systemGray3
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
 
@@ -49,7 +49,7 @@ class RecorderView: UIView {
     lazy var playButton: UIButton = {
         let play = UIButton()
         play.setImage(UIImage(systemName: "play.fill"), for: .normal)
-        play.tintColor = .black
+        play.tintColor = .white
         play.isHidden = true
         return play
     }()
@@ -92,10 +92,10 @@ extension RecorderView: ViewCode {
         trashButton.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            labelRecording.bottomAnchor.constraint(equalTo: recorderButton.topAnchor, constant: -30),
+            labelRecording.bottomAnchor.constraint(equalTo: recorderButton.topAnchor, constant: -60),
             labelRecording.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             
-            labelTimer.bottomAnchor.constraint(equalTo: recorderButton.topAnchor, constant: 0),
+            labelTimer.bottomAnchor.constraint(equalTo: recorderButton.topAnchor, constant: -30),
             labelTimer.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             
             labelPlay.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
@@ -115,7 +115,7 @@ extension RecorderView: ViewCode {
     }
 
     func setupAdditionalConfiguration() {
-        self.backgroundColor = .systemGray
+        self.backgroundColor = .colors(name: .recorderColor)
     }
 
 }
