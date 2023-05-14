@@ -24,10 +24,10 @@ class CompositionViewModel: ObservableObject {
     }
     
     func setupComposition() {
-        self.name = self.composition.name
-        self.versions = self.getVersions()
+        name = composition.name
+        versions = getVersions()
         
-        self.switchVersion(to: self.versions.count - 1)
+        switchVersion(to: versions.count - 1)
     }
 }
 
@@ -35,9 +35,8 @@ extension CompositionViewModel {
     
     // MARK: - Version functions
     func getVersions() -> [Version] {
+        var versions = service.getCompositionVersionsByCompositionID(compositionID: composition.id)
         
-        var versions = self.service.getCompositionVersionsByCompositionID(compositionID: self.composition.id)
-
         versions.sort {
             let v1 = Int($0.name.split(separator: " ").last!)!
             let v2 = Int($1.name.split(separator: " ").last!)!
@@ -49,51 +48,45 @@ extension CompositionViewModel {
     }
     
     private func updateVersions() {
-        
-        self.versions = self.getVersions()
+        versions = getVersions()
     }
     
     func createVersion() {
+        service.createVersionWithCompositionID(name: "Version \(versions.count + 1)",
+                                               compositionID: composition.id,
+                                               parts: parts)
         
-        self.service.createVersionWithCompositionID(name: "Version \(self.versions.count + 1)",
-                                                    compositionID: self.composition.id,
-                                                    parts: self.parts)
-        
-        self.updateVersions()
-        self.switchVersion(to: self.versions.count - 1)
+        updateVersions()
+        switchVersion(to: versions.count - 1)
     }
     
     func deleteVersion() {
-        
-        let index = self.versions.firstIndex {
+        let index = versions.firstIndex {
             $0.id == self.selectedVersionID!
         }!
         
-        self.service.deleteVersionByID(versionID: self.selectedVersionID!)
-        self.updateVersions()
+        service.deleteVersionByID(versionID: selectedVersionID!)
         
-        self.switchVersion(to: index - 1)
+        updateVersions()
+        switchVersion(to: index - 1)
     }
     
     func deleteProject() {
-        
-        self.service.deleteCompositionByID(compositionID: self.composition.id)
+        service.deleteCompositionByID(compositionID: composition.id)
     }
     
     func switchVersion(to version: Int) {
+        selectedVersionID = versions[version].id
+        parts = getVersionParts(versionId: selectedVersionID!)
         
-        self.selectedVersionID = self.versions[version].id
-        self.parts = self.getVersionParts(versionId: self.selectedVersionID!)
-        
-        self.selectedVersionIndex = self.versions.firstIndex {
+        selectedVersionIndex = versions.firstIndex {
             $0.id == self.selectedVersionID
         }!
     }
     
     // MARK: - Part functions
     func getVersionParts(versionId: UUID) -> [Part] {
-        
-        var parts = self.service.getPartsByVersionID(versionID: self.selectedVersionID!)
+        var parts = service.getPartsByVersionID(versionID: selectedVersionID!)
         
         parts.sort {
             return $0.index < $1.index
@@ -103,51 +96,46 @@ extension CompositionViewModel {
     }
     
     private func updateParts() {
-        
-        self.parts = self.getVersionParts(versionId: self.selectedVersionID!)
+        parts = getVersionParts(versionId: selectedVersionID!)
     }
     
     func createPart(type: String) {
-        
-        self.service.createPartByVersionID(index: self.parts.count,
+        service.createPartByVersionID(index: parts.count,
                                            type: type,
                                            lyric: "",
-                                           versionID: self.selectedVersionID!)
+                                           versionID: selectedVersionID!)
         
-        self.updateParts()
+        updateParts()
     }
     
     func updatePart(part: Part) {
-        self.service.updatePartByID(partID: part.id,
+        service.updatePartByID(partID: part.id,
                                     index: part.index,
                                     type: part.type,
                                     lyric: part.lyrics)
         
-        self.updateParts()
+        updateParts()
     }
     
     func deletePart(index: IndexPath) {
-        
-        self.service.deletePartByID(partID: self.parts[index.row].id)
-        self.updateParts()
+        service.deletePartByID(partID: parts[index.row].id)
+        updateParts()
     }
     
     func duplicatePart(index: IndexPath) {
-        
-        var parts = self.getVersionParts(versionId: self.selectedVersionID!)
+        var parts = getVersionParts(versionId: selectedVersionID!)
         parts.insert(parts[index.row], at: index.row + 1)
         
         for index in 0..<parts.count {
             parts[index].index = index
         }
         
-        self.service.updateCompositionPartsByVersionID(versionID: self.selectedVersionID!, parts: parts)
-        self.updateParts()
+        service.updateCompositionPartsByVersionID(versionID: selectedVersionID!, parts: parts)
+        updateParts()
     }
     
     func dragAndDrop(from source: IndexPath, to destination: IndexPath) {
-        
-        var parts = self.getVersionParts(versionId: self.selectedVersionID!)
+        var parts = getVersionParts(versionId: selectedVersionID!)
         
         let part = parts.remove(at: source.row)
         parts.insert(part, at: destination.row)
@@ -155,8 +143,8 @@ extension CompositionViewModel {
         for index in 0..<parts.count {
             parts[index].index = index
         }
-    
-        self.service.updateCompositionPartsByVersionID(versionID: self.selectedVersionID!, parts: parts)
-        self.updateParts()
+        
+        service.updateCompositionPartsByVersionID(versionID: selectedVersionID!, parts: parts)
+        updateParts()
     }
 }

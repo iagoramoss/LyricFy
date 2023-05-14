@@ -9,9 +9,9 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    var screen = HomeView()
+    private var screen = HomeView()
     
-    var viewModel: HomeViewModel
+    private var viewModel: HomeViewModel
     
     init(homeViewModel: HomeViewModel) {
         viewModel = homeViewModel
@@ -127,7 +127,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         if indexPath.item > 0 {
             navigateToComposition(composition: viewModel.projects[indexPath.item - 1])
         } else {
-            self.present(Alert(
+            present(Alert(
                 title: "Create Project",
                 textFieldPlaceholder: "X",
                 textFieldDefaultText: "Projeto",
