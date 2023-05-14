@@ -18,16 +18,18 @@ class HomeViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupNavigationBar()
+        setupView()
+    }
+    
     override func loadView() {
         super.loadView()
         self.view = screen
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        setupNavigationBar()
-        
+    private func setupView() {
         screen.collectionProjects.delegate = self
         screen.collectionProjects.dataSource = self
         
@@ -36,13 +38,16 @@ class HomeViewController: UIViewController {
         view.backgroundColor = .white
     }
     
-    private func setupBindings() {
-        
-    }
-    
     private func setupNavigationBar() {
         title = "Projects"
         navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
+    private func navigateToComposition(composition: Composition) {
+        let compositionViewModel = CompositionViewModel(composition: composition)
+        
+        navigationController?.pushViewController(CompositionScreenController(viewModel: compositionViewModel),
+                                                 animated: true)
     }
     
     required init?(coder: NSCoder) {
@@ -120,10 +125,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         didSelectItemAt indexPath: IndexPath
     ) {
         if indexPath.item > 0 {
-            let compositionViewModel = CompositionViewModel(composition: viewModel.projects[indexPath.item - 1])
-            
-            navigationController?.pushViewController(CompositionScreenController(viewModel: compositionViewModel),
-                                                     animated: true)
+            navigateToComposition(composition: viewModel.projects[indexPath.item - 1])
         } else {
             self.present(Alert(
                 title: "Create Project",

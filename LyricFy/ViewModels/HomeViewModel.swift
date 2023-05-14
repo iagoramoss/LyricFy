@@ -19,21 +19,21 @@ class HomeViewModel {
     }
     
     func updateProjects() {
-        self.projects = self.dataService.getCompositions()
+        projects = dataService.getCompositions()
     }
     
     func createProject(name: String) {
-        self.dataService.createComposition(name: name)
+        dataService.createComposition(name: name)
         updateProjects()
     }
     
     func updateProjectName(projectId id: UUID, newName: String) {
-        self.dataService.updateCompositionName(compositionID: id, newName: newName)
+        dataService.updateCompositionName(compositionID: id, newName: newName)
         updateProjects()
     }
     
     func deleteProject(projectId id: UUID) {
-        self.dataService.deleteCompositionByID(compositionID: id)
+        dataService.deleteCompositionByID(compositionID: id)
         updateProjects()
     }
 }

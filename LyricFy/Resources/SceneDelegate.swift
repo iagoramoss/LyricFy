@@ -19,7 +19,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let window = UIWindow(windowScene: windowScene)
         let homeViewModel = HomeViewModel(dataService: DAOService())
-//        let compositionVI
         let mainNav = UINavigationController(
             rootViewController: HomeViewController(homeViewModel: homeViewModel)
         )
