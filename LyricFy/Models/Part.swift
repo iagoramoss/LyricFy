@@ -10,6 +10,7 @@ import Foundation
 struct Part: Identifiable {
     
     var id: UUID
+    var index: Int
     var type: String
     var lyrics: String
 }

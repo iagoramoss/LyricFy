@@ -120,7 +120,7 @@ class DAOService {
         // Creating Composition Parts
         let compositionParts: [PartEntity] = parts.map { part in
             let currentPart = PartEntity(context: manager.context)
-            currentPart.id = part.id
+            currentPart.id = UUID()
             currentPart.version = version
             currentPart.type = part.type
             currentPart.lyric = part.lyrics
@@ -168,6 +168,7 @@ class DAOService {
 
         return versionParts.map { part in
             Part(id: part.id!,
+                 index: Int(part.index),
                  type: part.type ?? "",
                  lyrics: part.lyric ?? "")
         }
@@ -179,6 +180,7 @@ class DAOService {
         let versionEntityParts: [PartEntity] = parts.map { part in
             let entityPart = PartEntity(context: manager.context)
             entityPart.id = part.id
+            entityPart.index = Int32(part.index)
             entityPart.type = part.type
             entityPart.lyric = part.lyrics
             entityPart.version = version
@@ -191,20 +193,22 @@ class DAOService {
         manager.save()
     }
     
-    func updatePartByID(partID: UUID, type: String, lyric: String) {
+    func updatePartByID(partID: UUID, index: Int, type: String, lyric: String) {
         guard let part = getPartByID(id: partID) else { return }
 
+        part.index = Int32(index)
         part.type = type
         part.lyric = lyric
         
         manager.save()
     }
 
-    func createPartByVersionID(type: String, lyric: String, versionID: UUID) {
+    func createPartByVersionID(index: Int, type: String, lyric: String, versionID: UUID) {
         guard let version = getVersionEntityByID(id: versionID) else { return }
         
         let part = PartEntity(context: manager.context)
         part.id = UUID()
+        part.index = Int32(index)
         part.type = type
         part.lyric = lyric
         part.version = version
