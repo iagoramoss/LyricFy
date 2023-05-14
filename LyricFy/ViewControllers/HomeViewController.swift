@@ -114,7 +114,6 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
             previewProvider: nil) { [weak self] _ in
                 let project = self!.viewModel.projects[indexPath.row - 1]
                 return UIMenu(
-                    title: "X",
                     children: [
                         self!.updateMenuAction(_: collectionView, project: project),
                         self!.deleteMenuAction(_: collectionView, project: project)
@@ -132,7 +131,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         } else {
             present(Alert(
                 title: "Create Project",
-                textFieldPlaceholder: "X",
+                textFieldPlaceholder: "Ex: My Song",
                 textFieldDefaultText: "Projeto",
                 projectName: nil,
                 action: { [weak self] projectName in

@@ -30,6 +30,7 @@ class CompositionScreenController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
+        navigationController?.navigationBar.tintColor = .colors(name: .barButtonColor)
     }
     
     private func reloadData() {

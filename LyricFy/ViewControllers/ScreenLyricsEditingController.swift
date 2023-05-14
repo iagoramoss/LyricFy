@@ -126,7 +126,7 @@ class ScreenLyricsEditingController: UIViewController {
     private func setupNavigationBar() {
         navigationItem.title = viewModel.lyricsType
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.tintColor = .colors(name: .barButtonColor)
     }
     
     deinit {

@@ -29,14 +29,14 @@ class PartCell: UITableViewCell, ViewCode {
     private lazy var title: UILabel = {
         let title = UILabel()
         title.font = UIFont.preferredFont(for: .title2, weight: .bold)
-        title.textColor = .black
+        title.textColor = .colors(name: .barButtonColor)
         return title
     }()
     
     private lazy var lyric: UILabel = {
         let lyric = UILabel()
         lyric.font = UIFont.preferredFont(for: .subheadline, weight: .regular)
-        lyric.textColor = .black
+        lyric.textColor = .colors(name: .barButtonColor)
         lyric.numberOfLines = 0
         return lyric
     }()
