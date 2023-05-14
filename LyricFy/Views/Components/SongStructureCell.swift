@@ -22,7 +22,7 @@ class SongStructureCell: UITableViewCell, ViewCode {
         container.layer.cornerRadius = 10
         container.layer.masksToBounds = true
         container.clipsToBounds = true
-        container.backgroundColor = UIColor(red: 0.959, green: 0.871, blue: 1, alpha: 1)
+        container.backgroundColor = .colors(name: .sectionsColor)
         return container
     }()
     

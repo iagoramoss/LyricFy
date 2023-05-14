@@ -24,7 +24,7 @@ class VersionsView: UIView {
     lazy var doneButton: UIButton = {
         let done = UIButton()
         done.setTitle("Done", for: .normal)
-        done.setTitleColor(.colors(name: .orangeLabel), for: .normal)
+        done.setTitleColor(UIColor(red: 0.21, green: 0.27, blue: 0.62, alpha: 1.0), for: .normal)
         done.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         return done
     }()
@@ -32,7 +32,7 @@ class VersionsView: UIView {
     lazy var cancelButton: UIButton = {
         let cancel = UIButton()
         cancel.setTitle("Cancel", for: .normal)
-        cancel.setTitleColor(.colors(name: .orangeLabel), for: .normal)
+        cancel.setTitleColor(UIColor(red: 0.21, green: 0.27, blue: 0.62, alpha: 1.0), for: .normal)
         cancel.titleLabel?.font = UIFont.systemFont(ofSize: 17)
         return cancel
     }()

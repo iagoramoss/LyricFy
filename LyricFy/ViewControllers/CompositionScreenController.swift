@@ -40,13 +40,16 @@ class CompositionScreenController: UIViewController {
         
         let addButton = UIBarButtonItem(image: .init(systemName: "plus"), style: .plain,
         target: self, action: #selector(onTappedButtonAdd))
-        addButton.tintColor = .black
+        addButton.tintColor = .colors(name: .barButtonColor)
 
         let menuButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"))
         menuButton.menu = menu
-        menuButton.tintColor = .black
+        menuButton.tintColor = .colors(name: .barButtonColor)
 
         navigationItem.title = "Song"
+        navigationController?.navigationBar.largeTitleTextAttributes = [
+            .foregroundColor: UIColor.colors(name: .buttonsColor)!
+        ]
         navigationController?.navigationBar.prefersLargeTitles = true
         
         navigationItem.rightBarButtonItems = [addButton, menuButton]

@@ -43,6 +43,9 @@ class HomeViewController: UIViewController {
     private func setupNavigationBar() {
         title = "Projects"
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.largeTitleTextAttributes = [
+            .foregroundColor: UIColor.colors(name: .buttonsColor)!
+        ]
     }
     
     required init?(coder: NSCoder) {

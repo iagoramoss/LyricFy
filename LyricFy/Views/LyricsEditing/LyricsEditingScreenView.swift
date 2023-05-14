@@ -41,7 +41,7 @@ class LyricsEditingScreenView: UIView, ViewCode {
         view.isScrollEnabled = false
         view.font = UIFont.systemFont(ofSize: 17)
         view.textAlignment = .left
-        view.backgroundColor = .clear
+        view.backgroundColor = .colors(name: .barButtonColor)
         view.typingAttributes = NSAttributedString.defaultParagraphAttributes
         return view
     }()

@@ -12,8 +12,11 @@ enum Colors: String {
     case bgColor
     case buttonsColor
     case buttonsLabel
-    case orangeLabel
+    case labelSheetColor
+    case sheetButtonColor
     case sheetColor
+    case barButtonColor
+    case sectionsColor
 }
 
 extension UIColor {
