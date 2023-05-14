@@ -12,7 +12,7 @@ class HomeView: UIView, ViewCode {
     lazy var layout: UICollectionViewFlowLayout = {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 42, left: 20, bottom: 0, right: 20)
+        layout.sectionInset = UIEdgeInsets(top: 32, left: 20, bottom: 0, right: 20)
         return layout
     }()
     

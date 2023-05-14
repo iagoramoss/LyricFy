@@ -17,16 +17,16 @@ class AddProjectsCell: UICollectionViewCell {
         projectComponent.translatesAutoresizingMaskIntoConstraints = false
         projectComponent.layer.cornerRadius = 28
         projectComponent.layer.borderWidth = 1
-        projectComponent.layer.borderColor = UIColor.red.cgColor
+        projectComponent.layer.borderColor = UIColor.colors(name: .buttonsColor)?.cgColor
         projectComponent.backgroundColor = .colors(name: .sheetColor)
-        projectComponent.layer.cornerRadius = 10
+        projectComponent.layer.cornerRadius = 28
         return projectComponent
     }()
     
     lazy var image: UIImageView = {
         let image = UIImageView(image: UIImage(systemName: "plus"))
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.tintColor = .colors(name: .orangeLabel)
+        image.tintColor = .colors(name: .buttonsColor)
         return image
     }()
     

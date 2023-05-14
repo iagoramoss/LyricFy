@@ -44,7 +44,7 @@ class HomeViewController: UIViewController {
         title = "Projects"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.largeTitleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.black,
+            NSAttributedString.Key.foregroundColor: UIColor.colors(name: .buttonsColor),
             NSAttributedString.Key.font: .fontCustom( fontName: .ralewayBold, size: 45) ?? UIFont.systemFont(ofSize: 45)
         ]
         navigationController
