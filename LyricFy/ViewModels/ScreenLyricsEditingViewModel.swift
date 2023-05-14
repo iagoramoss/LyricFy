@@ -14,14 +14,15 @@ class ScreenLyricsEditingViewModel {
     
     var lyricsType: String
     var lyricsText: String
-    var buttonTapCount: Int = 0
-    var buttonPlayCount: Int = 0
+    
+    var audioManager: AudioManager
     
     init(compositionPart: Part, didEditAction: @escaping (Part) -> Void) {
         self.compositionPart = compositionPart
         self.didEditLyrics = didEditAction
         self.lyricsText = compositionPart.lyrics
         self.lyricsType = compositionPart.type
+        self.audioManager = AudioManager(partID: compositionPart.id)
     }
     
     func saveLyricsEdition() {

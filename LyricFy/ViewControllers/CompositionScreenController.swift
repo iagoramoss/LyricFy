@@ -9,43 +9,34 @@ import UIKit
 import Combine
 
 class CompositionScreenController: UIViewController {
-    private var viewModel: CompositionViewModel
-    private var subscriptions = Set<AnyCancellable>()
     
     private var partView: PartView?
     
+    private var viewModel: CompositionViewModel
+    
+    private var subscriptions = Set<AnyCancellable>()
+    
     init(viewModel: CompositionViewModel) {
-        
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
-    deinit {
-        
-        self.subscriptions.forEach { $0.cancel() }
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override func loadView() {
+        super.loadView()
+        self.partView = PartView(delegate: self)
+        self.view = partView
     }
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
-        self.partView = PartView(delegate: self)
-        self.view = partView
-        
         setupNavigationBar()
     }
     
     private func reloadData() {
-        
-        self.partView?.tableView.reloadData()
+        partView?.tableView.reloadData()
     }
     
     private func setupNavigationBar() {
-        
         let menu = UIMenu(children: [
             UIAction(title: "See Versions",
                      image: UIImage(systemName: "arrow.triangle.branch"),
@@ -90,14 +81,14 @@ class CompositionScreenController: UIViewController {
         ])
         
         let addButton = UIBarButtonItem(image: .init(systemName: "plus"), style: .plain,
-        target: self, action: #selector(onTappedButtonAdd))
+                                        target: self, action: #selector(onTappedButtonAdd))
         addButton.tintColor = .black
-
+        
         let menuButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"))
         menuButton.menu = menu
         menuButton.tintColor = .black
-
-        navigationItem.title = self.viewModel.name.capitalized
+        
+        navigationItem.title = viewModel.name.capitalized
         navigationController?.navigationBar.prefersLargeTitles = true
         
         navigationItem.rightBarButtonItems = [addButton, menuButton]
@@ -109,10 +100,10 @@ class CompositionScreenController: UIViewController {
             self?.partView?.tableView.reloadData()
         }
         
-        self.navigationController?.pushViewController(ScreenLyricsEditingController(viewModel: lyricsViewModel),
-                                                      animated: true)
+        navigationController?.pushViewController(ScreenLyricsEditingController(viewModel: lyricsViewModel),
+                                                 animated: true)
     }
-
+    
     @objc
     func onTappedButtonAdd() {
         let sheetVC = SheetViewController()
@@ -130,10 +121,10 @@ class CompositionScreenController: UIViewController {
         sheetVC.sheetPresentationController?.prefersGrabberVisible = true
         present(sheetVC, animated: true)
     }
-
+    
     @objc
     func onTappedButtonVersion() {
-        let versionsVC = VersionsViewController(versions: self.viewModel.versions.map({
+        let versionsVC = VersionsViewController(versions: viewModel.versions.map({
             return $0.name
         }))
         
@@ -147,7 +138,15 @@ class CompositionScreenController: UIViewController {
         versionsVC.sheetPresentationController?.prefersGrabberVisible = true
         
         present(versionsVC, animated: true)
-        versionsVC.selectRow(row: self.viewModel.selectedVersionIndex)
+        versionsVC.selectRow(row: viewModel.selectedVersionIndex)
+    }
+    
+    deinit {
+        subscriptions.forEach { $0.cancel() }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
@@ -155,7 +154,7 @@ extension CompositionScreenController: PartTableView {
     
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
-        return self.viewModel.parts.count
+        return viewModel.parts.count
     }
     
     func tableView(_ tableView: UITableView,
@@ -164,7 +163,7 @@ extension CompositionScreenController: PartTableView {
                                                        for: indexPath) as? PartCell
         else { return PartCell() }
         
-        cell.part = self.viewModel.parts[indexPath.row]
+        cell.part = viewModel.parts[indexPath.row]
         return cell
     }
     
@@ -172,7 +171,7 @@ extension CompositionScreenController: PartTableView {
                    itemsForBeginning session: UIDragSession,
                    at indexPath: IndexPath) -> [UIDragItem] {
         let item = UIDragItem(itemProvider: NSItemProvider())
-        item.localObject = self.viewModel.parts[indexPath.row]
+        item.localObject = viewModel.parts[indexPath.row]
         
         return [item]
     }
@@ -180,7 +179,7 @@ extension CompositionScreenController: PartTableView {
     func tableView(_ tableView: UITableView,
                    moveRowAt sourceIndexPath: IndexPath,
                    to destinationIndexPath: IndexPath) {
-        self.viewModel.dragAndDrop(from: sourceIndexPath, to: destinationIndexPath)
+        viewModel.dragAndDrop(from: sourceIndexPath, to: destinationIndexPath)
     }
     
     func tableView(_ tableView: UITableView,
@@ -196,34 +195,31 @@ extension CompositionScreenController: PartTableView {
                    point: CGPoint
     ) -> UIContextMenuConfiguration? {
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-            return UIMenu(children: [
-                
-                UIAction(title: "Duplicate") { _ in
-                    
-                    self.viewModel.duplicatePart(index: indexPath)
-                    tableView.reloadData()
-                },
-                UIAction(title: "Delete", attributes: .destructive) {[weak self] _ in
-                    self?.present(
-                        Alert(title: "",
-                              message: "This section will be deleted. And it will not be possible to recover it.",
-                              actionButtonLabel: "Delete",
-                              actionButtonStyle: .destructive,
-                              preferredStyle: .actionSheet,
-                              action: { [weak self] in
-                                  
-                                  self?.viewModel.deletePart(index: indexPath)
-                                  tableView.reloadData()
-                              }),
-                        animated: true)
-                }
-            ])
+            return UIMenu(
+                children: [
+                    UIAction(title: "Duplicate") { [weak self] _ in
+                        self?.viewModel.duplicatePart(index: indexPath)
+                        tableView.reloadData()
+                    },
+                    UIAction(title: "Delete", attributes: .destructive) { [weak self] _ in
+                        self?.present(
+                            Alert(title: "",
+                                  message: "This section will be deleted. And it will not be possible to recover it.",
+                                  actionButtonLabel: "Delete",
+                                  actionButtonStyle: .destructive,
+                                  preferredStyle: .actionSheet,
+                                  action: { [weak self] in
+                                      self?.viewModel.deletePart(index: indexPath)
+                                      tableView.reloadData()
+                                  }),
+                            animated: true)
+                    }
+                ])
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let part = self.viewModel.parts[indexPath.row]
-        self.editPart(part: part)
+        let part = viewModel.parts[indexPath.row]
+        editPart(part: part)
     }
 }
