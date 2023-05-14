@@ -55,7 +55,6 @@ class HomeViewController: UIViewController {
         navigationController?.pushViewController(CompositionScreenController(viewModel: compositionViewModel),
                                                  animated: true)
     }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
