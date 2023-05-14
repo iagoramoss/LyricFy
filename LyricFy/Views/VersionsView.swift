@@ -64,7 +64,7 @@ extension VersionsView: ViewCode {
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            pickerView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 30),
+            pickerView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 50),
             pickerView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
 
             cancelButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),

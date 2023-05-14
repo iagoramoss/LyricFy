@@ -11,47 +11,29 @@ class HomeViewModel {
     
     private var dataService: DAOService
     
-    var projects: [ProjectCellModel] = []
+    var projects: [Composition]
 
     init(dataService: DAOService) {
         self.dataService = dataService
+        self.projects = dataService.getCompositions()
     }
     
-    func setupViewData() {
-//        guard let fetched = dataService.getProjects() else { return }
-//        self.projects.removeAll()
-//        for currentProject in fetched {
-//            projects.append(ProjectCellModel(id: currentProject.id,
-//                                             name: currentProject.name,
-//                                             date: currentProject.createdAt))
-//        }
+    func updateProjects() {
+        projects = dataService.getCompositions()
     }
     
     func createProject(name: String) {
-//        dataService.createProject(name: name)
-//        updateProjectsArray()
+        dataService.createComposition(name: name)
+        updateProjects()
     }
     
     func updateProjectName(projectId id: UUID, newName: String) {
-//        let project = dataService.getProjectById(id: id)
-//        dataService.updateProject(project: project, name: newName)
-//        updateProjectsArray()
+        dataService.updateCompositionName(compositionID: id, newName: newName)
+        updateProjects()
     }
     
     func deleteProject(projectId id: UUID) {
-//        let project = dataService.getProjectById(id: id)
-//        dataService.deleteProject(project: project!)
-//        updateProjectsArray()
-    }
-    
-    func updateProjectsArray() {
-//        self.projects.removeAll()
-//        guard let fetched = dataService.getProjects() else { return }
-//
-//        for currentProject in fetched {
-//            projects.append(ProjectCellModel(id: currentProject.id!,
-//                                             name: currentProject.name!,
-//                                             date: currentProject.createdAt!))
-//        }
+        dataService.deleteCompositionByID(compositionID: id)
+        updateProjects()
     }
 }
