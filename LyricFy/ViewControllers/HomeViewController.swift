@@ -21,7 +21,6 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        setupNavigationBar()
     }
     
     override func loadView() {
@@ -40,7 +39,7 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        setupNavigationBar()
+        setupNavigationBar()
     }
     
     private func setupNavigationBar() {
