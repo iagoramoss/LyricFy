@@ -15,16 +15,14 @@ class AudioManager: NSObject, AudioControl {
     @Published var audioControlState: AudioState
     @Published var recordingTimeLabel: String?
     
+    private var fileManager: AudioFileManager
+    
     private var session: AVAudioSession
     private var player: AVAudioPlayer?
     private var recorder: AVAudioRecorder?
     
     private var meterTimer: Timer?
     private var audioID: UUID
-    
-    private var audioExists: Bool {
-        FileManager.default.fileExists(atPath: getFileUrl().path)
-    }
     
     private var isAudioRecordingGranted: Bool {
         var granted = false
@@ -36,10 +34,15 @@ class AudioManager: NSObject, AudioControl {
         return granted
     }
     
+    var audioFilename: String {
+        "\(audioID).m4a"
+    }
+    
     init(partID: UUID) {
         audioControlState = .preparedToRecord
         audioID = partID
         session = AVAudioSession.sharedInstance()
+        fileManager = AudioFileManager.shared
         
         do {
             try session.setCategory(.playAndRecord, mode: .default)
@@ -51,12 +54,25 @@ class AudioManager: NSObject, AudioControl {
     }
     
     func prepareViewModel() {
-        if audioExists {
+        if fileManager.fileExists(filename: audioFilename) {
             audioControlState = .preparedToPlay
+            
+            setAudioCategory(.playback)
         }
     }
     
     // MARK: - Utils
+    private func setAudioCategory(_ category: AVAudioSession.Category) {
+        do {
+            try session.setCategory(category, mode: .default)
+            try session.setActive(true)
+        } catch let error {
+            #if DEBUG
+            print(error)
+            #endif
+        }
+    }
+    
     @objc
     private func updateAudioMeter(timer: Timer) {
         guard audioControlState == .recording, let recorder = self.recorder else { return }
@@ -69,20 +85,11 @@ class AudioManager: NSObject, AudioControl {
         recorder.updateMeters()
     }
     
-    private func getFileUrl() -> URL {
-        let filename = "\(audioID).m4a"
-        let filePath = getDocumentsDirectory().appendingPathComponent(filename)
-        return filePath
-    }
-    
-    private func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
-    }
-    
     // MARK: - Delegate
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         if !flag { stopRecording() }
+        
+        setAudioCategory(.playback)
     }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
@@ -96,7 +103,9 @@ extension AudioManager {
     func startRecording() {
         guard audioControlState == .preparedToRecord, isAudioRecordingGranted else { return }
         
-        let output = getFileUrl()
+        setAudioCategory(.playAndRecord)
+        
+        let output = fileManager.getAudioFileUrl(filename: audioFilename)
         let settings = [
             AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
             AVSampleRateKey: 44100,
@@ -136,9 +145,9 @@ extension AudioManager {
 extension AudioManager {
     
     func playAudio() {
-        guard audioControlState == .preparedToPlay, audioExists else { return }
+        guard audioControlState == .preparedToPlay, fileManager.fileExists(filename: audioFilename) else { return }
         
-        let fileURL = getFileUrl()
+        let fileURL = fileManager.getAudioFileUrl(filename: audioFilename)
         
         do {
             player = try AVAudioPlayer(contentsOf: fileURL)
@@ -171,13 +180,10 @@ extension AudioManager {
 extension AudioManager {
     
     func deleteAudio() {
-        guard audioExists else { return }
+        guard fileManager.fileExists(filename: audioFilename) else { return }
         
-        do {
-            try FileManager.default.removeItem(at: getFileUrl())
-            audioControlState = .preparedToRecord
-        } catch let error {
-            print("Error while deleting file: \(error)")
-        }
+        fileManager.deleteAudioFile(filename: audioFilename)
+        audioControlState = .preparedToRecord
+        setAudioCategory(.playAndRecord)
     }
 }
