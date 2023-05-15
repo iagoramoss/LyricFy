@@ -169,7 +169,7 @@ extension CompositionScreenController: PartTableView {
     
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: Composition.reuseIdentifier,
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PartCell.reuseIdentifier,
                                                        for: indexPath) as? PartCell
         else { return PartCell() }
         
@@ -236,5 +236,14 @@ extension CompositionScreenController: PartTableView {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let part = viewModel.parts[indexPath.row]
         editPart(part: part)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: CompositionHeader.reuseIdentifier)
+        
+        guard let header = header as? CompositionHeader else { return header }
+        
+        header.version = viewModel.selectedVersionIndex + 1
+        return header
     }
 }

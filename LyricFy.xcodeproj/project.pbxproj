@@ -34,12 +34,14 @@
 		67F7BE5E2A0F58D4000ACA06 /* Composition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F7BE5B2A0F58D4000ACA06 /* Composition.swift */; };
 		67F7BE5F2A0F58D4000ACA06 /* Part.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F7BE5C2A0F58D4000ACA06 /* Part.swift */; };
 		67F7BE602A0F58D4000ACA06 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F7BE5D2A0F58D4000ACA06 /* Version.swift */; };
+		67F7BE622A12B007000ACA06 /* CompositionHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F7BE612A12B007000ACA06 /* CompositionHeaderCell.swift */; };
 		7807628829FC30EE00353A06 /* ScreenLyricsEditingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7807628729FC30EE00353A06 /* ScreenLyricsEditingController.swift */; };
 		781615122A1183BF00EDE98B /* AudioFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781615112A1183BF00EDE98B /* AudioFileManager.swift */; };
 		7882169129FD9D340032A177 /* CGFloat+Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7882169029FD9D340032A177 /* CGFloat+Screen.swift */; };
 		78BE20E62A041A9A003B3AF2 /* KeyboardListenerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BE20E52A041A9A003B3AF2 /* KeyboardListenerProtocol.swift */; };
 		78C9686F2A0975E5009054D0 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C9686E2A0975E5009054D0 /* AudioManager.swift */; };
 		78C968712A09760F009054D0 /* AudioState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C968702A09760F009054D0 /* AudioState.swift */; };
+		78D0E8532A12B2AF00C80579 /* AudioPermissionAlertAlertDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D0E8522A12B2AF00C80579 /* AudioPermissionAlertAlertDelegate.swift */; };
 		78F391DE2A02EF9F0097884C /* ScreenLyricsEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F391DD2A02EF9F0097884C /* ScreenLyricsEditingViewModel.swift */; };
 		78F391E02A02F3400097884C /* UITextView+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F391DF2A02F3400097884C /* UITextView+Combine.swift */; };
 		9F0CECAE29FB050800103EFE /* CompositionScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0CECAD29FB050800103EFE /* CompositionScreenController.swift */; };
@@ -82,12 +84,14 @@
 		67F7BE5B2A0F58D4000ACA06 /* Composition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Composition.swift; sourceTree = "<group>"; };
 		67F7BE5C2A0F58D4000ACA06 /* Part.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Part.swift; sourceTree = "<group>"; };
 		67F7BE5D2A0F58D4000ACA06 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
+		67F7BE612A12B007000ACA06 /* CompositionHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionHeaderCell.swift; sourceTree = "<group>"; };
 		7807628729FC30EE00353A06 /* ScreenLyricsEditingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenLyricsEditingController.swift; sourceTree = "<group>"; };
 		781615112A1183BF00EDE98B /* AudioFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileManager.swift; sourceTree = "<group>"; };
 		7882169029FD9D340032A177 /* CGFloat+Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Screen.swift"; sourceTree = "<group>"; };
 		78BE20E52A041A9A003B3AF2 /* KeyboardListenerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardListenerProtocol.swift; sourceTree = "<group>"; };
 		78C9686E2A0975E5009054D0 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		78C968702A09760F009054D0 /* AudioState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioState.swift; sourceTree = "<group>"; };
+		78D0E8522A12B2AF00C80579 /* AudioPermissionAlertAlertDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPermissionAlertAlertDelegate.swift; sourceTree = "<group>"; };
 		78F391DD2A02EF9F0097884C /* ScreenLyricsEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenLyricsEditingViewModel.swift; sourceTree = "<group>"; };
 		78F391DF2A02F3400097884C /* UITextView+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Combine.swift"; sourceTree = "<group>"; };
 		9F0CECAD29FB050800103EFE /* CompositionScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionScreenController.swift; sourceTree = "<group>"; };
@@ -117,6 +121,7 @@
 				0D2CB0D929FC41210080CB8A /* ProjectsCell.swift */,
 				0D2CB0DF2A039EA10080CB8A /* AddProjectsCell.swift */,
 				673574FC2A05803900C75DB6 /* PartCell.swift */,
+				67F7BE612A12B007000ACA06 /* CompositionHeaderCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -278,6 +283,7 @@
 				9F0CECB029FB0C5B00103EFE /* ViewCode.swift */,
 				78BE20E52A041A9A003B3AF2 /* KeyboardListenerProtocol.swift */,
 				6718403C2A05945C00A92AAF /* PartTableViewProtocol.swift */,
+				78D0E8522A12B2AF00C80579 /* AudioPermissionAlertAlertDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -405,6 +411,8 @@
 				67F7BE562A0F583E000ACA06 /* NSAttributedString+defaultParagraph.swift in Sources */,
 				673574FF2A05805F00C75DB6 /* UIFont+PreferredFont.swift in Sources */,
 				0D2CB0DA29FC41210080CB8A /* ProjectsCell.swift in Sources */,
+				78D0E8532A12B2AF00C80579 /* AudioPermissionAlertAlertDelegate.swift in Sources */,
+				0D2CB0D729FC40D30080CB8A /* HomeViewController.swift in Sources */,
 				9F46596D2A0EB4840032B471 /* UIColor.swift in Sources */,
 				0D2CB0E02A039EA10080CB8A /* AddProjectsCell.swift in Sources */,
 				0D2CB0D529FC40A00080CB8A /* HomeView.swift in Sources */,
@@ -413,6 +421,7 @@
 				67227F0029F85EDE00E1166C /* SceneDelegate.swift in Sources */,
 				67F7BE5E2A0F58D4000ACA06 /* Composition.swift in Sources */,
 				78F391E02A02F3400097884C /* UITextView+Combine.swift in Sources */,
+				67F7BE622A12B007000ACA06 /* CompositionHeaderCell.swift in Sources */,
 				781615122A1183BF00EDE98B /* AudioFileManager.swift in Sources */,
 				78C968712A09760F009054D0 /* AudioState.swift in Sources */,
 			);

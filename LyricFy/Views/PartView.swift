@@ -21,10 +21,12 @@ class PartView: UIView, ViewCode {
     }()
     
     lazy var tableView: UITableView = {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 80
-        tableView.register(PartCell.self, forCellReuseIdentifier: Composition.reuseIdentifier)
+        tableView.register(PartCell.self, forCellReuseIdentifier: PartCell.reuseIdentifier)
+        tableView.register(CompositionHeader.self,
+                           forHeaderFooterViewReuseIdentifier: CompositionHeader.reuseIdentifier)
         tableView.dragInteractionEnabled = true
         tableView.separatorStyle = .none
         return tableView

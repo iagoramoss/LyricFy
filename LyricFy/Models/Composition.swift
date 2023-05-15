@@ -9,8 +9,6 @@ import Foundation
 
 struct Composition: Identifiable {
     
-    static let reuseIdentifier = "SongStructure"
-    
     var id: UUID
     var name: String
     var createdAt: Date
