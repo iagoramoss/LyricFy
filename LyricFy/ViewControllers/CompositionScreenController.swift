@@ -64,7 +64,7 @@ class CompositionScreenController: UIViewController {
                                   message: "The version will be deleted and you will not be able to recover it.",
                                   actionButtonLabel: "Delete",
                                   actionButtonStyle: .destructive,
-                                  preferredStyle: .alert,
+                                  preferredStyle: .actionSheet,
                                   action: {
                                       if self?.viewModel.versions.count == 1 {
                                           self?.viewModel.deleteProject()
@@ -201,23 +201,28 @@ extension CompositionScreenController: PartTableView {
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
             return UIMenu(
                 children: [
-                    UIAction(title: "Duplicate") { [weak self] _ in
-                        self?.viewModel.duplicatePart(index: indexPath)
-                        tableView.reloadData()
-                    },
-                    UIAction(title: "Delete", attributes: .destructive) { [weak self] _ in
-                        self?.present(
-                            Alert(title: "",
-                                  message: "This section will be deleted. And it will not be possible to recover it.",
-                                  actionButtonLabel: "Delete",
-                                  actionButtonStyle: .destructive,
-                                  preferredStyle: .actionSheet,
-                                  action: { [weak self] in
-                                      self?.viewModel.deletePart(index: indexPath)
-                                      tableView.reloadData()
-                                  }),
-                            animated: true)
-                    }
+                    UIAction(title: "Duplicate",
+                             image: UIImage(systemName: "doc.on.doc")
+                            ) { [weak self] _ in
+                                self?.viewModel.duplicatePart(index: indexPath)
+                                tableView.reloadData()
+                            },
+                    UIAction(title: "Delete",
+                             image: UIImage(systemName: "trash"),
+                             attributes: .destructive
+                            ) { [weak self] _ in
+                                self?.present(
+                                    Alert(title: "",
+                                          message: "This section will be deleted. And it will not be possible to recover it.",
+                                          actionButtonLabel: "Delete",
+                                          actionButtonStyle: .destructive,
+                                          preferredStyle: .actionSheet,
+                                          action: { [weak self] in
+                                              self?.viewModel.deletePart(index: indexPath)
+                                              tableView.reloadData()
+                                          }),
+                                    animated: true)
+                             }
                 ])
         }
     }
