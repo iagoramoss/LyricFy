@@ -20,7 +20,6 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationBar()
         setupView()
     }
     
@@ -35,12 +34,22 @@ class HomeViewController: UIViewController {
         
         screen.collectionProjects.reloadData()
         
-        view.backgroundColor = .white
+        view.backgroundColor = .colors(name: .bgColor)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationBar()
     }
     
     private func setupNavigationBar() {
         title = "Projects"
+        
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.largeTitleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.colors(name: .buttonsColor)!,
+            NSAttributedString.Key.font: .fontCustom( fontName: .ralewayBold, size: 45) ?? UIFont.systemFont(ofSize: 45)
+        ]
     }
     
     private func navigateToComposition(composition: Composition) {
@@ -48,8 +57,9 @@ class HomeViewController: UIViewController {
         
         navigationController?.pushViewController(CompositionScreenController(viewModel: compositionViewModel),
                                                  animated: true)
+
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -96,7 +106,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        return CGSize(width: 166, height: 144)
+        return CGSize(width: 168, height: 162)
     }
     
     func collectionView(
@@ -111,7 +121,6 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
             previewProvider: nil) { [weak self] _ in
                 let project = self!.viewModel.projects[indexPath.row - 1]
                 return UIMenu(
-                    title: "X",
                     children: [
                         self!.updateMenuAction(_: collectionView, project: project),
                         self!.deleteMenuAction(_: collectionView, project: project)
@@ -129,8 +138,8 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         } else {
             present(Alert(
                 title: "Create Project",
-                textFieldPlaceholder: "X",
-                textFieldDefaultText: "Projeto",
+                textFieldPlaceholder: "Ex: My Song",
+                textFieldDefaultText: "Project",
                 projectName: nil,
                 action: { [weak self] projectName in
                     self?.viewModel.createProject(name: projectName)
@@ -145,7 +154,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         layout collectionViewLayout: UICollectionViewLayout,
         minimumLineSpacingForSectionAt section: Int
     ) -> CGFloat {
-        return 30
+        return 20
     }
     
     func deleteMenuAction (
@@ -175,7 +184,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         project: Composition
     ) -> UIAction {
         return UIAction(title: "Edit name",
-                        image: UIImage(systemName: "pencil.circle"),
+                        image: UIImage(systemName: "pencil"),
                         state: .off) { [weak self] _ in
             self?.present(Alert(
                 title: "Rename Project",

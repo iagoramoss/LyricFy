@@ -12,7 +12,7 @@ class HomeView: UIView, ViewCode {
     lazy var layout: UICollectionViewFlowLayout = {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 32, left: 20, bottom: 0, right: 20)
+        layout.sectionInset = UIEdgeInsets(top: 15, left: 16, bottom: 0, right: 16)
         return layout
     }()
     
@@ -41,7 +41,7 @@ class HomeView: UIView, ViewCode {
             collectionProjects.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             collectionProjects.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             collectionProjects.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            collectionProjects.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            collectionProjects.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     

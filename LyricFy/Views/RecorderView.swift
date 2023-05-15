@@ -14,17 +14,17 @@ class RecorderView: UIView {
         label.text = "Recording"
         label.textAlignment = .center
         label.isHidden = true
-        label.textColor = .black
+        label.textColor = .white
         label.font = UIFont.boldSystemFont(ofSize: 21)
         return label
     }()
 
     lazy var labelPlay: UILabel = {
         let label = UILabel()
-        label.text = "Record 01"
+        label.text = "Record"
         label.textAlignment = .left
         label.isHidden = true
-        label.textColor = .black
+        label.textColor = .white
         label.font = UIFont.boldSystemFont(ofSize: 17)
         return label
     }()
@@ -34,22 +34,24 @@ class RecorderView: UIView {
         label.text = "00:00:00"
         label.textAlignment = .center
         label.isHidden = true
-        label.textColor = .black
-        label.font = UIFont.boldSystemFont(ofSize: 21)
+        label.textColor = UIColor(red: 0.55, green: 0.55, blue: 0.55, alpha: 1)
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
 
     lazy var recorderButton: UIButton = {
         let button = UIButton()
-        button.layer.cornerRadius = 30
+        button.layer.cornerRadius = 25
         button.backgroundColor = .red
+        button.layer.borderWidth = 5
+        button.layer.borderColor = .init(red: 0.27, green: 0.3, blue: 0.48, alpha: 1.0)
         return button
     }()
     
     lazy var playButton: UIButton = {
         let play = UIButton()
         play.setImage(UIImage(systemName: "play.fill"), for: .normal)
-        play.tintColor = .black
+        play.tintColor = .white
         play.isHidden = true
         return play
     }()
@@ -70,7 +72,7 @@ class RecorderView: UIView {
     func audioDeleted() {
         playButton.isHidden = true
         trashButton.isHidden = true
-        recorderButton.layer.cornerRadius = 30
+        recorderButton.layer.cornerRadius = 25
         recorderButton.backgroundColor = .red
         recorderButton.isHidden = false
         labelPlay.isHidden = true
@@ -82,12 +84,12 @@ class RecorderView: UIView {
             labelRecording.isHidden = false
             labelTimer.isHidden = false
             recorderButton.layer.cornerRadius = 10
-            recorderButton.backgroundColor = .yellow
+            recorderButton.backgroundColor = .red
             
         case .preparedToRecord:
             playButton.isHidden = true
             trashButton.isHidden = true
-            recorderButton.layer.cornerRadius = 30
+            recorderButton.layer.cornerRadius = 25
             recorderButton.backgroundColor = .red
             recorderButton.isHidden = false
             labelPlay.isHidden = true
@@ -117,12 +119,13 @@ class RecorderView: UIView {
 extension RecorderView: ViewCode {
 
     func setupHierarchy() {
-        addSubview(recorderButton)
-        addSubview(labelRecording)
-        addSubview(labelTimer)
-        addSubview(playButton)
-        addSubview(trashButton)
-        addSubview(labelPlay)
+        self.addSubview(recorderButton)
+        self.addSubview(labelRecording)
+        self.addSubview(labelTimer)
+        self.addSubview(playButton)
+        self.addSubview(trashButton)
+        self.addSubview(labelPlay)
+
     }
 
     func setupConstraints() {
@@ -134,11 +137,11 @@ extension RecorderView: ViewCode {
         trashButton.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            labelRecording.bottomAnchor.constraint(equalTo: recorderButton.topAnchor, constant: -30),
-            labelRecording.centerXAnchor.constraint(equalTo: centerXAnchor),
+            labelRecording.bottomAnchor.constraint(equalTo: recorderButton.topAnchor, constant: -60),
+            labelRecording.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             
-            labelTimer.bottomAnchor.constraint(equalTo: recorderButton.topAnchor, constant: 0),
-            labelTimer.centerXAnchor.constraint(equalTo: centerXAnchor),
+            labelTimer.bottomAnchor.constraint(equalTo: recorderButton.topAnchor, constant: -30),
+            labelTimer.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             
             labelPlay.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             labelPlay.topAnchor.constraint(equalTo: topAnchor, constant: 30),
@@ -149,14 +152,15 @@ extension RecorderView: ViewCode {
             trashButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
             trashButton.topAnchor.constraint(equalTo: topAnchor, constant: 30),
 
-            recorderButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -40),
-            recorderButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            recorderButton.widthAnchor.constraint(equalToConstant: 65),
-            recorderButton.heightAnchor.constraint(equalToConstant: 65)
+            recorderButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -60),
+            recorderButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            recorderButton.widthAnchor.constraint(equalToConstant: 55),
+            recorderButton.heightAnchor.constraint(equalToConstant: 55)
+
         ])
     }
 
     func setupAdditionalConfiguration() {
-        backgroundColor = .systemGray
+        self.backgroundColor = .colors(name: .recorderColor)
     }
 }

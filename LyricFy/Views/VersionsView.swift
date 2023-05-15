@@ -12,31 +12,28 @@ class VersionsView: UIView {
 
     let pickerView: UIPickerView = UIPickerView()
     
-    var labelModalTitle: UILabel = {
+    lazy var labelModalTitle: UILabel = {
         let modalTitle = UILabel()
         modalTitle.text = "Choose a version"
         modalTitle.textAlignment = .center
         modalTitle.textColor = .black
         modalTitle.font = UIFont.boldSystemFont(ofSize: 17)
-
         return modalTitle
     }()
     
-    var doneButton: UIButton = {
+    lazy var doneButton: UIButton = {
         let done = UIButton()
         done.setTitle("Done", for: .normal)
-        done.setTitleColor(.systemBlue, for: .normal)
+        done.setTitleColor(UIColor(red: 0.21, green: 0.27, blue: 0.62, alpha: 1.0), for: .normal)
         done.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-
         return done
     }()
-    
-    var cancelButton: UIButton = {
+
+    lazy var cancelButton: UIButton = {
         let cancel = UIButton()
         cancel.setTitle("Cancel", for: .normal)
-        cancel.setTitleColor(.systemBlue, for: .normal)
+        cancel.setTitleColor(UIColor(red: 0.21, green: 0.27, blue: 0.62, alpha: 1.0), for: .normal)
         cancel.titleLabel?.font = UIFont.systemFont(ofSize: 17)
-
         return cancel
     }()
 
@@ -78,6 +75,6 @@ extension VersionsView: ViewCode {
         ])
     }
     func setupAdditionalConfiguration() {
-        backgroundColor = .white
+        backgroundColor = .colors(name: .sheetColor)
     }
 }

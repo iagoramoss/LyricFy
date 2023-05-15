@@ -30,30 +30,31 @@ class CompositionScreenController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
+        navigationController?.navigationBar.tintColor = .colors(name: .barButtonColor)
     }
     
     private func reloadData() {
         partView?.tableView.reloadData()
     }
-    
+
     private func setupNavigationBar() {
         let menu = UIMenu(children: [
-            UIAction(title: "See Versions",
+            UIAction(title: "Change version",
                      image: UIImage(systemName: "arrow.triangle.branch"),
                      state: .off,
                      handler: { [weak self] _ in
                          self?.onTappedButtonVersion()
                      }),
             
-            UIAction(title: "Create Versions",
-                     image: UIImage(systemName: "plus"),
+            UIAction(title: "Duplicate version",
+                     image: UIImage(systemName: "doc.on.doc"),
                      state: .off,
                      handler: { [weak self] _ in
                          self?.viewModel.createVersion()
                          self?.reloadData()
                      }),
             
-            UIAction(title: "Delete Versions",
+            UIAction(title: "Delete version",
                      image: UIImage(systemName: "trash"),
                      attributes: .destructive,
                      state: .off,
@@ -63,7 +64,7 @@ class CompositionScreenController: UIViewController {
                                   message: "The version will be deleted and you will not be able to recover it.",
                                   actionButtonLabel: "Delete",
                                   actionButtonStyle: .destructive,
-                                  preferredStyle: .alert,
+                                  preferredStyle: .actionSheet,
                                   action: {
                                       if self?.viewModel.versions.count == 1 {
                                           self?.viewModel.deleteProject()
@@ -82,13 +83,16 @@ class CompositionScreenController: UIViewController {
         
         let addButton = UIBarButtonItem(image: .init(systemName: "plus"), style: .plain,
                                         target: self, action: #selector(onTappedButtonAdd))
-        addButton.tintColor = .black
+        addButton.tintColor = .colors(name: .barButtonColor)
         
         let menuButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"))
         menuButton.menu = menu
-        menuButton.tintColor = .black
+        menuButton.tintColor = .colors(name: .barButtonColor)
         
         navigationItem.title = viewModel.name.capitalized
+        navigationController?.navigationBar.largeTitleTextAttributes = [
+            .foregroundColor: UIColor.colors(name: .buttonsColor)!
+        ]
         navigationController?.navigationBar.prefersLargeTitles = true
         
         navigationItem.rightBarButtonItems = [addButton, menuButton]
@@ -154,6 +158,12 @@ extension CompositionScreenController: PartTableView {
     
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
+
+        if viewModel.parts.isEmpty {
+            partView?.placeholder.isHidden = false
+        } else {
+            partView?.placeholder.isHidden = true
+        }
         return viewModel.parts.count
     }
     
@@ -197,23 +207,28 @@ extension CompositionScreenController: PartTableView {
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
             return UIMenu(
                 children: [
-                    UIAction(title: "Duplicate") { [weak self] _ in
-                        self?.viewModel.duplicatePart(index: indexPath)
-                        tableView.reloadData()
-                    },
-                    UIAction(title: "Delete", attributes: .destructive) { [weak self] _ in
-                        self?.present(
-                            Alert(title: "",
-                                  message: "This section will be deleted. And it will not be possible to recover it.",
-                                  actionButtonLabel: "Delete",
-                                  actionButtonStyle: .destructive,
-                                  preferredStyle: .actionSheet,
-                                  action: { [weak self] in
-                                      self?.viewModel.deletePart(index: indexPath)
-                                      tableView.reloadData()
-                                  }),
-                            animated: true)
-                    }
+                    UIAction(title: "Duplicate",
+                             image: UIImage(systemName: "doc.on.doc")
+                            ) { [weak self] _ in
+                                self?.viewModel.duplicatePart(index: indexPath)
+                                tableView.reloadData()
+                            },
+                    UIAction(title: "Delete",
+                             image: UIImage(systemName: "trash"),
+                             attributes: .destructive
+                            ) { [weak self] _ in
+                                self?.present(
+                                    Alert(title: "",
+                                          message: "This section will be deleted. And it will not be possible to recover it.",
+                                          actionButtonLabel: "Delete",
+                                          actionButtonStyle: .destructive,
+                                          preferredStyle: .actionSheet,
+                                          action: { [weak self] in
+                                              self?.viewModel.deletePart(index: indexPath)
+                                              tableView.reloadData()
+                                          }),
+                                    animated: true)
+                             }
                 ])
         }
     }

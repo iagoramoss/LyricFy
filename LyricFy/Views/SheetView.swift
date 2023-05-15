@@ -19,9 +19,9 @@ class SheetView: UIView {
         var button = UIButton()
         button.setTitle("Verse", for: .normal)
         button.layer.cornerRadius = 23
-        button.setTitleColor(.systemBlue, for: .normal)
+        button.setTitleColor(.colors(name: .labelSheetColor), for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        button.backgroundColor = .white
+        button.backgroundColor = .colors(name: .sheetButtonColor)
         return button
     }()
     
@@ -29,9 +29,9 @@ class SheetView: UIView {
         var button = UIButton()
         button.setTitle("Pre-Chorus", for: .normal)
         button.layer.cornerRadius = 23
-        button.setTitleColor(.systemBlue, for: .normal)
+        button.setTitleColor(.colors(name: .labelSheetColor), for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        button.backgroundColor = .white
+        button.backgroundColor = .colors(name: .sheetButtonColor)
         return button
     }()
     
@@ -39,9 +39,9 @@ class SheetView: UIView {
         var button = UIButton()
         button.setTitle("Chorus", for: .normal)
         button.layer.cornerRadius = 23
-        button.setTitleColor(.systemBlue, for: .normal)
+        button.setTitleColor(.colors(name: .labelSheetColor), for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        button.backgroundColor = .white
+        button.backgroundColor = .colors(name: .sheetButtonColor)
         return button
     }()
     
@@ -49,9 +49,9 @@ class SheetView: UIView {
         var button = UIButton()
         button.setTitle("Bridge", for: .normal)
         button.layer.cornerRadius = 23
-        button.setTitleColor(.systemBlue, for: .normal)
+        button.setTitleColor(.colors(name: .labelSheetColor), for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        button.backgroundColor = .white
+        button.backgroundColor = .colors(name: .sheetButtonColor)
         return button
     }()
     
@@ -59,9 +59,9 @@ class SheetView: UIView {
         var button = UIButton()
         button.setTitle("Custom", for: .normal)
         button.layer.cornerRadius = 23
-        button.setTitleColor(.systemBlue, for: .normal)
+        button.setTitleColor(.colors(name: .labelSheetColor), for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        button.backgroundColor = .white
+        button.backgroundColor = .colors(name: .sheetButtonColor)
         return button
     }()
     
@@ -116,6 +116,6 @@ extension SheetView: ViewCode {
     }
     
     func setupAdditionalConfiguration() {
-        backgroundColor = .systemGray3
+        backgroundColor = .colors(name: .sheetColor)
     }
 }

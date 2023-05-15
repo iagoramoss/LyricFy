@@ -11,6 +11,14 @@ import UIKit
 class PartView: UIView, ViewCode {
     
     var delegate: PartTableView
+
+    lazy var placeholder: UILabel = {
+        let label = UILabel()
+        label.text = "You haven't written any part of the song."
+        label.textColor = .colors(name: .placeholderColor)
+        label.font = UIFont.boldSystemFont(ofSize: 15)
+        return label
+    }()
     
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -32,16 +40,21 @@ class PartView: UIView, ViewCode {
     
     func setupHierarchy() {
         addSubview(tableView)
+        tableView.addSubview(placeholder)
     }
     
     func setupConstraints() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        placeholder.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
             tableView.topAnchor.constraint(equalTo: topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+            placeholder.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            placeholder.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
     }
     

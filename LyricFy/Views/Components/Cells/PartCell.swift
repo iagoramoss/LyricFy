@@ -24,21 +24,21 @@ class PartCell: UITableViewCell, ViewCode {
         container.layer.cornerRadius = 10
         container.layer.masksToBounds = true
         container.clipsToBounds = true
-        container.backgroundColor = UIColor(red: 0.959, green: 0.871, blue: 1, alpha: 1)
+        container.backgroundColor = .colors(name: .sectionsColor)
         return container
     }()
     
     private lazy var title: UILabel = {
         let title = UILabel()
         title.font = UIFont.preferredFont(for: .title2, weight: .bold)
-        title.textColor = .black
+        title.textColor = .colors(name: .barButtonColor)
         return title
     }()
     
     private lazy var lyric: UILabel = {
         let lyric = UILabel()
         lyric.font = UIFont.preferredFont(for: .subheadline, weight: .regular)
-        lyric.textColor = .black
+        lyric.textColor = .colors(name: .barButtonColor)
         lyric.numberOfLines = 0
         return lyric
     }()

@@ -59,6 +59,12 @@ extension VersionsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         let row = versionsArray[row]
         return row
     }
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int,
+                    forComponent component: Int) -> NSAttributedString? {
+        let element = versionsArray[row]
+        let attributes: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.black]
+        return NSAttributedString(string: element, attributes: attributes)
+    }
     
     func selectRow(row: Int) {
         self.versionsView.pickerView.selectRow(row, inComponent: 0, animated: true)

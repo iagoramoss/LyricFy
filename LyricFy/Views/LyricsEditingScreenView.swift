@@ -20,7 +20,7 @@ class LyricsEditingScreenView: UIView, ViewCode {
         view.bouncesZoom = true
         view.minimumZoomScale = 1
         view.maximumZoomScale = 1
-        view.backgroundColor = .clear
+        view.backgroundColor = .colors(name: .sectionsColor)
         view.keyboardDismissMode = .onDrag
         return view
     }()
@@ -40,6 +40,7 @@ class LyricsEditingScreenView: UIView, ViewCode {
         view.isEditable = true
         view.isScrollEnabled = false
         view.font = UIFont.systemFont(ofSize: 17)
+        view.textColor = .colors(name: .barButtonColor)
         view.textAlignment = .left
         view.backgroundColor = .clear
         view.typingAttributes = NSAttributedString.defaultParagraphAttributes
@@ -55,7 +56,7 @@ class LyricsEditingScreenView: UIView, ViewCode {
     }
 
     func setupAdditionalConfiguration() {
-        backgroundColor = .systemBackground
+        backgroundColor = .clear
         configureKeyboardNotifications()
     }
 
@@ -89,7 +90,7 @@ class LyricsEditingScreenView: UIView, ViewCode {
             textView.heightAnchor.constraint(greaterThanOrEqualToConstant: .screenHeight/3),
 
             recorderView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            recorderView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.2),
+            recorderView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.25),
             recorderView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             recorderView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
