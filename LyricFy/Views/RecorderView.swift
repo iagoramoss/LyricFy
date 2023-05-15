@@ -31,10 +31,10 @@ class RecorderView: UIView {
 
     lazy var labelTimer: UILabel = {
         let label = UILabel()
-        label.text = "00:00"
+        label.text = "00:00:00"
         label.textAlignment = .center
         label.isHidden = true
-        label.textColor = .systemGray3
+        label.textColor = UIColor(red: 0.55, green: 0.55, blue: 0.55, alpha: 1)
         label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
@@ -67,6 +67,48 @@ class RecorderView: UIView {
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
         setupView()
+    }
+    
+    func audioDeleted() {
+        playButton.isHidden = true
+        trashButton.isHidden = true
+        recorderButton.layer.cornerRadius = 25
+        recorderButton.backgroundColor = .red
+        recorderButton.isHidden = false
+        labelPlay.isHidden = true
+    }
+    
+    func audioSatateChanged(state: AudioState) {
+        switch state {
+        case .recording:
+            labelRecording.isHidden = false
+            labelTimer.isHidden = false
+            recorderButton.layer.cornerRadius = 10
+            recorderButton.backgroundColor = .red
+            
+        case .preparedToRecord:
+            playButton.isHidden = true
+            trashButton.isHidden = true
+            recorderButton.layer.cornerRadius = 25
+            recorderButton.backgroundColor = .red
+            recorderButton.isHidden = false
+            labelPlay.isHidden = true
+            
+        case .preparedToPlay:
+            labelRecording.isHidden = true
+            labelTimer.isHidden = true
+            recorderButton.isHidden = true
+            labelPlay.isHidden = false
+            playButton.isHidden = false
+            trashButton.isHidden = false
+            playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+            
+        case .pausedPlaying:
+            playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+            
+        case .playing:
+            playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -101,19 +143,19 @@ extension RecorderView: ViewCode {
             labelTimer.bottomAnchor.constraint(equalTo: recorderButton.topAnchor, constant: -30),
             labelTimer.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             
-            labelPlay.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            labelPlay.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
+            labelPlay.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            labelPlay.topAnchor.constraint(equalTo: topAnchor, constant: 30),
             
-            playButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -50),
-            playButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            playButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -50),
+            playButton.centerXAnchor.constraint(equalTo: centerXAnchor),
 
-            trashButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -30),
-            trashButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
+            trashButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+            trashButton.topAnchor.constraint(equalTo: topAnchor, constant: 30),
 
             recorderButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -60),
             recorderButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             recorderButton.widthAnchor.constraint(equalToConstant: 55),
-            recorderButton.heightAnchor.constraint(equalToConstant: 55),
+            recorderButton.heightAnchor.constraint(equalToConstant: 55)
 
         ])
     }
@@ -121,5 +163,4 @@ extension RecorderView: ViewCode {
     func setupAdditionalConfiguration() {
         self.backgroundColor = .colors(name: .recorderColor)
     }
-
 }

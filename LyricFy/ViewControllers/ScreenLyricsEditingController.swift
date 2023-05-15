@@ -50,18 +50,19 @@ class ScreenLyricsEditingController: UIViewController {
     func actionPlay() {
         viewModel.audioManager.playAudio()
     }
+
+    @objc
+    func actionPause() {
+        viewModel.audioManager.pauseAudio()
+    }
     
     @objc
     func actionTrash() {
-        screen?.recorderView.playButton.isHidden = true
-        screen?.recorderView.trashButton.isHidden = true
-        screen?.recorderView.recorderButton.layer.cornerRadius = 25
-        screen?.recorderView.recorderButton.backgroundColor = .red
-        screen?.recorderView.recorderButton.isHidden = false
-        screen?.recorderView.labelPlay.isHidden = true
+        viewModel.audioManager.deleteAudio()
+        screen?.recorderView.audioDeleted()
     }
     
-    private func audioStateChange(state: AudioState) {
+    private func audioStateChanged(state: AudioState) {
         switch state {
         case .recording:
             screen?.recorderView.labelRecording.isHidden = false
@@ -84,18 +85,19 @@ class ScreenLyricsEditingController: UIViewController {
                                                           for: .touchUpInside)
             
         case .preparedToPlay:
-            screen?.recorderView.labelRecording.isHidden = true
-            screen?.recorderView.labelTimer.isHidden = true
-            screen?.recorderView.recorderButton.isHidden = true
-            screen?.recorderView.labelPlay.isHidden = false
-            screen?.recorderView.playButton.isHidden = false
-            screen?.recorderView.trashButton.isHidden = false
+            screen?.recorderView.playButton.addTarget(self,
+                                                      action: #selector(actionPlay),
+                                                      for: .touchUpInside)
             
         case .pausedPlaying:
-            screen?.recorderView.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+            screen?.recorderView.playButton.addTarget(self,
+                                                      action: #selector(actionPlay),
+                                                      for: .touchUpInside)
             
         case .playing:
-            screen?.recorderView.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+            screen?.recorderView.playButton.addTarget(self,
+                                                      action: #selector(actionPause),
+                                                      for: .touchUpInside)
         }
     }
     
@@ -113,13 +115,14 @@ class ScreenLyricsEditingController: UIViewController {
         
         viewModel.audioManager.$audioControlState
             .sink { state in
-                self.audioStateChange(state: state)
+                self.audioStateChanged(state: state)
+                self.screen?.recorderView.audioSatateChanged(state: state)
             }
             .store(in: &subscriptions)
         
         viewModel.audioManager.$recordingTimeLabel
             .sink { counterLabel in
-                self.screen?.recorderView.labelTimer.text = counterLabel ?? "00:00"
+                self.screen?.recorderView.labelTimer.text = counterLabel ?? "00:00:00"
             }
             .store(in: &subscriptions)
     }
@@ -178,4 +181,3 @@ extension ScreenLyricsEditingController: KeyboardListener {
         view.endEditing(true)
     }
 }
-
