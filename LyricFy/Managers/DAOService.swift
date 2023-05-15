@@ -121,6 +121,7 @@ class DAOService {
         let compositionParts: [PartEntity] = parts.map { part in
             let currentPart = PartEntity(context: manager.context)
             currentPart.id = UUID()
+            currentPart.index = Int32(part.index)
             currentPart.version = version
             currentPart.type = part.type
             currentPart.lyric = part.lyrics

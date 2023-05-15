@@ -79,6 +79,9 @@ extension CompositionViewModel {
         selectedVersionID = versions[version].id
         parts = getVersionParts(versionId: selectedVersionID!)
         
+        selectedVersionID = versions[version].id
+        updateParts()
+        
         selectedVersionIndex = versions.firstIndex {
             $0.id == self.selectedVersionID
         }!
