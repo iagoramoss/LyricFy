@@ -222,4 +222,13 @@ extension CompositionScreenController: PartTableView {
         let part = viewModel.parts[indexPath.row]
         editPart(part: part)
     }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: CompositionHeader.reuseIdentifier)
+        
+        guard let header = header as? CompositionHeader else { return header }
+        
+        header.version = viewModel.selectedVersionIndex + 1
+        return header
+    }
 }
