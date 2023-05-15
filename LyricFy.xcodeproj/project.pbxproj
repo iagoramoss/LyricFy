@@ -18,7 +18,6 @@
 		0D2CB11C2A0EB68F0080CB8A /* Raleway-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D2CB1192A0EB68F0080CB8A /* Raleway-SemiBold.ttf */; };
 		0D2CB11D2A0EB68F0080CB8A /* Raleway-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D2CB11A2A0EB68F0080CB8A /* Raleway-Medium.ttf */; };
 		0D2CB11F2A0EB8670080CB8A /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2CB11E2A0EB8670080CB8A /* Fonts.swift */; };
-		6718403D2A05945C00A92AAF /* SongStructureTableViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6718403C2A05945C00A92AAF /* SongStructureTableViewProtocol.swift */; };
 		6718403D2A05945C00A92AAF /* PartTableViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6718403C2A05945C00A92AAF /* PartTableViewProtocol.swift */; };
 		67227EFE29F85EDE00E1166C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67227EFD29F85EDE00E1166C /* AppDelegate.swift */; };
 		67227F0029F85EDE00E1166C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67227EFF29F85EDE00E1166C /* SceneDelegate.swift */; };
@@ -65,7 +64,6 @@
 		0D2CB1192A0EB68F0080CB8A /* Raleway-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-SemiBold.ttf"; sourceTree = "<group>"; };
 		0D2CB11A2A0EB68F0080CB8A /* Raleway-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Medium.ttf"; sourceTree = "<group>"; };
 		0D2CB11E2A0EB8670080CB8A /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
-		6718403C2A05945C00A92AAF /* SongStructureTableViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongStructureTableViewProtocol.swift; sourceTree = "<group>"; };
 		6718403C2A05945C00A92AAF /* PartTableViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartTableViewProtocol.swift; sourceTree = "<group>"; };
 		67227EFA29F85EDE00E1166C /* LyricFy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LyricFy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67227EFD29F85EDE00E1166C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };

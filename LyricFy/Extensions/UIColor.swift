@@ -18,6 +18,7 @@ enum Colors: String {
     case barButtonColor
     case sectionsColor
     case recorderColor
+    case placeholderColor
 }
 
 extension UIColor {

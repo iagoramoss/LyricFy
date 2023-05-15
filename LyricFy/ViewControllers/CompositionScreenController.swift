@@ -158,6 +158,12 @@ extension CompositionScreenController: PartTableView {
     
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
+
+        if viewModel.parts.isEmpty {
+            partView?.placeholder.isHidden = false
+        } else {
+            partView?.placeholder.isHidden = true
+        }
         return viewModel.parts.count
     }
     
