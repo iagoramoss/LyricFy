@@ -159,7 +159,7 @@ extension CompositionScreenController: PartTableView {
     
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: Composition.reuseIdentifier,
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PartCell.reuseIdentifier,
                                                        for: indexPath) as? PartCell
         else { return PartCell() }
         

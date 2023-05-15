@@ -10,6 +10,8 @@ import UIKit
 
 class PartCell: UITableViewCell, ViewCode {
     
+    static let reuseIdentifier = String(describing: PartCell.self)
+    
     var part: Part? {
         didSet {
             title.text = part?.type.capitalized
