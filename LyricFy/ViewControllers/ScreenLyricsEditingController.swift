@@ -24,9 +24,16 @@ class ScreenLyricsEditingController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        screen?.recorderView.recorderButton.addTarget(self, action: #selector(actionRecord), for: .touchUpInside)
-        screen?.recorderView.playButton.addTarget(self, action: #selector(actionPlay), for: .touchUpInside)
-        screen?.recorderView.trashButton.addTarget(self, action: #selector(actionTrash), for: .touchUpInside)
+        screen?.recorderView.recorderButton.addTarget(self,
+                                                      action: #selector(actionRecord),
+                                                      for: .touchUpInside)
+        screen?.recorderView.playButton.addTarget(self,
+                                                  action: #selector(actionPlay),
+                                                  for: .touchUpInside)
+        screen?.recorderView.trashButton.addTarget(self,
+                                                   action: #selector(actionTrash),
+                                                   for: .touchUpInside)
+        viewModel.audioManager.delegete = self
     }
     
     override func loadView() {
@@ -57,8 +64,19 @@ class ScreenLyricsEditingController: UIViewController {
     
     @objc
     func actionTrash() {
-        viewModel.audioManager.deleteAudio()
-        screen?.recorderView.audioDeleted()
+        let title = "Do you want to delete this record?"
+        let message = "The record will be deleted and you will not be able to recover it."
+        
+        let alert = Alert(title: title,
+                          message: message,
+                          actionButtonLabel: "Delete",
+                          actionButtonStyle: .destructive,
+                          preferredStyle: .alert) { [weak self] in
+            self?.viewModel.audioManager.deleteAudio()
+            self?.screen?.recorderView.audioDeleted()
+        }
+        
+        present(alert, animated: false)
     }
     
     private func audioStateChanged(state: AudioState) {
@@ -147,6 +165,23 @@ extension ScreenLyricsEditingController: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         viewModel.saveLyricsEdition()
+    }
+}
+
+extension ScreenLyricsEditingController: AudioPermissionAlertDelegate {
+    
+    func presetAudioPermissionDeniedAlert() {
+        let message = "Please, go on Settings > Privacy > Microphone to allow audio recording permssion."
+        let title = "No Recording Permission"
+        
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok",
+                                      style: .default,
+                                      handler: { print($0) }))
+        
+        present(alert, animated: false)
     }
 }
 
