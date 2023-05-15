@@ -41,7 +41,7 @@ class HomeView: UIView, ViewCode {
             collectionProjects.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             collectionProjects.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             collectionProjects.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            collectionProjects.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+            collectionProjects.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
     

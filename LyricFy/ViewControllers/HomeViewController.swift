@@ -20,7 +20,6 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationBar()
         setupView()
     }
     
@@ -38,14 +37,19 @@ class HomeViewController: UIViewController {
         view.backgroundColor = .colors(name: .bgColor)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationBar()
+    }
+    
     private func setupNavigationBar() {
         title = "Projects"
+        
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.largeTitleTextAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.colors(name: .buttonsColor)!,
             NSAttributedString.Key.font: .fontCustom( fontName: .ralewayBold, size: 45) ?? UIFont.systemFont(ofSize: 45)
         ]
-        UINavigationBar.appearance().layoutMargins.left = 80
     }
     
     private func navigateToComposition(composition: Composition) {
