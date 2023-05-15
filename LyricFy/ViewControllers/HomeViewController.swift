@@ -21,6 +21,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        setupNavigationBar()
     }
     
     override func loadView() {
@@ -39,7 +40,7 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupNavigationBar()
+//        setupNavigationBar()
     }
     
     private func setupNavigationBar() {
@@ -184,7 +185,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         project: Composition
     ) -> UIAction {
         return UIAction(title: "Edit name",
-                        image: UIImage(systemName: "pencil.circle"),
+                        image: UIImage(systemName: "pencil"),
                         state: .off) { [weak self] _ in
             self?.present(Alert(
                 title: "Rename Project",
