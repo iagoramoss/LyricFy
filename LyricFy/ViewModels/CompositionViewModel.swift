@@ -127,7 +127,11 @@ extension CompositionViewModel {
     
     func duplicatePart(index: IndexPath) {
         var parts = getVersionParts(versionId: selectedVersionID!)
-        parts.insert(parts[index.row], at: index.row + 1)
+        
+        var newPart = parts[index.row]
+        newPart.id = UUID()
+        
+        parts.insert(newPart, at: index.row + 1)
         
         for index in 0..<parts.count {
             parts[index].index = index
