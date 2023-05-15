@@ -13,6 +13,7 @@ extension NSAttributedString {
         let font = UIFont.systemFont(ofSize: 17, weight: .regular)
         let paragraphStyle = NSMutableParagraphStyle()
         let kern = 0.37
+        let color = UIColor.colors(name: .barButtonColor)!
 
         paragraphStyle.lineHeightMultiple = 1.08
         paragraphStyle.lineBreakMode = .byWordWrapping
@@ -20,7 +21,8 @@ extension NSAttributedString {
         let attributes: [NSAttributedString.Key: Any] = [
             .font: font,
             .paragraphStyle: paragraphStyle,
-            .kern: kern
+            .kern: kern,
+            .foregroundColor: color
         ]
 
         return attributes
