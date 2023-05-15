@@ -34,6 +34,8 @@ class AudioManager: NSObject, AudioControl {
         return granted
     }
     
+    var delegete: AudioPermissionAlertDelegate?
+    
     var audioFilename: String {
         "\(audioID).m4a"
     }
@@ -47,10 +49,12 @@ class AudioManager: NSObject, AudioControl {
         do {
             try session.setCategory(.playAndRecord, mode: .default)
             try session.setActive(true)
-            
-            // Caso a sessão não esteja habilitada pedir autorização
-            session.requestRecordPermission({ print($0) })
-        } catch {}
+        } catch let error {
+            #if DEBUG
+            print(error)
+            #endif
+        }
+        session.requestRecordPermission({ print($0) })
     }
     
     func prepareViewModel() {
@@ -101,7 +105,11 @@ class AudioManager: NSObject, AudioControl {
 extension AudioManager {
     
     func startRecording() {
-        guard audioControlState == .preparedToRecord, isAudioRecordingGranted else { return }
+        guard audioControlState == .preparedToRecord else { return }
+        guard isAudioRecordingGranted else {
+            delegete?.presetAudioPermissionDeniedAlert()
+            return
+        }
         
         setAudioCategory(.playAndRecord)
         
@@ -127,7 +135,9 @@ extension AudioManager {
                                               userInfo: nil,
                                               repeats: true)
         } catch let error {
+            #if DEBUG
             print("Recording ERROR: \(error.localizedDescription)")
+            #endif
         }
     }
     
@@ -157,7 +167,9 @@ extension AudioManager {
             
             audioControlState = .playing
         } catch let error {
+            #if DEBUG
             print("Playing ERROR: \(error.localizedDescription)")
+            #endif
         }
     }
     
