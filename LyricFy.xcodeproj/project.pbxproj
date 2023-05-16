@@ -412,7 +412,6 @@
 				673574FF2A05805F00C75DB6 /* UIFont+PreferredFont.swift in Sources */,
 				0D2CB0DA29FC41210080CB8A /* ProjectsCell.swift in Sources */,
 				78D0E8532A12B2AF00C80579 /* AudioPermissionAlertAlertDelegate.swift in Sources */,
-				0D2CB0D729FC40D30080CB8A /* HomeViewController.swift in Sources */,
 				9F46596D2A0EB4840032B471 /* UIColor.swift in Sources */,
 				0D2CB0E02A039EA10080CB8A /* AddProjectsCell.swift in Sources */,
 				0D2CB0D529FC40A00080CB8A /* HomeView.swift in Sources */,
@@ -565,6 +564,8 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LyricFy/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Lyra;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "For using microphone";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -597,6 +598,8 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LyricFy/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Lyra;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "For using microphone";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
