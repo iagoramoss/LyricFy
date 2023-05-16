@@ -93,7 +93,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         
         let projectDate = viewModel.projects[indexPath.row - 1].createdAt
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy"
+        dateFormatter.dateFormat = "MM/dd/yyyy"
         let dateString = dateFormatter.string(from: projectDate)
         
         cell.nameProject.text = viewModel.projects[indexPath.row - 1].name
