@@ -145,6 +145,9 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
                 action: { [weak self] projectName in
                     self?.viewModel.createProject(name: projectName)
                     collectionView.reloadData()
+                    
+                    guard self != nil else { return }
+                    self!.navigateToComposition(composition: self!.viewModel.projects.last!)
                 }
             ), animated: true, completion: nil)
         }
