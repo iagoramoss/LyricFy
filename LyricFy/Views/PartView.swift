@@ -73,6 +73,8 @@ class PartView: UIView, ViewCode {
         tableView.dataSource = delegate
         tableView.delegate = delegate
         tableView.dragDelegate = delegate
+        
+        tableView.backgroundColor = .colors(name: .bgColor)
     }
     
     required init?(coder: NSCoder) {
