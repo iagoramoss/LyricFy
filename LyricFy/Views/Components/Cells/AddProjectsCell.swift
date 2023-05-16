@@ -17,7 +17,6 @@ class AddProjectsCell: UICollectionViewCell {
         projectComponent.translatesAutoresizingMaskIntoConstraints = false
         projectComponent.layer.cornerRadius = 28
         projectComponent.layer.borderWidth = 1
-        projectComponent.layer.borderColor = UIColor.colors(name: .buttonsColor)?.cgColor
         projectComponent.backgroundColor = .colors(name: .sheetColor)
         projectComponent.layer.cornerRadius = 28
         return projectComponent
@@ -48,6 +47,7 @@ extension AddProjectsCell: ViewCode {
     }
 
     func setupConstraints() {
+        projectComponent.layer.borderColor = UIColor.colors(name: .cellsColor)?.cgColor
         NSLayoutConstraint.activate([
             projectComponent.widthAnchor.constraint(equalToConstant: 168),
             projectComponent.heightAnchor.constraint(equalToConstant: 162),
