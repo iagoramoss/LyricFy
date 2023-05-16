@@ -120,8 +120,16 @@ class CompositionScreenController: UIViewController {
             self.editPart(part: part)
         }
         
+        if #available(iOS 16.0, *) {
+            sheetVC.sheetPresentationController?.detents = [.custom(resolver: { _ in
+                return 200
+            })]
+        } else {
+            sheetVC.sheetPresentationController?.detents = [.medium()]
+        }
+        
         sheetVC.modalPresentationStyle = .pageSheet
-        sheetVC.sheetPresentationController?.detents = [.medium()]
+        
         sheetVC.sheetPresentationController?.prefersGrabberVisible = true
         present(sheetVC, animated: true)
     }
