@@ -55,16 +55,6 @@ class SheetView: UIView {
         return button
     }()
     
-    var custom: UIButton = {
-        var button = UIButton()
-        button.setTitle("Custom", for: .normal)
-        button.layer.cornerRadius = 23
-        button.setTitleColor(.colors(name: .labelSheetColor), for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        button.backgroundColor = .colors(name: .sheetButtonColor)
-        return button
-    }()
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -77,7 +67,6 @@ extension SheetView: ViewCode {
         addSubview(preChorus)
         addSubview(chorus)
         addSubview(bridge)
-        addSubview(custom)
     }
     
     func setupConstraints() {
@@ -85,7 +74,6 @@ extension SheetView: ViewCode {
         preChorus.translatesAutoresizingMaskIntoConstraints = false
         chorus.translatesAutoresizingMaskIntoConstraints = false
         bridge.translatesAutoresizingMaskIntoConstraints = false
-        custom.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             verse.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
@@ -106,12 +94,7 @@ extension SheetView: ViewCode {
             bridge.topAnchor.constraint(equalTo: verse.bottomAnchor, constant: 30),
             bridge.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
             bridge.widthAnchor.constraint(equalToConstant: 85),
-            bridge.heightAnchor.constraint(equalToConstant: 44),
-
-            custom.topAnchor.constraint(equalTo: preChorus.bottomAnchor, constant: 30),
-            custom.leadingAnchor.constraint(equalTo: bridge.trailingAnchor, constant: 20),
-            custom.widthAnchor.constraint(equalToConstant: 85),
-            custom.heightAnchor.constraint(equalToConstant: 44)
+            bridge.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
     

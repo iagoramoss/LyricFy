@@ -120,8 +120,16 @@ class CompositionScreenController: UIViewController {
             self.editPart(part: part)
         }
         
+        if #available(iOS 16.0, *) {
+            sheetVC.sheetPresentationController?.detents = [.custom(resolver: { _ in
+                return 200
+            })]
+        } else {
+            sheetVC.sheetPresentationController?.detents = [.medium()]
+        }
+        
         sheetVC.modalPresentationStyle = .pageSheet
-        sheetVC.sheetPresentationController?.detents = [.medium()]
+        
         sheetVC.sheetPresentationController?.prefersGrabberVisible = true
         present(sheetVC, animated: true)
     }
@@ -160,8 +168,10 @@ extension CompositionScreenController: PartTableView {
                    numberOfRowsInSection section: Int) -> Int {
 
         if viewModel.parts.isEmpty {
+            partView?.imageView.isHidden = false
             partView?.placeholder.isHidden = false
         } else {
+            partView?.imageView.isHidden = true
             partView?.placeholder.isHidden = true
         }
         return viewModel.parts.count

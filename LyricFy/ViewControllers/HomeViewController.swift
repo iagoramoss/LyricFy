@@ -29,17 +29,16 @@ class HomeViewController: UIViewController {
     }
     
     private func setupView() {
+        setupNavigationBar()
+        
         screen.collectionProjects.delegate = self
         screen.collectionProjects.dataSource = self
-        
-        screen.collectionProjects.reloadData()
         
         view.backgroundColor = .colors(name: .bgColor)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupNavigationBar()
         
         viewModel.updateProjects()
         screen.collectionProjects.reloadData()
@@ -50,8 +49,7 @@ class HomeViewController: UIViewController {
         
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.largeTitleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.colors(name: .buttonsColor)!,
-            NSAttributedString.Key.font: .fontCustom( fontName: .ralewayBold, size: 45) ?? UIFont.systemFont(ofSize: 45)
+            NSAttributedString.Key.foregroundColor: UIColor.colors(name: .buttonsColor)!
         ]
     }
     
@@ -95,7 +93,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         
         let projectDate = viewModel.projects[indexPath.row - 1].createdAt
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy"
+        dateFormatter.dateFormat = "MM/dd/yyyy"
         let dateString = dateFormatter.string(from: projectDate)
         
         cell.nameProject.text = viewModel.projects[indexPath.row - 1].name
