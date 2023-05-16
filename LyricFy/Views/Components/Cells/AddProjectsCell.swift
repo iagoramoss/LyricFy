@@ -17,7 +17,7 @@ class AddProjectsCell: UICollectionViewCell {
         projectComponent.translatesAutoresizingMaskIntoConstraints = false
         projectComponent.layer.cornerRadius = 28
         projectComponent.layer.borderWidth = 1
-        projectComponent.layer.borderColor = UIColor.colors(name: .buttonsColor)?.cgColor
+        projectComponent.layer.borderColor = UIColor.colors(name: .cellsColor)?.cgColor
         projectComponent.backgroundColor = .colors(name: .sheetColor)
         projectComponent.layer.cornerRadius = 28
         return projectComponent

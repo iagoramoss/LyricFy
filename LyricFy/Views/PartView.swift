@@ -12,6 +12,12 @@ class PartView: UIView, ViewCode {
     
     var delegate: PartTableView
 
+    lazy var imageView: UIImageView = {
+           let image = UIImageView()
+           image.image = UIImage(named: "imagePlaceholder")
+           return image
+        }()
+
     lazy var placeholder: UILabel = {
         let label = UILabel()
         label.text = "You haven't written any part of the song."
@@ -38,21 +44,28 @@ class PartView: UIView, ViewCode {
     
     func setupHierarchy() {
         addSubview(tableView)
+        tableView.addSubview(imageView)
         tableView.addSubview(placeholder)
     }
     
     func setupConstraints() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         placeholder.translatesAutoresizingMaskIntoConstraints = false
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
             tableView.topAnchor.constraint(equalTo: topAnchor),
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
+            imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            imageView.widthAnchor.constraint(equalToConstant: 28),
+            imageView.heightAnchor.constraint(equalToConstant: 28),
 
             placeholder.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            placeholder.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+            placeholder.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10)
         ])
     }
     
