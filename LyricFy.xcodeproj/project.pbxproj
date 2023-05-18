@@ -566,7 +566,7 @@
 				INFOPLIST_FILE = LyricFy/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Lyra;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "For using microphone";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Lyra needs access to a microphone to record the audio of your composition";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -600,7 +600,7 @@
 				INFOPLIST_FILE = LyricFy/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Lyra;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "For using microphone";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Lyra needs access to a microphone to record the audio of your composition";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
