@@ -29,7 +29,7 @@
 		673574FD2A05803900C75DB6 /* PartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673574FC2A05803900C75DB6 /* PartCell.swift */; };
 		673574FF2A05805F00C75DB6 /* UIFont+PreferredFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673574FE2A05805F00C75DB6 /* UIFont+PreferredFont.swift */; };
 		6735E3FF2A140B32005F9BF7 /* ViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6735E3FE2A140B32005F9BF7 /* ViewCode.swift */; };
-		67E0A7062A0C12AD00ED72C1 /* CompositionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E0A7052A0C12AD00ED72C1 /* CompositionViewModel.swift */; };
+		6735E4002A180349005F9BF7 /* CompositionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E0A7052A0C12AD00ED72C1 /* CompositionViewModel.swift */; };
 		67F7BE542A0F5825000ACA06 /* LyricsEditingScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F7BE532A0F5825000ACA06 /* LyricsEditingScreenView.swift */; };
 		67F7BE562A0F583E000ACA06 /* NSAttributedString+defaultParagraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F7BE552A0F583E000ACA06 /* NSAttributedString+defaultParagraph.swift */; };
 		67F7BE5E2A0F58D4000ACA06 /* Composition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F7BE5B2A0F58D4000ACA06 /* Composition.swift */; };
@@ -388,6 +388,7 @@
 				0D2CB1112A0AC13C0080CB8A /* CoreDataManager.swift in Sources */,
 				9F74D1342A04A3B8001017B2 /* VersionsView.swift in Sources */,
 				0D2CB0DE29FC4F560080CB8A /* HomeViewModel.swift in Sources */,
+				6735E4002A180349005F9BF7 /* CompositionViewModel.swift in Sources */,
 				67227F1829FC50A300E1166C /* Alert.swift in Sources */,
 				7882169129FD9D340032A177 /* CGFloat+Screen.swift in Sources */,
 				673574FB2A05801F00C75DB6 /* PartView.swift in Sources */,
@@ -397,7 +398,6 @@
 				67F7BE602A0F58D4000ACA06 /* Version.swift in Sources */,
 				0D2CB11F2A0EB8670080CB8A /* Fonts.swift in Sources */,
 				9F74D1362A04A4A2001017B2 /* VersionsViewController.swift in Sources */,
-				67E0A7062A0C12AD00ED72C1 /* CompositionViewModel.swift in Sources */,
 				9F35359229FEE7A600F24950 /* SheetViewController.swift in Sources */,
 				9F8F0B982A0AE6F40063297F /* RecorderView.swift in Sources */,
 				0D2CB1142A0AC1CA0080CB8A /* DAOService.swift in Sources */,
@@ -560,13 +560,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = A7SRF7ZP35;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LyricFy/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Lyra;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "For using microphone";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Lyra needs access to a microphone to record the audio of your composition";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -576,7 +576,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.br.lyra;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -594,13 +594,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = A7SRF7ZP35;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LyricFy/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Lyra;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "For using microphone";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Lyra needs access to a microphone to record the audio of your composition";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -610,7 +610,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.br.lyra;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
