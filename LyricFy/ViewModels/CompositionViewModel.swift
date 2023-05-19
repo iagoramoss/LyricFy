@@ -18,6 +18,7 @@ class CompositionViewModel: ObservableObject {
     private let composition: Composition
     private let service = DAOService()
     private var selectedVersionID: UUID?
+    private var lastVersion = 0
     
     init(composition: Composition) {
         self.composition = composition
@@ -45,6 +46,8 @@ extension CompositionViewModel {
             return v1 < v2
         }
         
+        lastVersion = Int(versions.last!.name.split(separator: " ").last!)!
+        
         return versions
     }
     
@@ -53,7 +56,7 @@ extension CompositionViewModel {
     }
     
     func createVersion() {
-        service.createVersionWithCompositionID(name: "Version \(versions.count + 1)",
+        service.createVersionWithCompositionID(name: "Version \(lastVersion + 1)",
                                                compositionID: composition.id,
                                                parts: parts)
         
