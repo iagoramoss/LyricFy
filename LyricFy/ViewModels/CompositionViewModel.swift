@@ -68,7 +68,7 @@ extension CompositionViewModel {
         service.deleteVersionByID(versionID: selectedVersionID!)
         
         updateVersions()
-        switchVersion(to: index - 1)
+        switchVersion(to: max(index - 1, 0))
     }
     
     func deleteProject() {
