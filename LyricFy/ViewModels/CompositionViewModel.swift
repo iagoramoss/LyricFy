@@ -65,14 +65,10 @@ extension CompositionViewModel {
     }
     
     func deleteVersion() {
-        let index = versions.firstIndex {
-            $0.id == self.selectedVersionID!
-        }!
-        
         service.deleteVersionByID(versionID: selectedVersionID!)
-        
         updateVersions()
-        switchVersion(to: max(index - 1, 0))
+        
+        switchVersion(to: max(selectedVersionIndex - 1, 0))
     }
     
     func deleteProject() {
@@ -80,17 +76,11 @@ extension CompositionViewModel {
     }
     
     func switchVersion(to version: Int) {
+        selectedVersionIndex = version
         selectedVersionID = versions[version].id
-        parts = getVersionParts(versionId: selectedVersionID!)
-        
-        selectedVersionID = versions[version].id
-        updateParts()
-        
         selectedVersionName = versions[version].name
         
-        selectedVersionIndex = versions.firstIndex {
-            $0.id == self.selectedVersionID
-        }!
+        updateParts()
     }
     
     // MARK: - Part functions
