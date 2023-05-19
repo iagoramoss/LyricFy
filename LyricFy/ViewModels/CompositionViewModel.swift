@@ -13,6 +13,7 @@ class CompositionViewModel: ObservableObject {
     @Published private(set) var versions: [Version] = []
     @Published private(set) var parts: [Part] = []
     @Published private(set) var selectedVersionIndex = 0
+    @Published private(set) var selectedVersionName = ""
     
     private let composition: Composition
     private let service = DAOService()
@@ -81,6 +82,8 @@ extension CompositionViewModel {
         
         selectedVersionID = versions[version].id
         updateParts()
+        
+        selectedVersionName = versions[version].name
         
         selectedVersionIndex = versions.firstIndex {
             $0.id == self.selectedVersionID

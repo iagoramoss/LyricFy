@@ -11,9 +11,9 @@ import UIKit
 class CompositionHeader: UITableViewHeaderFooterView, ViewCode {
     static let reuseIdentifier = String(describing: CompositionHeader.self)
     
-    var version: Int = 1 {
+    var versionName: String = "" {
         didSet {
-            versionLabel.text = "Version \(version)"
+            versionLabel.text = versionName
         }
     }
     
