@@ -143,10 +143,28 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
                 textFieldDefaultText: "Project",
                 projectName: nil,
                 action: { [weak self] projectName in
-                    self?.viewModel.createProject(name: projectName)
+                    guard self != nil else { return }
+                    
+                    var projectName = projectName
+                    
+                    if projectName.trimmingCharacters(in: .whitespaces).isEmpty {
+                        let projectNames = self!.viewModel.projects.map { $0.name }
+                        var untitledCount = 0
+                        
+                        repeat {
+                            projectName = "Untitled"
+                            
+                            if untitledCount > 0 {
+                                projectName += " \(untitledCount)"
+                            }
+                            
+                            untitledCount += 1
+                        } while projectNames.contains(projectName)
+                    }
+                    
+                    self!.viewModel.createProject(name: projectName)
                     collectionView.reloadData()
                     
-                    guard self != nil else { return }
                     self!.navigateToComposition(composition: self!.viewModel.projects.last!)
                 }
             ), animated: true, completion: nil)
@@ -196,6 +214,10 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
                 textFieldDefaultText: project.name,
                 projectName: project.name,
                 action: { [weak self] name in
+                    if name.trimmingCharacters(in: .whitespaces).isEmpty {
+                        return
+                    }
+                    
                     self?.viewModel.updateProjectName(projectId: project.id, newName: name)
                     collectionView.reloadData()
                 }
