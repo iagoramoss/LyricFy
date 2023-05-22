@@ -205,11 +205,12 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         _ collectionView: UICollectionView,
         project: Composition
     ) -> UIAction {
-        return UIAction(title: "Edit name",
+        return UIAction(title: "Rename Project",
                         image: UIImage(systemName: "pencil"),
                         state: .off) { [weak self] _ in
             self?.present(Alert(
                 title: "Rename Project",
+                actionButtonLabel: "Rename",
                 textFieldPlaceholder: nil,
                 textFieldDefaultText: project.name,
                 projectName: project.name,

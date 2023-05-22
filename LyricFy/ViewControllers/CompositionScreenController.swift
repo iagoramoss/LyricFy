@@ -33,6 +33,11 @@ class CompositionScreenController: UIViewController {
         navigationController?.navigationBar.tintColor = .colors(name: .barButtonColor)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.reloadData()
+    }
+    
     private func reloadData() {
         partView?.tableView.reloadData()
     }
@@ -112,12 +117,14 @@ class CompositionScreenController: UIViewController {
     func onTappedButtonAdd() {
         let sheetVC = SheetViewController()
         
-        sheetVC.action = { partType in
-            self.dismiss(animated: true)
-            self.viewModel.createPart(type: partType)
+        sheetVC.action = { [weak self] partType in
+            self?.dismiss(animated: true)
+            guard self != nil else { return }
             
-            let part = self.viewModel.parts.last!
-            self.editPart(part: part)
+            self!.viewModel.createPart(type: partType)
+            
+            let part = self!.viewModel.parts.last!
+            self!.editPart(part: part)
         }
         
         if #available(iOS 16.0, *) {
