@@ -184,6 +184,7 @@ class DAOService {
             entityPart.index = Int32(part.index)
             entityPart.type = part.type
             entityPart.lyric = part.lyrics
+            entityPart.audioURL = part.audioURL
             entityPart.version = version
             
             return entityPart
@@ -194,17 +195,26 @@ class DAOService {
         manager.save()
     }
     
-    func updatePartByID(partID: UUID, index: Int, type: String, lyric: String) {
+    func updatePartByID(partID: UUID,
+                        index: Int,
+                        type: String,
+                        lyric: String,
+                        audioURL: URL?) {
         guard let part = getPartByID(id: partID) else { return }
 
         part.index = Int32(index)
         part.type = type
         part.lyric = lyric
+        part.audioURL = audioURL
         
         manager.save()
     }
 
-    func createPartByVersionID(index: Int, type: String, lyric: String, versionID: UUID) {
+    func createPartByVersionID(index: Int,
+                               type: String,
+                               lyric: String,
+                               audioURL: URL?,
+                               versionID: UUID) {
         guard let version = getVersionEntityByID(id: versionID) else { return }
         
         let part = PartEntity(context: manager.context)
@@ -221,6 +231,66 @@ class DAOService {
         guard let part = getPartByID(id: partID) else { return }
         
         manager.context.delete(part)
+        manager.save()
+    }
+    
+    func getAudioReferencCount(fileURL url: URL) -> Int? {
+        guard let parts = getPartEntities() else { return nil }
+        
+        return parts.reduce(0) { (count, part) in
+            return part.audioURL == url
+            ? count + 1
+            : count
+        }
+    }
+    
+    // MARK: - Audio utility functions
+    private func getAudioReferenceEntities() -> [AudioReference]? {
+        let request: NSFetchRequest<AudioReference> = AudioReference.fetchRequest()
+
+        do {
+            return try manager.context.fetch(request)
+        } catch {
+            #if DEBUG
+            print("Error while retrieving versions: \(error.localizedDescription)")
+            #endif
+            return nil
+        }
+    }
+    
+    private func getAudioReferenceEntityByURL(url: URL) -> AudioReference? {
+        guard let audios = getAudioReferenceEntities() else { return nil }
+        
+        for audioEntity in audios where audioEntity.audioReference == url {
+            return audioEntity
+        }
+        
+        return nil
+    }
+    
+    func audioReferenceExists(fileURL url: URL) -> Bool? {
+        guard let parts = getPartEntities() else { return nil }
+        
+        for part in parts where part.audioURL == url {
+            return true
+        }
+        
+        return false
+    }
+    
+    func saveAudioReference(fileURL url: URL) {
+        guard !(audioReferenceExists(fileURL: url) == false) else { return }
+        
+        let audio = AudioReference(context: manager.context)
+        audio.audioReference = url
+        
+        manager.save()
+    }
+    
+    func deleteAudioReference(fileURL url: URL) {
+        guard let audio = getAudioReferenceEntityByURL(url: url) else { return }
+        
+        manager.context.delete(audio)
         manager.save()
     }
 }

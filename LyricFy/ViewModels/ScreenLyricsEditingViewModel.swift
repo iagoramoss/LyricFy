@@ -29,6 +29,7 @@ class ScreenLyricsEditingViewModel {
         didEditLyrics(Part(id: compositionPart.id,
                            index: compositionPart.index,
                            type: lyricsType,
-                           lyrics: lyricsText))
+                           lyrics: lyricsText,
+                           audioURL: nil))
     }
 }
