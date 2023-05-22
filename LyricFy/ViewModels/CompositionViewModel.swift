@@ -13,10 +13,12 @@ class CompositionViewModel: ObservableObject {
     @Published private(set) var versions: [Version] = []
     @Published private(set) var parts: [Part] = []
     @Published private(set) var selectedVersionIndex = 0
+    @Published private(set) var selectedVersionName = ""
     
     private let composition: Composition
     private let service = DAOService()
     private var selectedVersionID: UUID?
+    private var lastVersion = 0
     
     init(composition: Composition) {
         self.composition = composition
@@ -44,6 +46,8 @@ extension CompositionViewModel {
             return v1 < v2
         }
         
+        lastVersion = Int(versions.last!.name.split(separator: " ").last!)!
+        
         return versions
     }
     
@@ -52,7 +56,7 @@ extension CompositionViewModel {
     }
     
     func createVersion() {
-        service.createVersionWithCompositionID(name: "Version \(versions.count + 1)",
+        service.createVersionWithCompositionID(name: "Version \(lastVersion + 1)",
                                                compositionID: composition.id,
                                                parts: parts)
         
@@ -61,14 +65,10 @@ extension CompositionViewModel {
     }
     
     func deleteVersion() {
-        let index = versions.firstIndex {
-            $0.id == self.selectedVersionID!
-        }!
-        
         service.deleteVersionByID(versionID: selectedVersionID!)
-        
         updateVersions()
-        switchVersion(to: index - 1)
+        
+        switchVersion(to: max(selectedVersionIndex - 1, 0))
     }
     
     func deleteProject() {
@@ -76,15 +76,11 @@ extension CompositionViewModel {
     }
     
     func switchVersion(to version: Int) {
+        selectedVersionIndex = version
         selectedVersionID = versions[version].id
-        parts = getVersionParts(versionId: selectedVersionID!)
+        selectedVersionName = versions[version].name
         
-        selectedVersionID = versions[version].id
         updateParts()
-        
-        selectedVersionIndex = versions.firstIndex {
-            $0.id == self.selectedVersionID
-        }!
     }
     
     // MARK: - Part functions
