@@ -25,6 +25,7 @@ class ScreenLyricsEditingViewModel {
          audioFileManager: AudioFileManager
     ) {
         self.compositionPart = compositionPart
+        self.audioURL = compositionPart.audioURL
         self.lyricsText = compositionPart.lyrics
         self.lyricsType = compositionPart.type
         
@@ -33,9 +34,14 @@ class ScreenLyricsEditingViewModel {
         self.audioFileManager = audioFileManager
         
         // Check if there is an audioURL and if it exists
-        if let url = compositionPart.audioURL, audioFileManager.fileExists(fileURL: url) {
-            audioURL = url
-            audioManager.prepareToPlay()
+        print("Creating with URL: \(audioURL)")
+        if let url = compositionPart.audioURL {
+            if audioFileManager.fileExists(fileURL: url) {
+                audioURL = url
+                audioManager.prepareToPlay()
+            }
+        } else {
+            audioManager.prepateToRecord()
         }
     }
     

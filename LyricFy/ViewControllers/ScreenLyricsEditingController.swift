@@ -19,6 +19,12 @@ class ScreenLyricsEditingController: UIViewController {
     init(viewModel: ScreenLyricsEditingViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        
+        let urls = DataAccessManager.shared.getAudioUrlsFromReferenceTable()
+        
+        urls.map { data in
+            print("URL: \(data)")
+        }
     }
     
     override func viewDidLoad() {

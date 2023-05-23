@@ -51,6 +51,14 @@ class AudioController: NSObject, AVAudioPlayerDelegate, AVAudioRecorderDelegate 
         session.requestRecordPermission({ _ in })
     }
     
+    func prepateToRecord() {
+        stopPlayingAudio()
+        stopRecording()
+        
+        audioControlState = .preparedToRecord
+        setAudioCategory(.playAndRecord)
+    }
+    
     func prepareToPlay() {
         stopPlayingAudio()
         stopRecording()

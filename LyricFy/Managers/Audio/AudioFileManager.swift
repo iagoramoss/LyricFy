@@ -31,7 +31,7 @@ final class LocalAudioFileManager: AudioFileManager {
     // MARK: - Actions
     func saveAudioInReferenceTable(audioURL: URL) {
         guard persistenceManager.audioReferenceExistsInTable(fileURL: audioURL) == false
-        else { return print("Reference already exits.") }
+        else { return print("Reference already exits in table.") }
         
         persistenceManager.saveAudioReferenceInTable(fileURL: audioURL)
     }
