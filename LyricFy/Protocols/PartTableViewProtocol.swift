@@ -8,5 +8,5 @@
 import Foundation
 import UIKit
 
-protocol PartTableView: UITableViewDataSource, UITableViewDelegate, UITableViewDragDelegate {
+protocol PartTableView: UITableViewDataSource, UITableViewDelegate, UITableViewDragDelegate, UITableViewDropDelegate {
 }
