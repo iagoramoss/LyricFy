@@ -10,8 +10,11 @@ import CoreData
 
 class DataAccessManager {
     
+    private init() {}
+    
     private let manager = CoreDataManager.shared
     
+    public static let shared = DataAccessManager()
     
     // MARK: - Composition utility functions
     private func getProjectEntities() -> [ProjectEntity]? {
@@ -20,9 +23,9 @@ class DataAccessManager {
         do {
             return try manager.context.fetch(request)
         } catch {
-#if DEBUG
+            #if DEBUG
             print("Error while retrieving projects: \(error.localizedDescription)")
-#endif
+            #endif
             return nil
         }
     }
@@ -76,17 +79,20 @@ class DataAccessManager {
         project.name = newName
         manager.save()
     }
+}
+
+// MARK: - Version utility functions
+extension DataAccessManager {
     
-    // MARK: - Version utility functions
     private func getVersionEntities() -> [VersionEntity]? {
         let request: NSFetchRequest<VersionEntity> = VersionEntity.fetchRequest()
         
         do {
             return try manager.context.fetch(request)
         } catch {
-#if DEBUG
+            #if DEBUG
             print("Error while retrieving versions: \(error.localizedDescription)")
-#endif
+            #endif
             return nil
         }
     }
@@ -239,9 +245,10 @@ extension DataAccessManager: PartPersistenceManager {
     }
 }
 
-extension DataAccessManager {
-    // MARK: - Audio utility functions
-    func getAudioReferencCount(fileURL url: URL) -> Int? {
+// MARK: - Audio utility functions
+extension DataAccessManager: ReferencePersistenceManager {
+    
+    func getAudioReferenceCount(fileURL url: URL) -> Int? {
         guard let parts = getPartEntities() else { return nil }
         
         return parts.reduce(0) { (count, part) in
@@ -286,7 +293,7 @@ extension DataAccessManager {
         return urls
     }
     
-    func audioReferenceExists(fileURL url: URL) -> Bool? {
+    func audioReferenceExistsInTable(fileURL url: URL) -> Bool? {
         guard let parts = getPartEntities() else { return nil }
         
         for part in parts where part.audioURL == url {
@@ -296,8 +303,8 @@ extension DataAccessManager {
         return false
     }
     
-    func saveAudioReference(fileURL url: URL) {
-        guard !(audioReferenceExists(fileURL: url) == false) else { return }
+    func saveAudioReferenceInTable(fileURL url: URL) {
+        guard !(audioReferenceExistsInTable(fileURL: url) == false) else { return }
         
         let audio = AudioReference(context: manager.context)
         audio.audioReference = url

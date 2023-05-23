@@ -18,7 +18,6 @@ class ScreenLyricsEditingController: UIViewController {
     
     init(viewModel: ScreenLyricsEditingViewModel) {
         self.viewModel = viewModel
-        self.viewModel.audioManager.prepareViewModel()
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -42,24 +41,34 @@ class ScreenLyricsEditingController: UIViewController {
         self.view = screen
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        viewModel.prepareToExit()
+    }
+    
     @objc
     func actionRecord() {
-        viewModel.audioManager.startRecording()
+        viewModel.startRecording()
     }
     
     @objc
     func actionStopRecord() {
-        viewModel.audioManager.stopRecording()
+        viewModel.stopRecording()
     }
     
     @objc
     func actionPlay() {
-        viewModel.audioManager.playAudio()
+        viewModel.playAudio()
+    }
+    
+    @objc
+    func actionStopPlaying() {
+        viewModel.stopPlaying()
     }
 
     @objc
     func actionPause() {
-        viewModel.audioManager.pauseAudio()
+        viewModel.pauseAudio()
     }
     
     @objc
@@ -72,7 +81,7 @@ class ScreenLyricsEditingController: UIViewController {
                           actionButtonLabel: "Delete",
                           actionButtonStyle: .destructive,
                           preferredStyle: .alert) { [weak self] in
-            self?.viewModel.audioManager.deleteAudio()
+            self?.viewModel.deleteAudio()
             self?.screen?.recorderView.audioDeleted()
         }
         
@@ -82,21 +91,11 @@ class ScreenLyricsEditingController: UIViewController {
     private func audioStateChanged(state: AudioState) {
         switch state {
         case .recording:
-            screen?.recorderView.labelRecording.isHidden = false
-            screen?.recorderView.labelTimer.isHidden = false
-            screen?.recorderView.recorderButton.layer.cornerRadius = 10
-            screen?.recorderView.recorderButton.backgroundColor = .red
             screen?.recorderView.recorderButton.addTarget(self,
                                                           action: #selector(actionStopRecord),
                                                           for: .touchUpInside)
             
         case .preparedToRecord:
-            screen?.recorderView.playButton.isHidden = true
-            screen?.recorderView.trashButton.isHidden = true
-            screen?.recorderView.recorderButton.layer.cornerRadius = 25
-            screen?.recorderView.recorderButton.backgroundColor = .red
-            screen?.recorderView.recorderButton.isHidden = false
-            screen?.recorderView.labelPlay.isHidden = true
             screen?.recorderView.recorderButton.addTarget(self,
                                                           action: #selector(actionRecord),
                                                           for: .touchUpInside)
@@ -174,7 +173,7 @@ extension ScreenLyricsEditingController: UITextViewDelegate {
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        viewModel.saveLyricsEdition()
+        viewModel.saveLyricsEdition(completion: nil)
     }
 }
 

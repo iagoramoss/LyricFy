@@ -9,11 +9,11 @@ import Foundation
 
 class HomeViewModel {
     
-    private var dataService: DAOService
+    private var dataService: DataAccessManager
     
     var projects: [Composition]
 
-    init(dataService: DAOService) {
+    init(dataService: DataAccessManager) {
         self.dataService = dataService
         self.projects = dataService.getCompositions()
     }

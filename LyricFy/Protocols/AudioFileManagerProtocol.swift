@@ -1,5 +1,5 @@
 //
-//  FileManagerProtocol.swift
+//  AudioFileManagerProtocol.swift
 //  LyricFy
 //
 //  Created by Afonso Lucas on 23/05/23.
@@ -13,7 +13,7 @@ protocol AudioFileManager {
     func getAudioFileUrl(audioID: UUID) -> URL
     
     func saveAudioInReferenceTable(audioURL: URL)
-    func deleteAudioFromReferenceTable(fileURL: URL)
+    func deleteAudioFromSystem(fileURL: URL)
     
     func cleanAudioFilesFromSystemAndReferenceTable()
 }

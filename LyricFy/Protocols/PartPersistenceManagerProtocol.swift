@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+protocol PartPersistenceManager {
+    
+    func updatePartByID(partID: UUID,
+                        index: Int,
+                        type: String,
+                        lyric: String,
+                        audioURL: URL?)
+}

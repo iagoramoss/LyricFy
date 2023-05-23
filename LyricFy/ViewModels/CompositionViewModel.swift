@@ -16,7 +16,7 @@ class CompositionViewModel: ObservableObject {
     @Published private(set) var selectedVersionName = ""
     
     private let composition: Composition
-    private let service = DAOService()
+    private let service = DataAccessManager.shared
     private var selectedVersionID: UUID?
     private var lastVersion = 0
     
