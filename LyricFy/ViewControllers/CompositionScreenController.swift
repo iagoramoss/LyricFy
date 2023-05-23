@@ -316,7 +316,7 @@ extension CompositionScreenController: PartTableView {
         
         guard let header = header as? CompositionHeader else { return header }
         
-        header.version = viewModel.selectedVersionIndex + 1
+        header.versionName = viewModel.selectedVersionName
         return header
     }
     
