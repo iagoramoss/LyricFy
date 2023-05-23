@@ -18,11 +18,6 @@ class HomeViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupView()
-    }
-    
     override func loadView() {
         super.loadView()
         self.view = screen
@@ -39,6 +34,7 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupView()
         
         viewModel.updateProjects()
         screen.collectionProjects.reloadData()
@@ -48,9 +44,13 @@ class HomeViewController: UIViewController {
         title = "Projects"
         
         navigationController?.navigationBar.prefersLargeTitles = true
+        
         navigationController?.navigationBar.largeTitleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.colors(name: .buttonsColor)!
+            NSAttributedString.Key.foregroundColor: UIColor.colors(name: .buttonsColor)!,
+            NSAttributedString.Key.font: UIFont.customFont(fontName: .ralewayBold, style: .largeTitle)
         ]
+        
+        navigationController?.navigationBar.barTintColor = UIColor.colors(name: .bgColor)
     }
     
     private func navigateToComposition(composition: Composition) {

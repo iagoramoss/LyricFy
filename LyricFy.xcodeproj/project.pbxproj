@@ -16,7 +16,6 @@
 		0D2CB11B2A0EB68F0080CB8A /* Raleway-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D2CB1182A0EB68E0080CB8A /* Raleway-Bold.ttf */; };
 		0D2CB11C2A0EB68F0080CB8A /* Raleway-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D2CB1192A0EB68F0080CB8A /* Raleway-SemiBold.ttf */; };
 		0D2CB11D2A0EB68F0080CB8A /* Raleway-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D2CB11A2A0EB68F0080CB8A /* Raleway-Medium.ttf */; };
-		0D2CB11F2A0EB8670080CB8A /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2CB11E2A0EB8670080CB8A /* Fonts.swift */; };
 		0D7EF1522A12C5E1001DE424 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2CB0D629FC40D30080CB8A /* HomeViewController.swift */; };
 		6718403D2A05945C00A92AAF /* PartTableViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6718403C2A05945C00A92AAF /* PartTableViewProtocol.swift */; };
 		67227EFE29F85EDE00E1166C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67227EFD29F85EDE00E1166C /* AppDelegate.swift */; };
@@ -27,7 +26,7 @@
 		67227F1829FC50A300E1166C /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67227F1729FC50A300E1166C /* Alert.swift */; };
 		673574FB2A05801F00C75DB6 /* PartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673574FA2A05801F00C75DB6 /* PartView.swift */; };
 		673574FD2A05803900C75DB6 /* PartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673574FC2A05803900C75DB6 /* PartCell.swift */; };
-		673574FF2A05805F00C75DB6 /* UIFont+PreferredFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673574FE2A05805F00C75DB6 /* UIFont+PreferredFont.swift */; };
+		673574FF2A05805F00C75DB6 /* UIFont+CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673574FE2A05805F00C75DB6 /* UIFont+CustomFont.swift */; };
 		6735E3FF2A140B32005F9BF7 /* ViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6735E3FE2A140B32005F9BF7 /* ViewCode.swift */; };
 		6735E4002A180349005F9BF7 /* CompositionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E0A7052A0C12AD00ED72C1 /* CompositionViewModel.swift */; };
 		67F7BE542A0F5825000ACA06 /* LyricsEditingScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F7BE532A0F5825000ACA06 /* LyricsEditingScreenView.swift */; };
@@ -65,7 +64,6 @@
 		0D2CB1182A0EB68E0080CB8A /* Raleway-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Bold.ttf"; sourceTree = "<group>"; };
 		0D2CB1192A0EB68F0080CB8A /* Raleway-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-SemiBold.ttf"; sourceTree = "<group>"; };
 		0D2CB11A2A0EB68F0080CB8A /* Raleway-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Medium.ttf"; sourceTree = "<group>"; };
-		0D2CB11E2A0EB8670080CB8A /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		6718403C2A05945C00A92AAF /* PartTableViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartTableViewProtocol.swift; sourceTree = "<group>"; };
 		67227EFA29F85EDE00E1166C /* LyricFy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LyricFy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67227EFD29F85EDE00E1166C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -77,7 +75,7 @@
 		67227F1729FC50A300E1166C /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		673574FA2A05801F00C75DB6 /* PartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartView.swift; sourceTree = "<group>"; };
 		673574FC2A05803900C75DB6 /* PartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartCell.swift; sourceTree = "<group>"; };
-		673574FE2A05805F00C75DB6 /* UIFont+PreferredFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+PreferredFont.swift"; sourceTree = "<group>"; };
+		673574FE2A05805F00C75DB6 /* UIFont+CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+CustomFont.swift"; sourceTree = "<group>"; };
 		6735E3FE2A140B32005F9BF7 /* ViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCode.swift; sourceTree = "<group>"; };
 		67E0A7052A0C12AD00ED72C1 /* CompositionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionViewModel.swift; sourceTree = "<group>"; };
 		67F7BE532A0F5825000ACA06 /* LyricsEditingScreenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LyricsEditingScreenView.swift; sourceTree = "<group>"; };
@@ -132,7 +130,6 @@
 				0D2CB1182A0EB68E0080CB8A /* Raleway-Bold.ttf */,
 				0D2CB11A2A0EB68F0080CB8A /* Raleway-Medium.ttf */,
 				0D2CB1192A0EB68F0080CB8A /* Raleway-SemiBold.ttf */,
-				0D2CB11E2A0EB8670080CB8A /* Fonts.swift */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -226,7 +223,7 @@
 			children = (
 				67F7BE552A0F583E000ACA06 /* NSAttributedString+defaultParagraph.swift */,
 				7882169029FD9D340032A177 /* CGFloat+Screen.swift */,
-				673574FE2A05805F00C75DB6 /* UIFont+PreferredFont.swift */,
+				673574FE2A05805F00C75DB6 /* UIFont+CustomFont.swift */,
 				78F391DF2A02F3400097884C /* UITextView+Combine.swift */,
 				9F46596C2A0EB4840032B471 /* UIColor.swift */,
 			);
@@ -396,7 +393,6 @@
 				67F7BE542A0F5825000ACA06 /* LyricsEditingScreenView.swift in Sources */,
 				78F391DE2A02EF9F0097884C /* ScreenLyricsEditingViewModel.swift in Sources */,
 				67F7BE602A0F58D4000ACA06 /* Version.swift in Sources */,
-				0D2CB11F2A0EB8670080CB8A /* Fonts.swift in Sources */,
 				9F74D1362A04A4A2001017B2 /* VersionsViewController.swift in Sources */,
 				9F35359229FEE7A600F24950 /* SheetViewController.swift in Sources */,
 				9F8F0B982A0AE6F40063297F /* RecorderView.swift in Sources */,
@@ -408,7 +404,7 @@
 				67F7BE5F2A0F58D4000ACA06 /* Part.swift in Sources */,
 				673574FD2A05803900C75DB6 /* PartCell.swift in Sources */,
 				67F7BE562A0F583E000ACA06 /* NSAttributedString+defaultParagraph.swift in Sources */,
-				673574FF2A05805F00C75DB6 /* UIFont+PreferredFont.swift in Sources */,
+				673574FF2A05805F00C75DB6 /* UIFont+CustomFont.swift in Sources */,
 				0D2CB0DA29FC41210080CB8A /* ProjectsCell.swift in Sources */,
 				78D0E8532A12B2AF00C80579 /* AudioPermissionAlertAlertDelegate.swift in Sources */,
 				9F46596D2A0EB4840032B471 /* UIColor.swift in Sources */,
