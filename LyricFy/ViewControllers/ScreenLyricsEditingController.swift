@@ -34,6 +34,8 @@ class ScreenLyricsEditingController: UIViewController {
                                                    action: #selector(actionTrash),
                                                    for: .touchUpInside)
         viewModel.audioManager.delegete = self
+        
+        screen?.placeHolder.isHidden = viewModel.lyricsText.isEmpty ? false : true
     }
     
     override func loadView() {
@@ -166,6 +168,13 @@ extension ScreenLyricsEditingController: UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
+        
+        if !textView.text.isEmpty {
+            screen?.placeHolder.isHidden = true
+        } else {
+            screen?.placeHolder.isHidden = false
+        }
+        
         guard let textView = screen?.textView else { return }
         
         let newSize = textView.sizeThatFits(
