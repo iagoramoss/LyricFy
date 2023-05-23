@@ -1,5 +1,5 @@
 //
-//  AudioManager.swift
+//  AudioController.swift
 //  LyricFy
 //
 //  Created by Afonso Lucas on 08/05/23.
@@ -8,61 +8,55 @@
 import Foundation
 import AVFoundation
 
-typealias AudioControl = AVAudioPlayerDelegate & AVAudioRecorderDelegate
-
-class AudioManager: NSObject, AudioControl {
+class AudioController: NSObject, AVAudioPlayerDelegate, AVAudioRecorderDelegate {
     
-    @Published var audioControlState: AudioState
-    @Published var recordingTimeLabel: String?
+    public static let shared = AudioController()
     
-    private var fileManager: AudioFileManager
+    @Published private(set) var audioControlState: AudioState
+    @Published private(set) var recordingTimeLabel: String?
     
     private var session: AVAudioSession
     private var player: AVAudioPlayer?
     private var recorder: AVAudioRecorder?
     
     private var meterTimer: Timer?
-    private var audioID: UUID
     
     private var isAudioRecordingGranted: Bool {
         var granted = false
+        
         switch AVAudioSession.sharedInstance().recordPermission {
-        case AVAudioSession.RecordPermission.granted: granted = true
-        case AVAudioSession.RecordPermission.denied: granted = false
-        default: granted = false
+        case AVAudioSession.RecordPermission.granted:
+            granted = true
+        default:
+            granted = false
         }
         return granted
     }
     
     var delegete: AudioPermissionAlertDelegate?
     
-    var audioFilename: String {
-        "\(audioID).m4a"
-    }
-    
-    init(partID: UUID) {
+    private override init() {
         audioControlState = .preparedToRecord
-        audioID = partID
         session = AVAudioSession.sharedInstance()
-        fileManager = AudioFileManager.shared
         
         do {
             try session.setCategory(.playAndRecord, mode: .default)
             try session.setActive(true)
         } catch let error {
             #if DEBUG
-            print(error)
+            print("Error while setting up audio session: \(error.localizedDescription)")
             #endif
         }
-        session.requestRecordPermission({ print($0) })
+        
+        session.requestRecordPermission({ _ in })
     }
     
-    func prepareViewModel() {
-        if fileManager.fileExists(filename: audioFilename) {
-            audioControlState = .preparedToPlay
-            
-            setAudioCategory(.playback)
-        }
+    func prepareToPlay() {
+        stopPlayingAudio()
+        stopRecording()
+        
+        audioControlState = .preparedToPlay
+        setAudioCategory(.playback)
     }
     
     // MARK: - Utils
@@ -72,7 +66,7 @@ class AudioManager: NSObject, AudioControl {
             try session.setActive(true)
         } catch let error {
             #if DEBUG
-            print(error)
+            print("Error while setting up audio category: \(error.localizedDescription)")
             #endif
         }
     }
@@ -102,9 +96,9 @@ class AudioManager: NSObject, AudioControl {
 }
 
 // MARK: - Recording functions
-extension AudioManager {
+extension AudioController {
     
-    func startRecording() {
+    func startRecording(output: URL) {
         guard audioControlState == .preparedToRecord else { return }
         guard isAudioRecordingGranted else {
             delegete?.presetAudioPermissionDeniedAlert()
@@ -113,7 +107,6 @@ extension AudioManager {
         
         setAudioCategory(.playAndRecord)
         
-        let output = fileManager.getAudioFileUrl(filename: audioFilename)
         let settings = [
             AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
             AVSampleRateKey: 44100,
@@ -152,15 +145,21 @@ extension AudioManager {
 }
 
 // MARK: - Playing functions
-extension AudioManager {
+extension AudioController {
     
-    func playAudio() {
-        guard audioControlState == .preparedToPlay, fileManager.fileExists(filename: audioFilename) else { return }
+    func stopPlayingAudio() {
+        guard audioControlState == .playing else { return }
         
-        let fileURL = fileManager.getAudioFileUrl(filename: audioFilename)
+        player?.stop()
+        player = nil
+        audioControlState = .preparedToPlay
+    }
+    
+    func playAudio(audioURL: URL) {
+        guard audioControlState == .preparedToPlay else { return }
         
         do {
-            player = try AVAudioPlayer(contentsOf: fileURL)
+            player = try AVAudioPlayer(contentsOf: audioURL)
             player?.delegate = self
             player?.prepareToPlay()
             player?.play()
@@ -185,17 +184,5 @@ extension AudioManager {
         
         player?.play()
         audioControlState = .playing
-    }
-}
-
-// MARK: - File functions
-extension AudioManager {
-    
-    func deleteAudio() {
-        guard fileManager.fileExists(filename: audioFilename) else { return }
-        
-        fileManager.deleteAudioFile(filename: audioFilename)
-        audioControlState = .preparedToRecord
-        setAudioCategory(.playAndRecord)
     }
 }

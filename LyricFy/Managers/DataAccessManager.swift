@@ -8,9 +8,10 @@
 import Foundation
 import CoreData
 
-class DAOService {
+class DataAccessManager {
     
     private let manager = CoreDataManager.shared
+    
     
     // MARK: - Composition utility functions
     private func getProjectEntities() -> [ProjectEntity]? {
@@ -19,9 +20,9 @@ class DAOService {
         do {
             return try manager.context.fetch(request)
         } catch {
-            #if DEBUG
+#if DEBUG
             print("Error while retrieving projects: \(error.localizedDescription)")
-            #endif
+#endif
             return nil
         }
     }
@@ -79,13 +80,13 @@ class DAOService {
     // MARK: - Version utility functions
     private func getVersionEntities() -> [VersionEntity]? {
         let request: NSFetchRequest<VersionEntity> = VersionEntity.fetchRequest()
-
+        
         do {
             return try manager.context.fetch(request)
         } catch {
-            #if DEBUG
+#if DEBUG
             print("Error while retrieving versions: \(error.localizedDescription)")
-            #endif
+#endif
             return nil
         }
     }
@@ -94,14 +95,14 @@ class DAOService {
         guard let versions = getVersionEntities() else { return nil }
         return versions.first(where: { $0.id == id })
     }
-
+    
     func getCompositionVersionsByCompositionID(compositionID: UUID) -> [Version] {
         guard let versions = getVersionEntities() else { return [] }
         
         let compositionVersions = versions.filter { version in
             return version.project?.id == compositionID
         }
-
+        
         return compositionVersions.map { version in
             Version(id: version.id!,
                     name: version.version!)
@@ -128,20 +129,23 @@ class DAOService {
             
             return currentPart
         }
-
+        
         version.parts = NSSet(array: compositionParts)
         
         manager.save()
     }
-
+    
     func deleteVersionByID(versionID: UUID) {
         guard let version = getVersionEntityByID(id: versionID) else { return }
         
         manager.context.delete(version)
         manager.save()
     }
-    
-    // MARK: - Parts utility functions
+}
+
+// MARK: - Parts utility functions
+extension DataAccessManager: PartPersistenceManager {
+
     private func getPartEntities() -> [PartEntity]? {
         let request: NSFetchRequest<PartEntity> = PartEntity.fetchRequest()
         
@@ -233,7 +237,10 @@ class DAOService {
         manager.context.delete(part)
         manager.save()
     }
-    
+}
+
+extension DataAccessManager {
+    // MARK: - Audio utility functions
     func getAudioReferencCount(fileURL url: URL) -> Int? {
         guard let parts = getPartEntities() else { return nil }
         
@@ -244,7 +251,6 @@ class DAOService {
         }
     }
     
-    // MARK: - Audio utility functions
     private func getAudioReferenceEntities() -> [AudioReference]? {
         let request: NSFetchRequest<AudioReference> = AudioReference.fetchRequest()
 
@@ -268,6 +274,18 @@ class DAOService {
         return nil
     }
     
+    func getAudioUrlsFromReferenceTable() -> [URL] {
+        guard let audios = getAudioReferenceEntities() else { return [] }
+        
+        var urls: [URL] = []
+        
+        for audioEntity in audios where audioEntity.audioReference != nil {
+            urls.append(audioEntity.audioReference!)
+        }
+        
+        return urls
+    }
+    
     func audioReferenceExists(fileURL url: URL) -> Bool? {
         guard let parts = getPartEntities() else { return nil }
         
@@ -287,7 +305,7 @@ class DAOService {
         manager.save()
     }
     
-    func deleteAudioReference(fileURL url: URL) {
+    func deleteAudioReferenceFromTable(fileURL url: URL) {
         guard let audio = getAudioReferenceEntityByURL(url: url) else { return }
         
         manager.context.delete(audio)
