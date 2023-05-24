@@ -181,7 +181,9 @@ extension DataAccessManager: PartPersistenceManager {
             Part(id: part.id!,
                  index: Int(part.index),
                  type: part.type ?? "",
-                 lyrics: part.lyric ?? "")
+                 lyrics: part.lyric ?? "",
+                 audioURL: part.audioURL
+            )
         }
     }
     
@@ -232,6 +234,7 @@ extension DataAccessManager: PartPersistenceManager {
         part.index = Int32(index)
         part.type = type
         part.lyric = lyric
+        part.audioURL = audioURL
         part.version = version
         
         manager.save()

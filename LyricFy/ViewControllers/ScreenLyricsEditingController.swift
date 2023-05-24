@@ -19,25 +19,41 @@ class ScreenLyricsEditingController: UIViewController {
     init(viewModel: ScreenLyricsEditingViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        
-        let urls = DataAccessManager.shared.getAudioUrlsFromReferenceTable()
-        
-        urls.map { data in
-            print("URL: \(data)")
-        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        screen?.recorderView.recorderButton.addTarget(self,
-                                                      action: #selector(actionRecord),
-                                                      for: .touchUpInside)
-        screen?.recorderView.playButton.addTarget(self,
-                                                  action: #selector(actionPlay),
-                                                  for: .touchUpInside)
-        screen?.recorderView.trashButton.addTarget(self,
-                                                   action: #selector(actionTrash),
-                                                   for: .touchUpInside)
+        
+        screen?.recorderView.recorderButton.addAction(
+            getActionFromFunction { [weak self] in
+                switch self?.viewModel.audioManager.audioControlState {
+                case .recording:
+                    self?.viewModel.stopRecording()
+                case .preparedToRecord:
+                    self?.viewModel.startRecording()
+                default: return
+                }
+            }, for: .touchUpInside
+        )
+        
+        screen?.recorderView.playButton.addAction(
+            getActionFromFunction { [weak self] in
+                switch self?.viewModel.audioManager.audioControlState {
+                case .recording:
+                    self?.viewModel.stopRecording()
+                case .playing:
+                    self?.viewModel.pauseAudio()
+                case .pausedPlaying:
+                    self?.viewModel.resumeAudio()
+                default: return
+                }
+            }, for: .touchUpInside
+        )
+        
+        screen?.recorderView.trashButton.addAction(
+            getActionFromFunction(function: viewModel.deleteAudio), for: .touchUpInside
+        )
+        
         viewModel.audioManager.delegete = self
     }
     
@@ -53,31 +69,6 @@ class ScreenLyricsEditingController: UIViewController {
     }
     
     @objc
-    func actionRecord() {
-        viewModel.startRecording()
-    }
-    
-    @objc
-    func actionStopRecord() {
-        viewModel.stopRecording()
-    }
-    
-    @objc
-    func actionPlay() {
-        viewModel.playAudio()
-    }
-    
-    @objc
-    func actionStopPlaying() {
-        viewModel.stopPlaying()
-    }
-
-    @objc
-    func actionPause() {
-        viewModel.pauseAudio()
-    }
-    
-    @objc
     func actionTrash() {
         let title = "Do you want to delete this record?"
         let message = "The record will be deleted and you will not be able to recover it."
@@ -86,41 +77,12 @@ class ScreenLyricsEditingController: UIViewController {
                           message: message,
                           actionButtonLabel: "Delete",
                           actionButtonStyle: .destructive,
-                          preferredStyle: .alert) { [weak self] in
-            self?.viewModel.deleteAudio()
-            self?.screen?.recorderView.audioDeleted()
+                          preferredStyle: .alert) {
+            self.viewModel.deleteAudio()
+            self.screen?.recorderView.audioDeleted()
         }
         
         present(alert, animated: false)
-    }
-    
-    private func audioStateChanged(state: AudioState) {
-        switch state {
-        case .recording:
-            screen?.recorderView.recorderButton.addTarget(self,
-                                                          action: #selector(actionStopRecord),
-                                                          for: .touchUpInside)
-            
-        case .preparedToRecord:
-            screen?.recorderView.recorderButton.addTarget(self,
-                                                          action: #selector(actionRecord),
-                                                          for: .touchUpInside)
-            
-        case .preparedToPlay:
-            screen?.recorderView.playButton.addTarget(self,
-                                                      action: #selector(actionPlay),
-                                                      for: .touchUpInside)
-            
-        case .pausedPlaying:
-            screen?.recorderView.playButton.addTarget(self,
-                                                      action: #selector(actionPlay),
-                                                      for: .touchUpInside)
-            
-        case .playing:
-            screen?.recorderView.playButton.addTarget(self,
-                                                      action: #selector(actionPause),
-                                                      for: .touchUpInside)
-        }
     }
     
     private func setupView() {
@@ -137,7 +99,6 @@ class ScreenLyricsEditingController: UIViewController {
         
         viewModel.audioManager.$audioControlState
             .sink { state in
-                self.audioStateChanged(state: state)
                 self.screen?.recorderView.audioSatateChanged(state: state)
             }
             .store(in: &subscriptions)
@@ -153,6 +114,10 @@ class ScreenLyricsEditingController: UIViewController {
         navigationItem.title = viewModel.lyricsType
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.tintColor = .colors(name: .barButtonColor)
+    }
+    
+    private func getActionFromFunction(function: @escaping () -> Void) -> UIAction {
+        return UIAction { _ in function() }
     }
     
     deinit {

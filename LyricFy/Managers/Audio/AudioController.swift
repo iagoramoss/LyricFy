@@ -155,14 +155,6 @@ extension AudioController {
 // MARK: - Playing functions
 extension AudioController {
     
-    func stopPlayingAudio() {
-        guard audioControlState == .playing else { return }
-        
-        player?.stop()
-        player = nil
-        audioControlState = .preparedToPlay
-    }
-    
     func playAudio(audioURL: URL) {
         guard audioControlState == .preparedToPlay else { return }
         
@@ -178,6 +170,14 @@ extension AudioController {
             print("Playing ERROR: \(error.localizedDescription)")
             #endif
         }
+    }
+    
+    func stopPlayingAudio() {
+        guard audioControlState == .playing else { return }
+        
+        player?.stop()
+        player = nil
+        audioControlState = .preparedToPlay
     }
     
     func pauseAudio() {

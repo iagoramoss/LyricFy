@@ -34,7 +34,6 @@ class ScreenLyricsEditingViewModel {
         self.audioFileManager = audioFileManager
         
         // Check if there is an audioURL and if it exists
-        print("Creating with URL: \(audioURL)")
         if let url = compositionPart.audioURL {
             if audioFileManager.fileExists(fileURL: url) {
                 audioURL = url
@@ -63,14 +62,14 @@ class ScreenLyricsEditingViewModel {
         
         let newAudioURL = audioFileManager.getAudioFileUrl(audioID: compositionPart.id)
         
+        // Update reference table with new audio url
+        audioFileManager.saveAudioInReferenceTable(audioURL: newAudioURL)
         audioManager.startRecording(output: newAudioURL)
+        
         audioURL = newAudioURL
         
         // Update part with new audio url
-        saveLyricsEdition {
-            // Update reference table with new audio url
-            self.audioFileManager.saveAudioInReferenceTable(audioURL: newAudioURL)
-        }
+        saveLyricsEdition(completion: nil)
     }
     
     func stopRecording() {
@@ -93,10 +92,6 @@ class ScreenLyricsEditingViewModel {
         audioManager.resumeAudio()
     }
     
-    func stopPlaying() {
-        audioManager.stopPlayingAudio()
-    }
-    
     // MARK: - File functions
     func deleteAudio() {
         guard audioURL != nil else { return print("Audio doesnt exists.") }
@@ -107,6 +102,8 @@ class ScreenLyricsEditingViewModel {
         saveLyricsEdition {
             // Cleaning files
             self.audioFileManager.cleanAudioFilesFromSystemAndReferenceTable()
+            // Reload UI to record
+            self.audioManager.prepateToRecord()
         }
     }
     
