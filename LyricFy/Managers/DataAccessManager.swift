@@ -24,7 +24,7 @@ class DataAccessManager {
             return try manager.context.fetch(request)
         } catch {
             #if DEBUG
-            print("Error while retrieving projects: \(error.localizedDescription)")
+            print("[DataAccessManager]: Error while retrieving projects: \(error.localizedDescription)")
             #endif
             return nil
         }
@@ -91,7 +91,7 @@ extension DataAccessManager {
             return try manager.context.fetch(request)
         } catch {
             #if DEBUG
-            print("Error while retrieving versions: \(error.localizedDescription)")
+            print("[DataAccessManager]: Error while retrieving versions: \(error.localizedDescription)")
             #endif
             return nil
         }
@@ -159,7 +159,7 @@ extension DataAccessManager: PartPersistenceManager {
             return try manager.context.fetch(request)
         } catch {
             #if DEBUG
-            print("Error while retrieving parts: \(error.localizedDescription)")
+            print("[DataAccessManager]: Error while retrieving parts: \(error.localizedDescription)")
             #endif
             return nil
         }
@@ -268,7 +268,7 @@ extension DataAccessManager: ReferencePersistenceManager {
             return try manager.context.fetch(request)
         } catch {
             #if DEBUG
-            print("Error while retrieving versions: \(error.localizedDescription)")
+            print("[DataAccessManager]: Error while retrieving versions: \(error.localizedDescription)")
             #endif
             return nil
         }

@@ -44,7 +44,7 @@ class AudioController: NSObject, AVAudioPlayerDelegate, AVAudioRecorderDelegate 
             try session.setActive(true)
         } catch let error {
             #if DEBUG
-            print("Error while setting up audio session: \(error.localizedDescription)")
+            print("[AudioController]: Error while setting up audio session: \(error.localizedDescription)")
             #endif
         }
         
@@ -74,7 +74,7 @@ class AudioController: NSObject, AVAudioPlayerDelegate, AVAudioRecorderDelegate 
             try session.setActive(true)
         } catch let error {
             #if DEBUG
-            print("Error while setting up audio category: \(error.localizedDescription)")
+            print("[AudioController]: Error while setting up audio category: \(error.localizedDescription)")
             #endif
         }
     }
@@ -137,7 +137,7 @@ extension AudioController {
                                               repeats: true)
         } catch let error {
             #if DEBUG
-            print("Recording ERROR: \(error.localizedDescription)")
+            print("[AudioController]: Recording ERROR: \(error.localizedDescription)")
             #endif
         }
     }
@@ -167,7 +167,7 @@ extension AudioController {
             audioControlState = .playing
         } catch let error {
             #if DEBUG
-            print("Playing ERROR: \(error.localizedDescription)")
+            print("[AudioController]: Playing ERROR: \(error.localizedDescription)")
             #endif
         }
     }

@@ -31,19 +31,29 @@ final class LocalAudioFileManager: AudioFileManager {
     // MARK: - Actions
     func saveAudioInReferenceTable(audioURL: URL) {
         guard persistenceManager.audioReferenceExistsInTable(fileURL: audioURL) == false
-        else { return print("Reference already exits in table.") }
+        else {
+            #if DEBUG
+            print("[LocalAudioFileManager]: Reference already exits in table.")
+            #endif
+            return
+        }
         
         persistenceManager.saveAudioReferenceInTable(fileURL: audioURL)
     }
     
     func deleteAudioFromSystem(fileURL: URL) {
-        guard fileExists(fileURL: fileURL) else { return print("File doesnt exist.") }
+        guard fileExists(fileURL: fileURL) else {
+            #if DEBUG
+            print("[LocalAudioFileManager]: File doesnt exist.")
+            #endif
+            return
+        }
         
         do {
             try FileManager.default.removeItem(at: fileURL)
         } catch let error {
             #if DEBUG
-            print("Error while deleting file: \(error)")
+            print("[LocalAudioFileManager]: Error while deleting file: \(error)")
             #endif
         }
     }
@@ -52,7 +62,10 @@ final class LocalAudioFileManager: AudioFileManager {
         // Make the check and clean audio files in foreground
         DispatchQueue.global(qos: .background).async { [weak self] in
             guard let urls = self?.persistenceManager.getAudioUrlsFromReferenceTable() else {
-                return print("Couldnt get reference table")
+                #if DEBUG
+                print("[LocalAudioFileManager]: Couldnt get reference table")
+                #endif
+                return
             }
             
             for url in urls {

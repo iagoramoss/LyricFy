@@ -58,7 +58,12 @@ class ScreenLyricsEditingViewModel {
     
     // MARK: - Record functions
     func startRecording() {
-        guard audioURL == nil else { return print("Cant override audio.") }
+        guard audioURL == nil else {
+            #if DEBUG
+            print("[ScreenLyricsEditingViewModel]: Cant override audio.")
+            #endif
+            return
+        }
         
         let newAudioURL = audioFileManager.getAudioFileUrl(audioID: compositionPart.id)
         
@@ -78,8 +83,18 @@ class ScreenLyricsEditingViewModel {
     
     // MARK: - Play functions
     func playAudio() {
-        guard let url = audioURL else { return print("URL for audio not provided.") }
-        guard audioFileManager.fileExists(fileURL: url) else { return print("Audio doesnt exist.") }
+        guard let url = audioURL else {
+            #if DEBUG
+            print("[ScreenLyricsEditingViewModel]: URL for audio not provided.")
+            #endif
+            return
+        }
+        guard audioFileManager.fileExists(fileURL: url) else {
+            #if DEBUG
+            print("[ScreenLyricsEditingViewModel]: Audio doesnt exist.")
+            #endif
+            return
+        }
         
         audioManager.playAudio(audioURL: url)
     }
@@ -94,7 +109,12 @@ class ScreenLyricsEditingViewModel {
     
     // MARK: - File functions
     func deleteAudio() {
-        guard audioURL != nil else { return print("Audio doesnt exists.") }
+        guard audioURL != nil else {
+            #if DEBUG
+            print("[ScreenLyricsEditingViewModel]: Audio doesnt exists.")
+            #endif
+            return
+        }
         
         audioURL = nil
         

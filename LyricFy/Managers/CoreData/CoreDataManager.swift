@@ -20,7 +20,7 @@ class CoreDataManager {
         container.loadPersistentStores { _, error in
             if let error = error {
                 #if DEBUG
-                    print("Error loading Core Data: \(error.localizedDescription)")
+                    print("[CoreDataManager]: Error loading Core Data: \(error.localizedDescription)")
                 #endif
             }
         }
@@ -31,11 +31,11 @@ class CoreDataManager {
         do {
             try context.save()
             #if DEBUG
-                print("Saved successfuly.")
+                print("[CoreDataManager]: Saved successfuly.")
             #endif
         } catch let error {
             #if DEBUG
-                print("Error saving Core Data: \(error)")
+                print("[CoreDataManager]: Error saving Core Data: \(error)")
             #endif
         }
     }
