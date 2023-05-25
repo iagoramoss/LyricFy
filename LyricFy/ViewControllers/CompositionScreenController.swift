@@ -33,6 +33,11 @@ class CompositionScreenController: UIViewController {
         navigationController?.navigationBar.tintColor = .colors(name: .barButtonColor)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        reloadData()
+    }
+    
     private func reloadData() {
         partView?.tableView.reloadData()
     }
