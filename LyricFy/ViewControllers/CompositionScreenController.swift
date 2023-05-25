@@ -33,6 +33,11 @@ class CompositionScreenController: UIViewController {
         navigationController?.navigationBar.tintColor = .colors(name: .barButtonColor)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        reloadData()
+    }
+    
     private func reloadData() {
         partView?.tableView.reloadData()
     }
@@ -99,10 +104,10 @@ class CompositionScreenController: UIViewController {
     }
     
     private func editPart(part: Part) {
-        let lyricsViewModel = ScreenLyricsEditingViewModel(compositionPart: part) { [weak self] editedPart in
-            self?.viewModel.updatePart(part: editedPart)
-            self?.partView?.tableView.reloadData()
-        }
+        let lyricsViewModel = ScreenLyricsEditingViewModel(compositionPart: part,
+                                                           dataManager: DataAccessManager.shared,
+                                                           audioManager: AudioController.shared,
+                                                           audioFileManager: LocalAudioFileManager.shared)
         
         navigationController?.pushViewController(ScreenLyricsEditingController(viewModel: lyricsViewModel),
                                                  animated: true)
