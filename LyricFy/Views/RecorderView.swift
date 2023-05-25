@@ -9,6 +9,9 @@ import UIKit
 
 class RecorderView: UIView {
 
+    private var pulseLayers = [CAShapeLayer]()
+    private var imgView = UIImageView()
+
     lazy var labelRecording: UILabel = {
         let label = UILabel()
         label.text = "Recording"
@@ -41,13 +44,25 @@ class RecorderView: UIView {
 
     lazy var recorderButton: UIButton = {
         let button = UIButton()
-        button.layer.cornerRadius = 25
-        button.backgroundColor = .red
-        button.layer.borderWidth = 5
-        button.layer.borderColor = .init(red: 0.27, green: 0.3, blue: 0.48, alpha: 1.0)
         return button
     }()
-    
+
+    lazy var circleLayer: CAShapeLayer = {
+        let pulseLayer = CAShapeLayer()
+        let circularPath = UIBezierPath(arcCenter: .zero,
+                                        radius: UIScreen.main.bounds.size.width / 10.0,
+                                        startAngle: 0, endAngle: 2 * .pi, clockwise: true)
+        pulseLayer.path = circularPath.cgPath
+        pulseLayer.lineWidth = 3.0
+        pulseLayer.fillColor = UIColor.clear.cgColor
+        pulseLayer.strokeColor = UIColor.gray.cgColor
+        pulseLayer.lineCap = CAShapeLayerLineCap.round
+        pulseLayer.position = CGPoint(x: UIScreen.main.bounds.size.width / 17.0,
+                                      y: UIScreen.main.bounds.size.height / 35.0)
+
+        return pulseLayer
+    }()
+
     lazy var playButton: UIButton = {
         let play = UIButton()
         play.setImage(UIImage(systemName: "play.fill"), for: .normal)
@@ -68,12 +83,53 @@ class RecorderView: UIView {
         super.init(frame: frame)
         setupView()
     }
-    
+
+    func createPulse() {
+        for _ in 0...2 {
+            let circularPath = UIBezierPath(arcCenter: .zero,
+                                            radius: UIScreen.main.bounds.size.width / 8.0,
+                                            startAngle: 0, endAngle: 2 * .pi, clockwise: true)
+            let pulseLayer = CAShapeLayer()
+            pulseLayer.path = circularPath.cgPath
+            pulseLayer.lineWidth = 3.0
+            pulseLayer.fillColor = UIColor.clear.cgColor
+            pulseLayer.lineCap = CAShapeLayerLineCap.round
+            pulseLayer.position = CGPoint(x: 27, y: 25)
+            pulseLayer.zPosition = recorderButton.layer.zPosition - 1
+            recorderButton.layer.addSublayer(pulseLayer)
+            pulseLayers.append(pulseLayer)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.animatePulse(index: 0)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                self.animatePulse(index: 1)
+            }
+        }
+    }
+
+    func animatePulse(index: Int) {
+        pulseLayers[index].strokeColor = UIColor.gray.cgColor
+
+        let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
+        scaleAnimation.duration = 2.0
+        scaleAnimation.fromValue = 0.0
+        scaleAnimation.toValue = 0.8
+        scaleAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
+        scaleAnimation.repeatCount = .greatestFiniteMagnitude
+        pulseLayers[index].add(scaleAnimation, forKey: "scale")
+        
+        let opacityAnimation = CABasicAnimation(keyPath: #keyPath(CALayer.opacity))
+        opacityAnimation.duration = 2.0
+        opacityAnimation.fromValue = 0.8
+        opacityAnimation.toValue = 0.0
+        opacityAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
+        opacityAnimation.repeatCount = .greatestFiniteMagnitude
+        pulseLayers[index].add(opacityAnimation, forKey: "opacity")
+    }
+
     func audioDeleted() {
         playButton.isHidden = true
         trashButton.isHidden = true
-        recorderButton.layer.cornerRadius = 25
-        recorderButton.backgroundColor = .red
         recorderButton.isHidden = false
         labelPlay.isHidden = true
     }
@@ -83,24 +139,34 @@ class RecorderView: UIView {
         case .recording:
             labelRecording.isHidden = false
             labelTimer.isHidden = false
-            recorderButton.layer.cornerRadius = 10
-            recorderButton.backgroundColor = .red
+
+            recorderButton.subviews.forEach { $0.removeFromSuperview() }
+            imgView = UIImageView(image: UIImage(systemName: "square.fill"))
+            imgView.layer.frame = CGRect(x: 0, y: 0, width: 45, height: 45)
+            imgView.tintColor = .red
+            recorderButton.addSubview(imgView)
+            self.createPulse()
             
         case .preparedToRecord:
             playButton.isHidden = true
             trashButton.isHidden = true
-            recorderButton.layer.cornerRadius = 25
-            recorderButton.backgroundColor = .red
+
+            recorderButton.subviews.forEach { $0.removeFromSuperview() }
+            imgView = UIImageView(image: UIImage(systemName: "circle.fill"))
+            imgView.layer.frame = CGRect(x: 0, y: 0, width: 45, height: 45)
+            imgView.tintColor = .red
+            recorderButton.addSubview(imgView)
+
             recorderButton.isHidden = false
             labelPlay.isHidden = true
             
         case .preparedToPlay:
-            labelRecording.isHidden = true
             labelTimer.isHidden = true
-            recorderButton.isHidden = true
             labelPlay.isHidden = false
             playButton.isHidden = false
             trashButton.isHidden = false
+            labelRecording.isHidden = true
+            recorderButton.isHidden = true
             playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
             
         case .pausedPlaying:
@@ -125,16 +191,16 @@ extension RecorderView: ViewCode {
         self.addSubview(playButton)
         self.addSubview(trashButton)
         self.addSubview(labelPlay)
-
+        self.recorderButton.layer.addSublayer(circleLayer)
     }
 
     func setupConstraints() {
-        labelRecording.translatesAutoresizingMaskIntoConstraints = false
-        labelTimer.translatesAutoresizingMaskIntoConstraints = false
         labelPlay.translatesAutoresizingMaskIntoConstraints = false
-        recorderButton.translatesAutoresizingMaskIntoConstraints = false
         playButton.translatesAutoresizingMaskIntoConstraints = false
+        labelTimer.translatesAutoresizingMaskIntoConstraints = false
         trashButton.translatesAutoresizingMaskIntoConstraints = false
+        labelRecording.translatesAutoresizingMaskIntoConstraints = false
+        recorderButton.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             labelRecording.bottomAnchor.constraint(equalTo: recorderButton.topAnchor, constant: -60),
@@ -151,12 +217,9 @@ extension RecorderView: ViewCode {
 
             trashButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
             trashButton.topAnchor.constraint(equalTo: topAnchor, constant: 30),
-
-            recorderButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -60),
-            recorderButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            recorderButton.widthAnchor.constraint(equalToConstant: 55),
-            recorderButton.heightAnchor.constraint(equalToConstant: 55)
-
+            
+            recorderButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -80),
+            recorderButton.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
     }
 

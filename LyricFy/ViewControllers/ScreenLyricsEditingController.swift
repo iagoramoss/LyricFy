@@ -13,7 +13,7 @@ class ScreenLyricsEditingController: UIViewController {
     private var screen: LyricsEditingScreenView? { didSet { setupView() } }
     
     private var viewModel: ScreenLyricsEditingViewModel
-    
+
     private var subscriptions = Set<AnyCancellable>()
     
     init(viewModel: ScreenLyricsEditingViewModel) {
@@ -56,7 +56,7 @@ class ScreenLyricsEditingController: UIViewController {
     func actionPlay() {
         viewModel.audioManager.playAudio()
     }
-
+    
     @objc
     func actionPause() {
         viewModel.audioManager.pauseAudio()
@@ -78,43 +78,34 @@ class ScreenLyricsEditingController: UIViewController {
         
         present(alert, animated: false)
     }
-    
+
     private func audioStateChanged(state: AudioState) {
         switch state {
         case .recording:
-            screen?.recorderView.labelRecording.isHidden = false
-            screen?.recorderView.labelTimer.isHidden = false
-            screen?.recorderView.recorderButton.layer.cornerRadius = 10
-            screen?.recorderView.recorderButton.backgroundColor = .red
             screen?.recorderView.recorderButton.addTarget(self,
                                                           action: #selector(actionStopRecord),
                                                           for: .touchUpInside)
-            
+
         case .preparedToRecord:
-            screen?.recorderView.playButton.isHidden = true
-            screen?.recorderView.trashButton.isHidden = true
-            screen?.recorderView.recorderButton.layer.cornerRadius = 25
-            screen?.recorderView.recorderButton.backgroundColor = .red
-            screen?.recorderView.recorderButton.isHidden = false
-            screen?.recorderView.labelPlay.isHidden = true
             screen?.recorderView.recorderButton.addTarget(self,
                                                           action: #selector(actionRecord),
                                                           for: .touchUpInside)
-            
+
         case .preparedToPlay:
             screen?.recorderView.playButton.addTarget(self,
                                                       action: #selector(actionPlay),
                                                       for: .touchUpInside)
-            
+
         case .pausedPlaying:
             screen?.recorderView.playButton.addTarget(self,
                                                       action: #selector(actionPlay),
                                                       for: .touchUpInside)
-            
+
         case .playing:
             screen?.recorderView.playButton.addTarget(self,
                                                       action: #selector(actionPause),
                                                       for: .touchUpInside)
+
         }
     }
     
