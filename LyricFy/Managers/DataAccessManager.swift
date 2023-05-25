@@ -275,7 +275,7 @@ extension DataAccessManager: ReferencePersistenceManager {
     }
     
     private func audioReferenceExistsInTable(fileURL url: URL) -> Bool? {
-        guard let parts = getPartEntities()
+        guard let parts = getAudioReferenceEntities()
         else {
             #if DEBUG
             print("[DataAccessManager]: Reference already exits in table.")
@@ -283,7 +283,7 @@ extension DataAccessManager: ReferencePersistenceManager {
             return nil
         }
         
-        for part in parts where part.audioURL == url {
+        for part in parts where part.audioReference == url {
             return true
         }
         
@@ -313,7 +313,9 @@ extension DataAccessManager: ReferencePersistenceManager {
     }
     
     func saveAudioReferenceInTable(fileURL url: URL) {
-        guard !(audioReferenceExistsInTable(fileURL: url) == false) else { return }
+        guard let referenceExists = audioReferenceExistsInTable(fileURL: url),
+              referenceExists == false
+        else { return }
         
         let audio = AudioReference(context: manager.context)
         audio.audioReference = url
