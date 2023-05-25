@@ -75,6 +75,7 @@ class PartView: UIView, ViewCode {
         tableView.dataSource = delegate
         tableView.delegate = delegate
         tableView.dragDelegate = delegate
+        tableView.dropDelegate = delegate
         
         tableView.backgroundColor = .colors(name: .bgColor)
     }
