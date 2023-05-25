@@ -13,4 +13,5 @@ struct Part: Identifiable {
     var index: Int
     var type: String
     var lyrics: String
+    var audioURL: URL?
 }
