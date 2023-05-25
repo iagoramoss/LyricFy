@@ -67,7 +67,7 @@ class AudioController: NSObject, AVAudioPlayerDelegate, AVAudioRecorderDelegate 
     
     private func getFormattedTimeString(_ timeInterval: TimeInterval) -> String {
         let components = Calendar.current.dateComponents([.hour, .minute, .second],
-                                                         from: Date(timeIntervalSinceReferenceDate: timeInterval))
+                                                         from: Date(timeIntervalSince1970: timeInterval))
         
         let formattedString = String(format: "%02d:%02d:%02d",
                                      components.hour ?? 0,

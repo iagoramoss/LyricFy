@@ -53,6 +53,8 @@ class ScreenLyricsEditingController: UIViewController {
     @objc
     func playAndPauseAction() {
         switch viewModel.audioManager.audioControlState {
+        case .preparedToPlay:
+            viewModel.playAudio()
         case .playing:
             viewModel.pauseAudio()
         case .pausedPlaying:

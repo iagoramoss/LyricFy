@@ -37,6 +37,7 @@ class ScreenLyricsEditingViewModel {
         if let url = compositionPart.audioURL, audioFileManager.fileExists(fileURL: url) {
             self.audioURL = url
             self.audioManager.prepareToPlay()
+            
         } else {
             self.audioManager.prepareToRecord()
         }
