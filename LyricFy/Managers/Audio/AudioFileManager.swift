@@ -30,28 +30,20 @@ final class LocalAudioFileManager: AudioFileManager {
     
     // MARK: - Actions
     func saveAudioInReferenceTable(audioURL: URL) {
-        guard persistenceManager.audioReferenceExistsInTable(fileURL: audioURL) == false
-        else {
-            #if DEBUG
-            print("[LocalAudioFileManager]: Reference already exits in table.")
-            #endif
-            return
-        }
-        
         persistenceManager.saveAudioReferenceInTable(fileURL: audioURL)
     }
     
     func deleteAudioFromSystem(fileURL: URL) {
         guard fileExists(fileURL: fileURL) else {
             #if DEBUG
-            print("[LocalAudioFileManager]: File doesnt exist.")
+            print("[LocalAudioFileManager]: File doesnt exists.")
             #endif
             return
         }
         
         do {
             try FileManager.default.removeItem(at: fileURL)
-        } catch let error {
+        } catch {
             #if DEBUG
             print("[LocalAudioFileManager]: Error while deleting file: \(error)")
             #endif
@@ -61,19 +53,23 @@ final class LocalAudioFileManager: AudioFileManager {
     func cleanAudioFilesFromSystemAndReferenceTable() {
         // Make the check and clean audio files in foreground
         DispatchQueue.global(qos: .background).async { [weak self] in
-            guard let urls = self?.persistenceManager.getAudioUrlsFromReferenceTable() else {
+            guard let self = self else {
                 #if DEBUG
-                print("[LocalAudioFileManager]: Couldnt get reference table")
+                print("[LocalAudioFileManager]: Couldnt get {self} reference.")
                 #endif
                 return
             }
             
-            for url in urls {
-                let currentCount = self?.persistenceManager.getAudioReferenceCount(fileURL: url)
+            // Get audio URLS from unique reference table
+            let urls = self.persistenceManager.getAudioUrlsFromReferenceTable()
+            
+            urls.forEach { url in
+                // Get URLS count from parts table
+                let currentCount = self.persistenceManager.getAudioReferenceCount(fileURL: url)
                 
                 if currentCount == 0 {
-                    self?.deleteAudioFromSystem(fileURL: url)
-                    self?.persistenceManager.deleteAudioReferenceFromTable(fileURL: url)
+                    self.deleteAudioFromSystem(fileURL: url)
+                    self.persistenceManager.deleteAudioReferenceFromTable(fileURL: url)
                 }
             }
         }

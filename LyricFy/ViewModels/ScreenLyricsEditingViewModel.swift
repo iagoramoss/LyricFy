@@ -33,14 +33,12 @@ class ScreenLyricsEditingViewModel {
         self.audioManager = audioManager
         self.audioFileManager = audioFileManager
         
-        // Check if there is an audioURL and if it exists
-        if let url = compositionPart.audioURL {
-            if audioFileManager.fileExists(fileURL: url) {
-                audioURL = url
-                audioManager.prepareToPlay()
-            }
+        // Check if there is an audioURL and if its file exists
+        if let url = compositionPart.audioURL, audioFileManager.fileExists(fileURL: url) {
+            self.audioURL = url
+            self.audioManager.prepareToPlay()
         } else {
-            audioManager.prepateToRecord()
+            self.audioManager.prepareToRecord()
         }
     }
     
@@ -120,15 +118,16 @@ class ScreenLyricsEditingViewModel {
         
         // Save part without audio
         saveLyricsEdition {
-            // Cleaning files
+            // Cleaning files in foreground
             self.audioFileManager.cleanAudioFilesFromSystemAndReferenceTable()
             // Reload UI to record
-            self.audioManager.prepateToRecord()
+            self.audioManager.prepareToRecord()
         }
     }
     
     // MARK: - Utility
     func prepareToExit() {
+        // Stop recornding or playing and reset its state
         audioManager.prepareToPlay()
     }
 }

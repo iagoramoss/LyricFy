@@ -15,34 +15,20 @@ class AudioController: NSObject, AVAudioPlayerDelegate, AVAudioRecorderDelegate 
     @Published private(set) var audioControlState: AudioState
     @Published private(set) var recordingTimeLabel: String?
     
-    private var session: AVAudioSession
+    private var session = AVAudioSession.sharedInstance()
     private var player: AVAudioPlayer?
     private var recorder: AVAudioRecorder?
-    
     private var meterTimer: Timer?
-    
-    private var isAudioRecordingGranted: Bool {
-        var granted = false
-        
-        switch AVAudioSession.sharedInstance().recordPermission {
-        case AVAudioSession.RecordPermission.granted:
-            granted = true
-        default:
-            granted = false
-        }
-        return granted
-    }
     
     var delegete: AudioPermissionAlertDelegate?
     
     private override init() {
         audioControlState = .preparedToRecord
-        session = AVAudioSession.sharedInstance()
         
         do {
             try session.setCategory(.playAndRecord, mode: .default)
             try session.setActive(true)
-        } catch let error {
+        } catch {
             #if DEBUG
             print("[AudioController]: Error while setting up audio session: \(error.localizedDescription)")
             #endif
@@ -51,7 +37,7 @@ class AudioController: NSObject, AVAudioPlayerDelegate, AVAudioRecorderDelegate 
         session.requestRecordPermission({ _ in })
     }
     
-    func prepateToRecord() {
+    func prepareToRecord() {
         stopPlayingAudio()
         stopRecording()
         
@@ -72,30 +58,44 @@ class AudioController: NSObject, AVAudioPlayerDelegate, AVAudioRecorderDelegate 
         do {
             try session.setCategory(category, mode: .default)
             try session.setActive(true)
-        } catch let error {
+        } catch {
             #if DEBUG
             print("[AudioController]: Error while setting up audio category: \(error.localizedDescription)")
             #endif
         }
     }
     
+    private func getFormattedTimeString(_ timeInterval: TimeInterval) -> String {
+        let components = Calendar.current.dateComponents([.hour, .minute, .second],
+                                                         from: Date(timeIntervalSinceReferenceDate: timeInterval))
+        
+        let formattedString = String(format: "%02d:%02d:%02d",
+                                     components.hour ?? 0,
+                                     components.minute ?? 0,
+                                     components.second ?? 0)
+        
+        return formattedString
+    }
+    
     @objc
     private func updateAudioMeter(timer: Timer) {
         guard audioControlState == .recording, let recorder = self.recorder else { return }
         
-        let hr = Int((recorder.currentTime / 60) / 60)
-        let min = Int(recorder.currentTime / 60)
-        let sec = Int(recorder.currentTime.truncatingRemainder(dividingBy: 60))
+        let timeString = getFormattedTimeString(recorder.currentTime)
         
-        recordingTimeLabel = String(format: "%02d:%02d:%02d", hr, min, sec)
+        recordingTimeLabel = timeString
         recorder.updateMeters()
     }
     
     // MARK: - Delegate
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-        if !flag { stopRecording() }
+        guard flag else {
+            stopRecording()
+            prepareToRecord()
+            return
+        }
         
-        setAudioCategory(.playback)
+        prepareToPlay()
     }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
@@ -108,7 +108,8 @@ extension AudioController {
     
     func startRecording(output: URL) {
         guard audioControlState == .preparedToRecord else { return }
-        guard isAudioRecordingGranted else {
+        
+        guard session.recordPermission == .granted else {
             delegete?.presetAudioPermissionDeniedAlert()
             return
         }
@@ -135,7 +136,7 @@ extension AudioController {
                                               selector: #selector(updateAudioMeter(timer:)),
                                               userInfo: nil,
                                               repeats: true)
-        } catch let error {
+        } catch {
             #if DEBUG
             print("[AudioController]: Recording ERROR: \(error.localizedDescription)")
             #endif
@@ -144,6 +145,7 @@ extension AudioController {
     
     func stopRecording() {
         guard audioControlState == .recording  else { return }
+        
         recorder?.stop()
         recorder = nil
         meterTimer?.invalidate()
@@ -165,7 +167,7 @@ extension AudioController {
             player?.play()
             
             audioControlState = .playing
-        } catch let error {
+        } catch {
             #if DEBUG
             print("[AudioController]: Playing ERROR: \(error.localizedDescription)")
             #endif

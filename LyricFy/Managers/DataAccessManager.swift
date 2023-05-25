@@ -251,16 +251,6 @@ extension DataAccessManager: PartPersistenceManager {
 // MARK: - Audio utility functions
 extension DataAccessManager: ReferencePersistenceManager {
     
-    func getAudioReferenceCount(fileURL url: URL) -> Int? {
-        guard let parts = getPartEntities() else { return nil }
-        
-        return parts.reduce(0) { (count, part) in
-            return part.audioURL == url
-            ? count + 1
-            : count
-        }
-    }
-    
     private func getAudioReferenceEntities() -> [AudioReference]? {
         let request: NSFetchRequest<AudioReference> = AudioReference.fetchRequest()
 
@@ -284,6 +274,32 @@ extension DataAccessManager: ReferencePersistenceManager {
         return nil
     }
     
+    private func audioReferenceExistsInTable(fileURL url: URL) -> Bool? {
+        guard let parts = getPartEntities()
+        else {
+            #if DEBUG
+            print("[DataAccessManager]: Reference already exits in table.")
+            #endif
+            return nil
+        }
+        
+        for part in parts where part.audioURL == url {
+            return true
+        }
+        
+        return false
+    }
+    
+    func getAudioReferenceCount(fileURL url: URL) -> Int? {
+        guard let parts = getPartEntities() else { return nil }
+        
+        return parts.reduce(0) { (count, part) in
+            return part.audioURL == url
+            ? count + 1
+            : count
+        }
+    }
+    
     func getAudioUrlsFromReferenceTable() -> [URL] {
         guard let audios = getAudioReferenceEntities() else { return [] }
         
@@ -294,16 +310,6 @@ extension DataAccessManager: ReferencePersistenceManager {
         }
         
         return urls
-    }
-    
-    func audioReferenceExistsInTable(fileURL url: URL) -> Bool? {
-        guard let parts = getPartEntities() else { return nil }
-        
-        for part in parts where part.audioURL == url {
-            return true
-        }
-        
-        return false
     }
     
     func saveAudioReferenceInTable(fileURL url: URL) {

@@ -33,7 +33,7 @@ class CoreDataManager {
             #if DEBUG
                 print("[CoreDataManager]: Saved successfuly.")
             #endif
-        } catch let error {
+        } catch {
             #if DEBUG
                 print("[CoreDataManager]: Error saving Core Data: \(error)")
             #endif
