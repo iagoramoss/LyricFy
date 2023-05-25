@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         let window = UIWindow(windowScene: windowScene)
-        let homeViewModel = HomeViewModel(dataService: DAOService())
+        let homeViewModel = HomeViewModel(dataService: DataAccessManager.shared)
         let mainNav = UINavigationController(
             rootViewController: HomeViewController(homeViewModel: homeViewModel)
         )
