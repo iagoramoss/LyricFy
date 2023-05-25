@@ -21,46 +21,27 @@ class ScreenLyricsEditingController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        screen?.recorderView.recorderButton.addAction(
-            getActionFromFunction { [weak self] in
-                switch self?.viewModel.audioManager.audioControlState {
-                case .recording:
-                    self?.viewModel.stopRecording()
-                case .preparedToRecord:
-                    self?.viewModel.startRecording()
-                default: return
-                }
-            }, for: .touchUpInside
-        )
-        
-        screen?.recorderView.playButton.addAction(
-            getActionFromFunction { [weak self] in
-                switch self?.viewModel.audioManager.audioControlState {
-                case .recording:
-                    self?.viewModel.stopRecording()
-                case .playing:
-                    self?.viewModel.pauseAudio()
-                case .pausedPlaying:
-                    self?.viewModel.resumeAudio()
-                default: return
-                }
-            }, for: .touchUpInside
-        )
-        
-        screen?.recorderView.trashButton.addAction(
-            getActionFromFunction(function: viewModel.deleteAudio), for: .touchUpInside
-        )
-        
-        viewModel.audioManager.delegete = self
-    }
-    
+    // MARK: - Lifecycle
     override func loadView() {
         super.loadView()
         self.screen = LyricsEditingScreenView(keyboardListener: self)
         self.view = screen
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        screen?.recorderView.recorderButton.addTarget(self,
+                                                      action: #selector(recordAndStopAction),
+                                                      for: .touchUpInside)
+        
+        screen?.recorderView.playButton.addTarget(self,
+                                                  action: #selector(playAndPauseAction),
+                                                  for: .touchUpInside)
+        
+        screen?.recorderView.trashButton.addTarget(self,
+                                                   action: #selector(deleteAudioAction),
+                                                   for: .touchUpInside)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -68,8 +49,31 @@ class ScreenLyricsEditingController: UIViewController {
         viewModel.prepareToExit()
     }
     
+    // MARK: - View Actions
     @objc
-    func actionTrash() {
+    func playAndPauseAction() {
+        switch viewModel.audioManager.audioControlState {
+        case .playing:
+            viewModel.pauseAudio()
+        case .pausedPlaying:
+            viewModel.resumeAudio()
+        default: return
+        }
+    }
+    
+    @objc
+    func recordAndStopAction() {
+        switch viewModel.audioManager.audioControlState {
+        case .recording:
+            viewModel.stopRecording()
+        case .preparedToRecord:
+            viewModel.startRecording()
+        default: return
+        }
+    }
+    
+    @objc
+    func deleteAudioAction() {
         let title = "Do you want to delete this record?"
         let message = "The record will be deleted and you will not be able to recover it."
         
@@ -85,6 +89,7 @@ class ScreenLyricsEditingController: UIViewController {
         present(alert, animated: false)
     }
     
+    // MARK: - Setup ViewController
     private func setupView() {
         setupNavigationBar()
         setupBindings()
@@ -93,20 +98,17 @@ class ScreenLyricsEditingController: UIViewController {
     
     private func setupBindings() {
         screen?.textView.delegate = self
+        
         screen?.textView.textPublisher
             .assign(to: \.lyricsText, on: self.viewModel)
             .store(in: &subscriptions)
         
         viewModel.audioManager.$audioControlState
-            .sink { state in
-                self.screen?.recorderView.audioSatateChanged(state: state)
-            }
+            .sink { self.screen?.recorderView.audioSatateChanged(state: $0) }
             .store(in: &subscriptions)
         
         viewModel.audioManager.$recordingTimeLabel
-            .sink { counterLabel in
-                self.screen?.recorderView.labelTimer.text = counterLabel ?? "00:00:00"
-            }
+            .sink { self.screen?.recorderView.labelTimer.text = $0 ?? "00:00:00" }
             .store(in: &subscriptions)
     }
     
@@ -114,10 +116,6 @@ class ScreenLyricsEditingController: UIViewController {
         navigationItem.title = viewModel.lyricsType
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.tintColor = .colors(name: .barButtonColor)
-    }
-    
-    private func getActionFromFunction(function: @escaping () -> Void) -> UIAction {
-        return UIAction { _ in function() }
     }
     
     deinit {
