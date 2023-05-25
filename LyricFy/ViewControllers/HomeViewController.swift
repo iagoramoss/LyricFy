@@ -47,10 +47,36 @@ class HomeViewController: UIViewController {
     private func setupNavigationBar() {
         title = "Projects"
         
+        let addProjectButton = UIBarButtonItem(
+            image: .init(systemName: "plus"),
+            style: .plain,
+            target: self,
+            action: #selector(onTappedButtonAddProjects)
+        )
+        addProjectButton.tintColor = .colors(name: .buttonsColor)
+        
+        navigationItem.rightBarButtonItem = addProjectButton
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.largeTitleTextAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.colors(name: .buttonsColor)!
         ]
+    }
+    
+    @objc
+    func onTappedButtonAddProjects() {
+        present(Alert(
+            title: "Create Project",
+            textFieldPlaceholder: "Ex: My Song",
+            textFieldDefaultText: "Project",
+            projectName: nil,
+            action: { [weak self] projectName in
+                self?.viewModel.createProject(name: projectName)
+                self?.screen.collectionProjects.reloadData()
+                
+                guard self != nil else { return }
+                self!.navigateToComposition(composition: self!.viewModel.projects.last!)
+            }
+        ), animated: true, completion: nil)
     }
     
     private func navigateToComposition(composition: Composition) {
@@ -58,9 +84,9 @@ class HomeViewController: UIViewController {
         
         navigationController?.pushViewController(CompositionScreenController(viewModel: compositionViewModel),
                                                  animated: true)
-
+        
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -72,31 +98,33 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return viewModel.projects.count + 1
+        if viewModel.projects.isEmpty {
+            screen.placeHolder.isHidden = false
+            screen.placeHolder.isHidden = false
+        } else {
+            screen.placeHolder.isHidden = true
+            screen.placeHolder.isHidden = true
+        }
+        screen.numberOfProjects = viewModel.projects.count
+        return viewModel.projects.count
     }
     
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        guard let addCell = screen.collectionProjects.dequeueReusableCell(
-            withReuseIdentifier: AddProjectsCell.identifier,
-            for: indexPath
-        ) as? AddProjectsCell else { return UICollectionViewCell() }
         
         guard let cell = screen.collectionProjects.dequeueReusableCell(
             withReuseIdentifier: ProjectsCell.identifier,
             for: indexPath
         ) as? ProjectsCell else { return UICollectionViewCell() }
         
-        guard indexPath.item > 0 else { return addCell }
-        
-        let projectDate = viewModel.projects[indexPath.row - 1].createdAt
+        let projectDate = viewModel.projects[indexPath.row].createdAt
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
         let dateString = dateFormatter.string(from: projectDate)
         
-        cell.nameProject.text = viewModel.projects[indexPath.row - 1].name
+        cell.nameProject.text = viewModel.projects[indexPath.row].name
         cell.date.text = dateString
         
         return cell
@@ -107,7 +135,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        return CGSize(width: 168, height: 162)
+        return CGSize(width: UIScreen.main.bounds.width/2.29, height: UIScreen.main.bounds.height/6.5)
     }
     
     func collectionView(
@@ -115,12 +143,11 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         contextMenuConfigurationForItemAt indexPath: IndexPath,
         point: CGPoint
     ) -> UIContextMenuConfiguration? {
-        guard indexPath.item > 0 else { return nil }
         
         return UIContextMenuConfiguration(
             identifier: nil,
             previewProvider: nil) { [weak self] _ in
-                let project = self!.viewModel.projects[indexPath.row - 1]
+                let project = self!.viewModel.projects[indexPath.row]
                 return UIMenu(
                     children: [
                         self!.updateMenuAction(_: collectionView, project: project),
@@ -134,23 +161,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        if indexPath.item > 0 {
-            navigateToComposition(composition: viewModel.projects[indexPath.item - 1])
-        } else {
-            present(Alert(
-                title: "Create Project",
-                textFieldPlaceholder: "Ex: My Song",
-                textFieldDefaultText: "Project",
-                projectName: nil,
-                action: { [weak self] projectName in
-                    self?.viewModel.createProject(name: projectName)
-                    collectionView.reloadData()
-                    
-                    guard self != nil else { return }
-                    self!.navigateToComposition(composition: self!.viewModel.projects.last!)
-                }
-            ), animated: true, completion: nil)
-        }
+        navigateToComposition(composition: viewModel.projects[indexPath.item])
     }
     
     func collectionView(
@@ -158,7 +169,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         layout collectionViewLayout: UICollectionViewLayout,
         minimumLineSpacingForSectionAt section: Int
     ) -> CGFloat {
-        return 20
+        return 16
     }
     
     func deleteMenuAction (
