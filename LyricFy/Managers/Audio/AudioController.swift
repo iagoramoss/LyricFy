@@ -66,24 +66,18 @@ class AudioController: NSObject, AVAudioPlayerDelegate, AVAudioRecorderDelegate 
     }
     
     private func getFormattedTimeString(_ timeInterval: TimeInterval) -> String {
-        let components = Calendar.current.dateComponents([.hour, .minute, .second],
-                                                         from: Date(timeIntervalSince1970: timeInterval))
+        let hour = Int((timeInterval / 60) / 60)
+        let minute = Int(timeInterval / 60)
+        let second = Int(timeInterval.truncatingRemainder(dividingBy: 60))
         
-        let formattedString = String(format: "%02d:%02d:%02d",
-                                     components.hour ?? 0,
-                                     components.minute ?? 0,
-                                     components.second ?? 0)
-        
-        return formattedString
+        return String(format: "%02d:%02d:%02d", hour, minute, second)
     }
     
     @objc
     private func updateAudioMeter(timer: Timer) {
         guard audioControlState == .recording, let recorder = self.recorder else { return }
         
-        let timeString = getFormattedTimeString(recorder.currentTime)
-        
-        recordingTimeLabel = timeString
+        recordingTimeLabel = getFormattedTimeString(recorder.currentTime)
         recorder.updateMeters()
     }
     
