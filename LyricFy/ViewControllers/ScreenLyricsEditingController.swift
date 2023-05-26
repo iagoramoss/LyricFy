@@ -42,6 +42,8 @@ class ScreenLyricsEditingController: UIViewController {
         screen?.recorderView.trashButton.addTarget(self,
                                                    action: #selector(deleteAudioAction),
                                                    for: .touchUpInside)
+        
+        screen?.placeHolder.isHidden = viewModel.lyricsText.isEmpty ? false : true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
