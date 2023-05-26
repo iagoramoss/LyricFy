@@ -7,30 +7,76 @@
 
 import Foundation
 
-final class AudioFileManager {
+final class LocalAudioFileManager: AudioFileManager {
     
-    private init() {}
+    public static var shared = LocalAudioFileManager(persistenceManager: DataAccessManager.shared)
     
-    static var shared = AudioFileManager()
+    private init(persistenceManager: ReferencePersistenceManager) {
+        self.persistenceManager = persistenceManager
+    }
     
-    func getAudioFileUrl(filename: String) -> URL {
+    private let persistenceManager: ReferencePersistenceManager
+    
+    // MARK: - Utility
+    func fileExists(fileURL: URL) -> Bool {
+        return FileManager.default.fileExists(atPath: fileURL.path)
+    }
+    
+    func getAudioFileUrl(audioID: UUID) -> URL {
+        let filename = "\(audioID.uuidString).m4a"
         let filePath = getDocumentsDirectory().appendingPathComponent(filename)
         return filePath
     }
     
-    func deleteAudioFile(filename: String) {
-        guard fileExists(filename: filename) else { return }
+    // MARK: - Actions
+    func saveAudioInReferenceTable(audioURL: URL) {
+        persistenceManager.saveAudioReferenceInTable(fileURL: audioURL)
+    }
+    
+    func deleteAudioFromSystem(fileURL: URL) {
+        guard fileExists(fileURL: fileURL) else {
+            #if DEBUG
+            print("[LocalAudioFileManager]: File doesnt exists.")
+            #endif
+            return
+        }
         
         do {
-            try FileManager.default.removeItem(at: getAudioFileUrl(filename: filename))
-        } catch let error {
-            print("Error while deleting file: \(error)")
+            try FileManager.default.removeItem(at: fileURL)
+        } catch {
+            #if DEBUG
+            print("[LocalAudioFileManager]: Error while deleting file: \(error)")
+            #endif
         }
     }
     
-    func fileExists(filename: String) -> Bool {
-        return FileManager.default.fileExists(atPath: getAudioFileUrl(filename: filename).path)
+    func cleanAudioFilesFromSystemAndReferenceTable() {
+        // Make the check and clean audio files in foreground
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            guard let self = self else {
+                #if DEBUG
+                print("[LocalAudioFileManager]: Couldnt get {self} reference.")
+                #endif
+                return
+            }
+            
+            // Get audio URLS from unique reference table
+            let urls = self.persistenceManager.getAudioUrlsFromReferenceTable()
+            
+            urls.forEach { url in
+                // Get URLS count from parts table
+                let currentCount = self.persistenceManager.getAudioReferenceCount(fileURL: url)
+                
+                if currentCount == 0 {
+                    self.deleteAudioFromSystem(fileURL: url)
+                    self.persistenceManager.deleteAudioReferenceFromTable(fileURL: url)
+                }
+            }
+        }
     }
+}
+
+extension LocalAudioFileManager {
     
     private func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)

@@ -16,54 +16,72 @@ class ScreenLyricsEditingController: UIViewController {
     
     private var subscriptions = Set<AnyCancellable>()
     
-    init(viewModel: ScreenLyricsEditingViewModel) {
+    private let delegate: PartDelegate
+    
+    init(viewModel: ScreenLyricsEditingViewModel, delegate: PartDelegate) {
         self.viewModel = viewModel
-        self.viewModel.audioManager.prepareViewModel()
+        self.delegate = delegate
+        
         super.init(nibName: nil, bundle: nil)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        screen?.recorderView.recorderButton.addTarget(self,
-                                                      action: #selector(actionRecord),
-                                                      for: .touchUpInside)
-        screen?.recorderView.playButton.addTarget(self,
-                                                  action: #selector(actionPlay),
-                                                  for: .touchUpInside)
-        screen?.recorderView.trashButton.addTarget(self,
-                                                   action: #selector(actionTrash),
-                                                   for: .touchUpInside)
-        viewModel.audioManager.delegete = self
-    }
-    
+    // MARK: - Lifecycle
     override func loadView() {
         super.loadView()
         self.screen = LyricsEditingScreenView(keyboardListener: self)
         self.view = screen
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        screen?.recorderView.recorderButton.addTarget(self,
+                                                      action: #selector(recordAndStopAction),
+                                                      for: .touchUpInside)
+        
+        screen?.recorderView.playButton.addTarget(self,
+                                                  action: #selector(playAndPauseAction),
+                                                  for: .touchUpInside)
+        
+        screen?.recorderView.trashButton.addTarget(self,
+                                                   action: #selector(deleteAudioAction),
+                                                   for: .touchUpInside)
+        
+        screen?.placeHolder.isHidden = viewModel.lyricsText.isEmpty ? false : true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        viewModel.prepareToExit()
+    }
+    
+    // MARK: - View Actions
     @objc
-    func actionRecord() {
-        viewModel.audioManager.startRecording()
+    func playAndPauseAction() {
+        switch viewModel.audioManager.audioControlState {
+        case .preparedToPlay:
+            viewModel.playAudio()
+        case .playing:
+            viewModel.pauseAudio()
+        case .pausedPlaying:
+            viewModel.resumeAudio()
+        default: return
+        }
     }
     
     @objc
-    func actionStopRecord() {
-        viewModel.audioManager.stopRecording()
+    func recordAndStopAction() {
+        switch viewModel.audioManager.audioControlState {
+        case .recording:
+            viewModel.stopRecording()
+        case .preparedToRecord:
+            viewModel.startRecording()
+        default: return
+        }
     }
     
     @objc
-    func actionPlay() {
-        viewModel.audioManager.playAudio()
-    }
-
-    @objc
-    func actionPause() {
-        viewModel.audioManager.pauseAudio()
-    }
-    
-    @objc
-    func actionTrash() {
+    func deleteAudioAction() {
         let title = "Do you want to delete this record?"
         let message = "The record will be deleted and you will not be able to recover it."
         
@@ -71,53 +89,15 @@ class ScreenLyricsEditingController: UIViewController {
                           message: message,
                           actionButtonLabel: "Delete",
                           actionButtonStyle: .destructive,
-                          preferredStyle: .alert) { [weak self] in
-            self?.viewModel.audioManager.deleteAudio()
-            self?.screen?.recorderView.audioDeleted()
+                          preferredStyle: .alert) {
+            self.viewModel.deleteAudio()
+            self.screen?.recorderView.audioDeleted()
         }
         
         present(alert, animated: false)
     }
     
-    private func audioStateChanged(state: AudioState) {
-        switch state {
-        case .recording:
-            screen?.recorderView.labelRecording.isHidden = false
-            screen?.recorderView.labelTimer.isHidden = false
-            screen?.recorderView.recorderButton.layer.cornerRadius = 10
-            screen?.recorderView.recorderButton.backgroundColor = .red
-            screen?.recorderView.recorderButton.addTarget(self,
-                                                          action: #selector(actionStopRecord),
-                                                          for: .touchUpInside)
-            
-        case .preparedToRecord:
-            screen?.recorderView.playButton.isHidden = true
-            screen?.recorderView.trashButton.isHidden = true
-            screen?.recorderView.recorderButton.layer.cornerRadius = 25
-            screen?.recorderView.recorderButton.backgroundColor = .red
-            screen?.recorderView.recorderButton.isHidden = false
-            screen?.recorderView.labelPlay.isHidden = true
-            screen?.recorderView.recorderButton.addTarget(self,
-                                                          action: #selector(actionRecord),
-                                                          for: .touchUpInside)
-            
-        case .preparedToPlay:
-            screen?.recorderView.playButton.addTarget(self,
-                                                      action: #selector(actionPlay),
-                                                      for: .touchUpInside)
-            
-        case .pausedPlaying:
-            screen?.recorderView.playButton.addTarget(self,
-                                                      action: #selector(actionPlay),
-                                                      for: .touchUpInside)
-            
-        case .playing:
-            screen?.recorderView.playButton.addTarget(self,
-                                                      action: #selector(actionPause),
-                                                      for: .touchUpInside)
-        }
-    }
-    
+    // MARK: - Setup ViewController
     private func setupView() {
         setupNavigationBar()
         setupBindings()
@@ -126,21 +106,17 @@ class ScreenLyricsEditingController: UIViewController {
     
     private func setupBindings() {
         screen?.textView.delegate = self
+        
         screen?.textView.textPublisher
             .assign(to: \.lyricsText, on: self.viewModel)
             .store(in: &subscriptions)
         
         viewModel.audioManager.$audioControlState
-            .sink { state in
-                self.audioStateChanged(state: state)
-                self.screen?.recorderView.audioSatateChanged(state: state)
-            }
+            .sink { self.screen?.recorderView.audioSatateChanged(state: $0) }
             .store(in: &subscriptions)
         
         viewModel.audioManager.$recordingTimeLabel
-            .sink { counterLabel in
-                self.screen?.recorderView.labelTimer.text = counterLabel ?? "00:00:00"
-            }
+            .sink { self.screen?.recorderView.labelTimer.text = $0 ?? "00:00:00" }
             .store(in: &subscriptions)
     }
     
@@ -166,6 +142,13 @@ extension ScreenLyricsEditingController: UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
+        
+        if !textView.text.isEmpty {
+            screen?.placeHolder.isHidden = true
+        } else {
+            screen?.placeHolder.isHidden = false
+        }
+        
         guard let textView = screen?.textView else { return }
         
         let newSize = textView.sizeThatFits(
@@ -174,7 +157,7 @@ extension ScreenLyricsEditingController: UITextViewDelegate {
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        viewModel.saveLyricsEdition()
+        viewModel.saveLyricsEdition(completion: delegate.reloadData)
     }
 }
 

@@ -33,15 +33,6 @@ class CompositionScreenController: UIViewController {
         navigationController?.navigationBar.tintColor = .colors(name: .barButtonColor)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.reloadData()
-    }
-    
-    private func reloadData() {
-        partView?.tableView.reloadData()
-    }
-
     private func setupNavigationBar() {
         let menu = UIMenu(children: [
             UIAction(title: "Change version",
@@ -104,12 +95,13 @@ class CompositionScreenController: UIViewController {
     }
     
     private func editPart(part: Part) {
-        let lyricsViewModel = ScreenLyricsEditingViewModel(compositionPart: part) { [weak self] editedPart in
-            self?.viewModel.updatePart(part: editedPart)
-            self?.partView?.tableView.reloadData()
-        }
+        let lyricsViewModel = ScreenLyricsEditingViewModel(compositionPart: part,
+                                                           dataManager: DataAccessManager.shared,
+                                                           audioManager: AudioController.shared,
+                                                           audioFileManager: LocalAudioFileManager.shared)
         
-        navigationController?.pushViewController(ScreenLyricsEditingController(viewModel: lyricsViewModel),
+        navigationController?.pushViewController(ScreenLyricsEditingController(viewModel: lyricsViewModel,
+                                                                               delegate: self),
                                                  animated: true)
     }
     
@@ -119,12 +111,12 @@ class CompositionScreenController: UIViewController {
         
         sheetVC.action = { [weak self] partType in
             self?.dismiss(animated: true)
-            guard self != nil else { return }
+            guard let self = self else { return }
             
-            self!.viewModel.createPart(type: partType)
+            self.viewModel.createPart(type: partType)
             
-            let part = self!.viewModel.parts.last!
-            self!.editPart(part: part)
+            let part = self.viewModel.parts.last!
+            self.editPart(part: part)
         }
         
         if #available(iOS 16.0, *) {
@@ -169,11 +161,22 @@ class CompositionScreenController: UIViewController {
     }
 }
 
-extension CompositionScreenController: PartTableView {
+extension CompositionScreenController: PartDelegate {
     
-    func tableView(_ tableView: UITableView,
-                   numberOfRowsInSection section: Int) -> Int {
-
+    func reloadData() {
+        viewModel.updateParts()
+        partView?.tableView.reloadData()
+    }
+    
+    func tableView(
+        _ tableView: UITableView,
+        performDropWith coordinator: UITableViewDropCoordinator
+    ) {}
+    
+    func tableView(
+        _ tableView: UITableView,
+        numberOfRowsInSection section: Int
+    ) -> Int {
         if viewModel.parts.isEmpty {
             partView?.imageView.isHidden = false
             partView?.placeholder.isHidden = false
@@ -184,78 +187,135 @@ extension CompositionScreenController: PartTableView {
         return viewModel.parts.count
     }
     
-    func tableView(_ tableView: UITableView,
-                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: PartCell.reuseIdentifier,
-                                                       for: indexPath) as? PartCell
+    func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: PartCell.reuseIdentifier,
+            for: indexPath
+        ) as? PartCell
         else { return PartCell() }
-        
         cell.part = viewModel.parts[indexPath.row]
         return cell
     }
     
-    func tableView(_ tableView: UITableView,
-                   itemsForBeginning session: UIDragSession,
-                   at indexPath: IndexPath) -> [UIDragItem] {
+    func tableView(
+        _ tableView: UITableView,
+        itemsForBeginning session: UIDragSession,
+        at indexPath: IndexPath
+    ) -> [UIDragItem] {
         let item = UIDragItem(itemProvider: NSItemProvider())
         item.localObject = viewModel.parts[indexPath.row]
         
         return [item]
     }
     
-    func tableView(_ tableView: UITableView,
-                   moveRowAt sourceIndexPath: IndexPath,
-                   to destinationIndexPath: IndexPath) {
+    func tableView(
+        _ tableView: UITableView,
+        moveRowAt sourceIndexPath: IndexPath,
+        to destinationIndexPath: IndexPath
+    ) {
         viewModel.dragAndDrop(from: sourceIndexPath, to: destinationIndexPath)
     }
     
-    func tableView(_ tableView: UITableView,
-                   dragPreviewParametersForRowAt indexPath: IndexPath) -> UIDragPreviewParameters? {
+    func tableView(
+        _ tableView: UITableView,
+        dragPreviewParametersForRowAt indexPath: IndexPath
+    ) -> UIDragPreviewParameters? {
+        guard let selectedCell = tableView.cellForRow(at: indexPath) as? PartCell else { return nil }
         let param = UIDragPreviewParameters()
-        param.backgroundColor = .clear
+        param.visiblePath = UIBezierPath(roundedRect: CGRect(
+            x: 16,
+            y: 22,
+            width: selectedCell.container.frame.width,
+            height: selectedCell.container.frame.height
+        ), cornerRadius: 10)
+        return param
+    }
+    
+    func tableView(
+        _ tableView: UITableView,
+        dropPreviewParametersForRowAt indexPath: IndexPath
+    ) -> UIDragPreviewParameters? {
+        guard let selectedCell = tableView.cellForRow(at: indexPath) as? PartCell else { return nil }
+        let param = UIDragPreviewParameters()
+        param.visiblePath = UIBezierPath(roundedRect: CGRect(
+            x: 16,
+            y: 22,
+            width: selectedCell.container.frame.width,
+            height: selectedCell.container.frame.height
+        ), cornerRadius: 10)
         
         return param
     }
     
-    func tableView(_ tableView: UITableView,
-                   contextMenuConfigurationForRowAt indexPath: IndexPath,
-                   point: CGPoint
+    func tableView(
+        _ tableView: UITableView,
+        contextMenuConfigurationForRowAt indexPath: IndexPath,
+        point: CGPoint
     ) -> UIContextMenuConfiguration? {
-        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-            return UIMenu(
-                children: [
-                    UIAction(title: "Duplicate",
-                             image: UIImage(systemName: "doc.on.doc")
-                            ) { [weak self] _ in
-                                self?.viewModel.duplicatePart(index: indexPath)
-                                tableView.reloadData()
-                            },
-                    UIAction(title: "Delete",
-                             image: UIImage(systemName: "trash"),
-                             attributes: .destructive
-                            ) { [weak self] _ in
-                                self?.present(
-                                    Alert(title: "",
-                                          message: "This section will be deleted. And it will not be possible to recover it.",
-                                          actionButtonLabel: "Delete",
-                                          actionButtonStyle: .destructive,
-                                          preferredStyle: .actionSheet,
-                                          action: { [weak self] in
-                                              self?.viewModel.deletePart(index: indexPath)
-                                              tableView.reloadData()
-                                          }),
-                                    animated: true)
-                             }
-                ])
+        
+        let duplicate: UIAction = UIAction(
+            title: "Duplicate",
+            image: UIImage(systemName: "doc.on.doc")
+        ) { [weak self] _ in
+            self?.viewModel.duplicatePart(index: indexPath)
+            tableView.reloadData()
+        }
+        
+        let delete: UIAction = UIAction(
+            title: "Delete",
+            image: UIImage(systemName: "trash"),
+            attributes: .destructive
+        ) { [weak self] _ in
+            self?.present(
+                Alert(title: "",
+                      message: "This section will be deleted. And it will not be possible to recover it.",
+                      actionButtonLabel: "Delete",
+                      actionButtonStyle: .destructive,
+                      preferredStyle: .actionSheet,
+                      action: { [weak self] in
+                          self?.viewModel.deletePart(index: indexPath)
+                          tableView.reloadData()
+                      }),
+                animated: true)
+        }
+        
+        return UIContextMenuConfiguration(
+            identifier: indexPath as NSCopying,
+            previewProvider: nil
+        ) { _ in
+            return UIMenu(children: [duplicate, delete])
         }
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(
+        _ tableView: UITableView,
+        previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration
+    ) -> UITargetedPreview? {
+        return makeTargetedPreview(for: configuration)
+    }
+    
+    func tableView(
+        _ tableView: UITableView,
+        previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration
+    ) -> UITargetedPreview? {
+        return makeTargetedPreview(for: configuration)
+    }
+    
+    func tableView(
+        _ tableView: UITableView,
+        didSelectRowAt indexPath: IndexPath
+    ) {
         let part = viewModel.parts[indexPath.row]
         editPart(part: part)
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(
+        _ tableView: UITableView,
+        viewForHeaderInSection section: Int
+    ) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: CompositionHeader.reuseIdentifier)
         
         guard let header = header as? CompositionHeader else { return header }
@@ -263,4 +323,17 @@ extension CompositionScreenController: PartTableView {
         header.versionName = viewModel.selectedVersionName
         return header
     }
+    
+    private func makeTargetedPreview(
+        for configuration: UIContextMenuConfiguration
+    ) -> UITargetedPreview? {
+        guard let indexPath = configuration.identifier as? IndexPath else { return nil }
+        guard let selectedCell = partView?.tableView.cellForRow(at: indexPath) as? PartCell else { return nil }
+        
+        let parameters = UIPreviewParameters()
+        parameters.backgroundColor = .clear
+        
+        return UITargetedPreview(view: selectedCell.container, parameters: parameters)
+    }
+    
 }

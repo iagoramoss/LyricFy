@@ -10,7 +10,7 @@ import UIKit
 
 class PartView: UIView, ViewCode {
     
-    var delegate: PartTableView
+    var delegate: PartDelegate
 
     lazy var imageView: UIImageView = {
            let image = UIImageView()
@@ -38,7 +38,7 @@ class PartView: UIView, ViewCode {
         return tableView
     }()
     
-    init(delegate: PartTableView) {
+    init(delegate: PartDelegate) {
         self.delegate = delegate
         super.init(frame: .zero)
         setupView()
@@ -75,6 +75,7 @@ class PartView: UIView, ViewCode {
         tableView.dataSource = delegate
         tableView.delegate = delegate
         tableView.dragDelegate = delegate
+        tableView.dropDelegate = delegate
         
         tableView.backgroundColor = .colors(name: .bgColor)
     }

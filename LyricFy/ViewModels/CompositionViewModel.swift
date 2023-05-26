@@ -16,7 +16,7 @@ class CompositionViewModel: ObservableObject {
     @Published private(set) var selectedVersionName = ""
     
     private let composition: Composition
-    private let service = DAOService()
+    private let service = DataAccessManager.shared
     private var selectedVersionID: UUID?
     private var lastVersion = 0
     
@@ -94,24 +94,26 @@ extension CompositionViewModel {
         return parts
     }
     
-    private func updateParts() {
+    func updateParts() {
         parts = getVersionParts(versionId: selectedVersionID!)
     }
     
     func createPart(type: String) {
         service.createPartByVersionID(index: parts.count,
-                                           type: type,
-                                           lyric: "",
-                                           versionID: selectedVersionID!)
+                                      type: type,
+                                      lyric: "",
+                                      audioURL: nil,
+                                      versionID: selectedVersionID!)
         
         updateParts()
     }
     
     func updatePart(part: Part) {
         service.updatePartByID(partID: part.id,
-                                    index: part.index,
-                                    type: part.type,
-                                    lyric: part.lyrics)
+                               index: part.index,
+                               type: part.type,
+                               lyric: part.lyrics,
+                               audioURL: nil)
         
         updateParts()
     }
