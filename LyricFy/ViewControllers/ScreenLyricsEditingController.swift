@@ -68,8 +68,10 @@ class ScreenLyricsEditingController: UIViewController {
         switch viewModel.audioManager.audioControlState {
         case .recording:
             viewModel.stopRecording()
+            screen?.recorderView.disablePulse()
         case .preparedToRecord:
             viewModel.startRecording()
+            screen?.recorderView.createPulse()
         default: return
         }
     }

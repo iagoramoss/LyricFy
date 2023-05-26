@@ -107,9 +107,13 @@ class RecorderView: UIView {
             }
         }
     }
+    func disablePulse() {
+        pulseLayers.forEach { $0.removeFromSuperlayer() }
+        pulseLayers.removeAll()
+    }
 
     func animatePulse(index: Int) {
-        pulseLayers[index].strokeColor = UIColor.gray.cgColor
+        pulseLayers[index].strokeColor = UIColor.red.cgColor
 
         let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
         scaleAnimation.duration = 2.0
@@ -122,7 +126,7 @@ class RecorderView: UIView {
         let opacityAnimation = CABasicAnimation(keyPath: #keyPath(CALayer.opacity))
         opacityAnimation.duration = 2.0
         opacityAnimation.fromValue = 0.8
-        opacityAnimation.toValue = 0.0
+        opacityAnimation.toValue = 0.3
         opacityAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
         opacityAnimation.repeatCount = .greatestFiniteMagnitude
         pulseLayers[index].add(opacityAnimation, forKey: "opacity")
