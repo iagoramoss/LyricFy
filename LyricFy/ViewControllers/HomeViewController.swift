@@ -53,7 +53,12 @@ class HomeViewController: UIViewController {
             target: self,
             action: #selector(onTappedButtonAddProjects)
         )
-        addProjectButton.tintColor = .colors(name: .buttonsColor)
+        
+        let configuration = UIImage.SymbolConfiguration(weight: .semibold)
+        let image = addProjectButton.image?.withConfiguration(configuration)
+        
+        addProjectButton.image = image
+        addProjectButton.tintColor = UIColor.colors(name: .buttonsColor)
         
         navigationItem.rightBarButtonItem = addProjectButton
         navigationController?.navigationBar.prefersLargeTitles = true

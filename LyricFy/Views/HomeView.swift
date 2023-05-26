@@ -12,7 +12,7 @@ class HomeView: UIView, ViewCode {
     lazy var layout: UICollectionViewFlowLayout = {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 56, left: 16, bottom: 0, right: 16)
+        layout.sectionInset = UIEdgeInsets(top: 38, left: 16, bottom: 0, right: 16)
         return layout
     }()
     
@@ -36,7 +36,7 @@ class HomeView: UIView, ViewCode {
     lazy var subtitle: UILabel = {
         let view = UILabel()
         view.text = "0 compositions"
-        view.font = .systemFont(ofSize: 15)
+        view.font = .systemFont(ofSize: 15, weight: .semibold)
         view.textColor = .colors(name: .buttonsColor)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
