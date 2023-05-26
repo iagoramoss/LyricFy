@@ -136,6 +136,13 @@ extension ScreenLyricsEditingController: UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
+        
+        if !textView.text.isEmpty {
+            screen?.placeHolder.isHidden = true
+        } else {
+            screen?.placeHolder.isHidden = false
+        }
+        
         guard let textView = screen?.textView else { return }
         
         let newSize = textView.sizeThatFits(

@@ -145,7 +145,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
     ) -> UIContextMenuConfiguration? {
         
         return UIContextMenuConfiguration(
-            identifier: nil,
+            identifier: indexPath as NSCopying,
             previewProvider: nil) { [weak self] _ in
                 let project = self!.viewModel.projects[indexPath.row]
                 return UIMenu(
@@ -155,6 +155,33 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
                     ]
                 )
             }
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration
+    ) -> UITargetedPreview? {
+        return makeTargetedPreview(for: configuration)
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration
+    ) -> UITargetedPreview? {
+        return makeTargetedPreview(for: configuration)
+    }
+    
+    private func makeTargetedPreview(for configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        
+        let collectionView = screen.collectionProjects
+        
+        guard let indexPath = configuration.identifier as? IndexPath else { return nil }
+        guard let selectedCell = collectionView.cellForItem(at: indexPath) as? ProjectsCell else { return nil }
+        
+        let parameters = UIPreviewParameters()
+        parameters.backgroundColor = .clear
+        
+        return UITargetedPreview(view: selectedCell.projectComponent, parameters: parameters)
     }
     
     func collectionView(

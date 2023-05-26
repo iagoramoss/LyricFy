@@ -33,6 +33,14 @@ class LyricsEditingScreenView: UIView, ViewCode {
         return view
     }()
 
+    lazy var placeHolder: UILabel = {
+        let view = UILabel()
+        view.text = "Type something here..."
+        view.font = .systemFont(ofSize: 18)
+        view.textColor = UIColor.lightGray
+        return view
+    }()
+    
     lazy var textView: UITextView = {
         let view = UITextView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -61,6 +69,7 @@ class LyricsEditingScreenView: UIView, ViewCode {
     }
 
     func setupHierarchy() {
+        textView.addSubview(placeHolder)
         contentView.addSubview(textView)
         scrollView.addSubview(contentView)
         addSubview(scrollView)
@@ -69,6 +78,7 @@ class LyricsEditingScreenView: UIView, ViewCode {
 
     func setupConstraints() {
         recorderView.translatesAutoresizingMaskIntoConstraints = false
+        placeHolder.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -88,6 +98,9 @@ class LyricsEditingScreenView: UIView, ViewCode {
             textView.topAnchor.constraint(equalTo: contentView.topAnchor),
             textView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             textView.heightAnchor.constraint(greaterThanOrEqualToConstant: .screenHeight/3),
+            
+            placeHolder.topAnchor.constraint(equalTo: textView.topAnchor, constant: 8),
+            placeHolder.leadingAnchor.constraint(equalTo: textView.leadingAnchor, constant: 10),
 
             recorderView.widthAnchor.constraint(equalTo: self.widthAnchor),
             recorderView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.25),

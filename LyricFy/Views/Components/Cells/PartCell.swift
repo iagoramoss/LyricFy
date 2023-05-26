@@ -19,7 +19,7 @@ class PartCell: UITableViewCell, ViewCode {
         }
     }
     
-    private lazy var container: UIView = {
+    lazy var container: UIView = {
         let container = UIView()
         container.layer.cornerRadius = 10
         container.layer.masksToBounds = true
