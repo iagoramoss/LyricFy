@@ -75,7 +75,7 @@ class ScreenLyricsEditingController: UIViewController {
             self?.viewModel.audioManager.deleteAudio()
             self?.screen?.recorderView.audioDeleted()
         }
-        
+
         present(alert, animated: false)
     }
 
@@ -105,7 +105,6 @@ class ScreenLyricsEditingController: UIViewController {
             screen?.recorderView.playButton.addTarget(self,
                                                       action: #selector(actionPause),
                                                       for: .touchUpInside)
-
         }
     }
     

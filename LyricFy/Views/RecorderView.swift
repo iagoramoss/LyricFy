@@ -50,14 +50,14 @@ class RecorderView: UIView {
     lazy var circleLayer: CAShapeLayer = {
         let pulseLayer = CAShapeLayer()
         let circularPath = UIBezierPath(arcCenter: .zero,
-                                        radius: UIScreen.main.bounds.size.width / 10.0,
+                                        radius: UIScreen.main.bounds.size.width / 13.0,
                                         startAngle: 0, endAngle: 2 * .pi, clockwise: true)
         pulseLayer.path = circularPath.cgPath
         pulseLayer.lineWidth = 3.0
         pulseLayer.fillColor = UIColor.clear.cgColor
         pulseLayer.strokeColor = UIColor.gray.cgColor
         pulseLayer.lineCap = CAShapeLayerLineCap.round
-        pulseLayer.position = CGPoint(x: UIScreen.main.bounds.size.width / 17.0,
+        pulseLayer.position = CGPoint(x: UIScreen.main.bounds.size.width / 30.0,
                                       y: UIScreen.main.bounds.size.height / 35.0)
 
         return pulseLayer
@@ -87,14 +87,15 @@ class RecorderView: UIView {
     func createPulse() {
         for _ in 0...2 {
             let circularPath = UIBezierPath(arcCenter: .zero,
-                                            radius: UIScreen.main.bounds.size.width / 8.0,
+                                            radius: UIScreen.main.bounds.size.width / 12.0,
                                             startAngle: 0, endAngle: 2 * .pi, clockwise: true)
             let pulseLayer = CAShapeLayer()
             pulseLayer.path = circularPath.cgPath
             pulseLayer.lineWidth = 3.0
             pulseLayer.fillColor = UIColor.clear.cgColor
             pulseLayer.lineCap = CAShapeLayerLineCap.round
-            pulseLayer.position = CGPoint(x: 27, y: 25)
+            pulseLayer.position = CGPoint(x: UIScreen.main.bounds.size.width / 30.0,
+                                          y: UIScreen.main.bounds.size.height / 35.0)
             pulseLayer.zPosition = recorderButton.layer.zPosition - 1
             recorderButton.layer.addSublayer(pulseLayer)
             pulseLayers.append(pulseLayer)
@@ -142,10 +143,11 @@ class RecorderView: UIView {
 
             recorderButton.subviews.forEach { $0.removeFromSuperview() }
             imgView = UIImageView(image: UIImage(systemName: "square.fill"))
-            imgView.layer.frame = CGRect(x: 0, y: 0, width: 45, height: 45)
+            imgView.frame.size = .init(width: 35, height: 35)
+            imgView.layer.position = .init(x: UIScreen.main.bounds.size.width / 30.0,
+                                           y: UIScreen.main.bounds.size.height / 35.0)
             imgView.tintColor = .red
             recorderButton.addSubview(imgView)
-            self.createPulse()
             
         case .preparedToRecord:
             playButton.isHidden = true
@@ -153,7 +155,9 @@ class RecorderView: UIView {
 
             recorderButton.subviews.forEach { $0.removeFromSuperview() }
             imgView = UIImageView(image: UIImage(systemName: "circle.fill"))
-            imgView.layer.frame = CGRect(x: 0, y: 0, width: 45, height: 45)
+            imgView.frame.size = .init(width: 50, height: 50)
+            imgView.layer.position = .init(x: UIScreen.main.bounds.size.width / 30.0,
+                                           y: UIScreen.main.bounds.size.height / 35.0)
             imgView.tintColor = .red
             recorderButton.addSubview(imgView)
 
