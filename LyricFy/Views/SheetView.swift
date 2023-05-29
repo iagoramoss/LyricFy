@@ -14,7 +14,7 @@ class SheetView: UIView, ViewCode {
     private lazy var label: UILabel = {
         let label = UILabel()
         label.text = "Choose the composition session you want to work on:"
-        label.textColor = UIColor(red: 0.294, green: 0.327, blue: 0.508, alpha: 1)
+        label.textColor = .magenta
         label.font = .customFont(fontName: .ralewaySemibold, style: .body, size: 17)
         label.numberOfLines = 0
         return label
@@ -29,7 +29,7 @@ class SheetView: UIView, ViewCode {
             return title
         })
         
-        config.baseBackgroundColor = UIColor(red: 0.776, green: 0.776, blue: 0.784, alpha: 0.7)
+        config.baseBackgroundColor = .magenta
         config.baseForegroundColor = .black
         config.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 16, bottom: 10, trailing: 16)
         config.cornerStyle = .large
