@@ -9,13 +9,15 @@ import UIKit
 import Combine
 
 class CompositionScreenController: UIViewController {
-    
+
     private var partView: PartView?
-    
+
     private var viewModel: CompositionViewModel
-    
+
     private var subscriptions = Set<AnyCancellable>()
-    
+
+    private var firstLoad: Bool = true
+
     init(viewModel: CompositionViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -26,13 +28,13 @@ class CompositionScreenController: UIViewController {
         self.partView = PartView(delegate: self)
         self.view = partView
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
         navigationController?.navigationBar.tintColor = .colors(name: .barButtonColor)
     }
-    
+
     private func setupNavigationBar() {
         let menu = UIMenu(children: [
             UIAction(title: "Change version",
@@ -47,6 +49,7 @@ class CompositionScreenController: UIViewController {
                      state: .off,
                      handler: { [weak self] _ in
                          self?.viewModel.createVersion()
+                         self?.navigationItem.title = self?.viewModel.selectedVersionName
                          self?.reloadData()
                      }),
             
@@ -55,8 +58,7 @@ class CompositionScreenController: UIViewController {
                      attributes: .destructive,
                      state: .off,
                      handler: { [weak self] _ in
-                         self?.present(
-                            Alert(title: "Do you want to delete this version?",
+                         self?.present( Alert(title: "Do you want to delete this version?",
                                   message: "The version will be deleted and you will not be able to recover it.",
                                   actionButtonLabel: "Delete",
                                   actionButtonStyle: .destructive,
@@ -65,14 +67,12 @@ class CompositionScreenController: UIViewController {
                                       if self?.viewModel.versions.count == 1 {
                                           self?.viewModel.deleteProject()
                                           self?.navigationController?.popViewController(animated: true)
-                                          
                                           return
                                       }
-                                      
+
                                       self?.viewModel.deleteVersion()
                                       self?.reloadData()
-                                  }
-                                 ),
+                                  }),
                             animated: true)
                      })
         ])
@@ -85,7 +85,7 @@ class CompositionScreenController: UIViewController {
         menuButton.menu = menu
         menuButton.tintColor = .colors(name: .barButtonColor)
         
-        navigationItem.title = viewModel.name.capitalized
+        navigationItem.title = viewModel.selectedVersionName
         navigationController?.navigationBar.largeTitleTextAttributes = [
             .foregroundColor: UIColor.colors(name: .buttonsColor)!
         ]
@@ -142,6 +142,7 @@ class CompositionScreenController: UIViewController {
         versionsVC.doneAction = { [weak self] in
             self?.viewModel.switchVersion(to: versionsVC.versionsView.pickerView.selectedRow(inComponent: 0))
             self?.reloadData()
+            self?.navigationItem.title = self?.viewModel.selectedVersionName
         }
         
         versionsVC.modalPresentationStyle = .pageSheet
@@ -311,16 +312,14 @@ extension CompositionScreenController: PartDelegate {
         let part = viewModel.parts[indexPath.row]
         editPart(part: part)
     }
-    
-    func tableView(
-        _ tableView: UITableView,
-        viewForHeaderInSection section: Int
-    ) -> UIView? {
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: CompositionHeader.reuseIdentifier)
-        
+
         guard let header = header as? CompositionHeader else { return header }
-        
-        header.versionName = viewModel.selectedVersionName
+
+        header.versionName = viewModel.name.capitalized
+
         return header
     }
     
