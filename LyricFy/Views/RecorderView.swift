@@ -137,6 +137,7 @@ class RecorderView: UIView {
         trashButton.isHidden = true
         recorderButton.isHidden = false
         labelPlay.isHidden = true
+        self.disablePulse()
     }
     
     func audioSatateChanged(state: AudioState) {
@@ -152,6 +153,7 @@ class RecorderView: UIView {
                                            y: UIScreen.main.bounds.size.height / 35.0)
             imgView.tintColor = .red
             recorderButton.addSubview(imgView)
+            self.createPulse()
             
         case .preparedToRecord:
             playButton.isHidden = true
