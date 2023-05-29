@@ -49,6 +49,10 @@ extension AddProjectsCell: ViewCode {
     func setupConstraints() {
         projectComponent.layer.borderColor = UIColor.colors(name: .cellsColor)?.cgColor
         NSLayoutConstraint.activate([
+            projectComponent.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            projectComponent.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            projectComponent.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            
             projectComponent.widthAnchor.constraint(equalToConstant: 168),
             projectComponent.heightAnchor.constraint(equalToConstant: 162),
             

@@ -21,7 +21,7 @@ class ProjectsCell: UICollectionViewCell {
     
     lazy var nameProject: UILabel = {
         let label = UILabel()
-        label.font = .fontCustom(fontName: .ralewaySemibold, size: 17)
+        label.font = .customFont(fontName: .ralewaySemibold, style: .headline, size: 17)
         label.textColor = .colors(name: .buttonsLabel)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 2
@@ -68,6 +68,10 @@ extension ProjectsCell: ViewCode {
 
     func setupConstraints() {
         NSLayoutConstraint.activate([
+            projectComponent.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            projectComponent.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            projectComponent.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            
             projectComponent.widthAnchor.constraint(equalToConstant: 168),
             projectComponent.heightAnchor.constraint(equalToConstant: 162),
             

@@ -18,11 +18,6 @@ class HomeViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupView()
-    }
-    
     override func loadView() {
         super.loadView()
         self.view = screen
@@ -39,6 +34,7 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupView()
         
         viewModel.updateProjects()
         screen.collectionProjects.reloadData()
@@ -48,9 +44,13 @@ class HomeViewController: UIViewController {
         title = "Projects"
         
         navigationController?.navigationBar.prefersLargeTitles = true
+        
         navigationController?.navigationBar.largeTitleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.colors(name: .buttonsColor)!
+            NSAttributedString.Key.foregroundColor: UIColor.colors(name: .buttonsColor)!,
+            NSAttributedString.Key.font: UIFont.customFont(fontName: .ralewayBold, style: .largeTitle)
         ]
+        
+        navigationController?.navigationBar.barTintColor = UIColor.colors(name: .bgColor)
     }
     
     private func navigateToComposition(composition: Composition) {
@@ -170,10 +170,28 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
                 textFieldDefaultText: "Project",
                 projectName: nil,
                 action: { [weak self] projectName in
-                    self?.viewModel.createProject(name: projectName)
+                    guard self != nil else { return }
+                    
+                    var projectName = projectName
+                    
+                    if projectName.trimmingCharacters(in: .whitespaces).isEmpty {
+                        let projectNames = self!.viewModel.projects.map { $0.name }
+                        var untitledCount = 0
+                        
+                        repeat {
+                            projectName = "Untitled"
+                            
+                            if untitledCount > 0 {
+                                projectName += " \(untitledCount)"
+                            }
+                            
+                            untitledCount += 1
+                        } while projectNames.contains(projectName)
+                    }
+                    
+                    self!.viewModel.createProject(name: projectName)
                     collectionView.reloadData()
                     
-                    guard self != nil else { return }
                     self!.navigateToComposition(composition: self!.viewModel.projects.last!)
                 }
             ), animated: true, completion: nil)
@@ -214,15 +232,20 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         _ collectionView: UICollectionView,
         project: Composition
     ) -> UIAction {
-        return UIAction(title: "Edit name",
+        return UIAction(title: "Rename Project",
                         image: UIImage(systemName: "pencil"),
                         state: .off) { [weak self] _ in
             self?.present(Alert(
                 title: "Rename Project",
+                actionButtonLabel: "Rename",
                 textFieldPlaceholder: nil,
                 textFieldDefaultText: project.name,
                 projectName: project.name,
                 action: { [weak self] name in
+                    if name.trimmingCharacters(in: .whitespaces).isEmpty {
+                        return
+                    }
+                    
                     self?.viewModel.updateProjectName(projectId: project.id, newName: name)
                     collectionView.reloadData()
                 }

@@ -35,15 +35,6 @@ class CompositionScreenController: UIViewController {
         navigationController?.navigationBar.tintColor = .colors(name: .barButtonColor)
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        reloadData()
-    }
-
-    private func reloadData() {
-        partView?.tableView.reloadData()
-    }
-
     private func setupNavigationBar() {
         let menu = UIMenu(children: [
             UIAction(title: "Change version",
@@ -109,7 +100,8 @@ class CompositionScreenController: UIViewController {
                                                            audioManager: AudioController.shared,
                                                            audioFileManager: LocalAudioFileManager.shared)
         
-        navigationController?.pushViewController(ScreenLyricsEditingController(viewModel: lyricsViewModel),
+        navigationController?.pushViewController(ScreenLyricsEditingController(viewModel: lyricsViewModel,
+                                                                               delegate: self),
                                                  animated: true)
     }
     
@@ -117,8 +109,10 @@ class CompositionScreenController: UIViewController {
     func onTappedButtonAdd() {
         let sheetVC = SheetViewController()
         
-        sheetVC.action = { partType in
-            self.dismiss(animated: true)
+        sheetVC.action = { [weak self] partType in
+            self?.dismiss(animated: true)
+            guard let self = self else { return }
+            
             self.viewModel.createPart(type: partType)
             
             let part = self.viewModel.parts.last!
@@ -168,7 +162,12 @@ class CompositionScreenController: UIViewController {
     }
 }
 
-extension CompositionScreenController: PartTableView {
+extension CompositionScreenController: PartDelegate {
+    
+    func reloadData() {
+        viewModel.updateParts()
+        partView?.tableView.reloadData()
+    }
     
     func tableView(
         _ tableView: UITableView,

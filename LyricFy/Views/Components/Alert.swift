@@ -43,7 +43,7 @@ class Alert: UIAlertController {
 
         let cancelButton = UIAlertAction(title: cancelButtonLabel, style: .cancel)
         let actionButton = UIAlertAction(title: actionButtonLabel, style: .default) { _ in
-            guard let input = self.textFields?.first?.text, !input.isEmpty else { return }
+            guard let input = self.textFields?.first?.text else { return }
             action(input)
         }
 
