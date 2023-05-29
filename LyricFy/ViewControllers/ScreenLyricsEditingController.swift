@@ -16,8 +16,12 @@ class ScreenLyricsEditingController: UIViewController {
     
     private var subscriptions = Set<AnyCancellable>()
     
-    init(viewModel: ScreenLyricsEditingViewModel) {
+    private let delegate: PartDelegate
+    
+    init(viewModel: ScreenLyricsEditingViewModel, delegate: PartDelegate) {
         self.viewModel = viewModel
+        self.delegate = delegate
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -42,6 +46,8 @@ class ScreenLyricsEditingController: UIViewController {
         screen?.recorderView.trashButton.addTarget(self,
                                                    action: #selector(deleteAudioAction),
                                                    for: .touchUpInside)
+        
+        screen?.placeHolder.isHidden = viewModel.lyricsText.isEmpty ? false : true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -151,7 +157,7 @@ extension ScreenLyricsEditingController: UITextViewDelegate {
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        viewModel.saveLyricsEdition(completion: nil)
+        viewModel.saveLyricsEdition(completion: delegate.reloadData)
     }
 }
 
