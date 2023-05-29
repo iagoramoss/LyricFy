@@ -94,7 +94,7 @@ extension CompositionViewModel {
         return parts
     }
     
-    private func updateParts() {
+    func updateParts() {
         parts = getVersionParts(versionId: selectedVersionID!)
     }
     

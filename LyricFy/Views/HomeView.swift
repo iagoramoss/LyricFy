@@ -47,7 +47,7 @@ class HomeView: UIView, ViewCode {
         view.text = "Create Music\nyour way"
         view.numberOfLines = 2
         view.textAlignment = .center
-        view.font = .fontCustom(fontName: .ralewayMedium, size: 22)
+        view.font = .customFont(fontName: .ralewayMedium, style: .title2, size: 22)
         view.textColor = .magenta
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -56,7 +56,7 @@ class HomeView: UIView, ViewCode {
     lazy var labelBottomPlaceHolder: UILabel = {
         let view = UILabel()
         view.text = "You don't have a song yet."
-        view.font = .fontCustom(fontName: .ralewayMedium, size: 15)
+        view.font = .customFont(fontName: .ralewayMedium, style: .subheadline, size: 15)
         view.textColor = .magenta
         view.translatesAutoresizingMaskIntoConstraints = false
         return view

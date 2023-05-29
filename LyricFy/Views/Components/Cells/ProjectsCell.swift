@@ -21,7 +21,7 @@ class ProjectsCell: UICollectionViewCell {
     
     lazy var nameProject: UILabel = {
         let label = UILabel()
-        label.font = .fontCustom(fontName: .ralewaySemibold, size: 17)
+        label.font = .customFont(fontName: .ralewaySemibold, style: .headline, size: 17)
         label.textColor = .colors(name: .buttonsLabel)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 2
