@@ -12,7 +12,7 @@ class HomeView: UIView, ViewCode {
     lazy var layout: UICollectionViewFlowLayout = {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 32, left: 20, bottom: 0, right: 20)
+        layout.sectionInset = UIEdgeInsets(top: 38, left: 16, bottom: 0, right: 16)
         return layout
     }()
     
@@ -27,17 +27,81 @@ class HomeView: UIView, ViewCode {
         return collectionProjects
     }()
     
+    lazy var numberOfProjects: Int = 0 {
+        didSet {
+            subtitle.text = "\(numberOfProjects) compositions"
+        }
+    }
+    
+    lazy var subtitle: UILabel = {
+        let view = UILabel()
+        view.text = "0 compositions"
+        view.font = .systemFont(ofSize: 15, weight: .semibold)
+        view.textColor = .colors(name: .buttonsColor)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    lazy var labelTopPlaceHolder: UILabel = {
+        let view = UILabel()
+        view.text = "Create Music\nyour way"
+        view.numberOfLines = 2
+        view.textAlignment = .center
+        view.font = .customFont(fontName: .ralewayMedium, style: .title2, size: 22)
+        view.textColor = .magenta
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    lazy var labelBottomPlaceHolder: UILabel = {
+        let view = UILabel()
+        view.text = "You don't have a song yet."
+        view.font = .customFont(fontName: .ralewayMedium, style: .subheadline, size: 15)
+        view.textColor = .magenta
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    lazy var imagePlaceHolder: UIImageView = {
+        let view = UIImageView(image: UIImage(named: "placeHolderNoProject"))
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+
+    lazy var placeHolder: UIStackView = {
+        let view = UIStackView()
+        view.axis = .vertical
+        view.spacing = 14
+        view.alignment = .center
+        [labelTopPlaceHolder, imagePlaceHolder, labelBottomPlaceHolder].forEach { view.addArrangedSubview($0) }
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
     init() {
         super.init(frame: .zero)
         setupView()
     }
     
     func setupHierarchy() {
+        collectionProjects.addSubview(placeHolder)
+        collectionProjects.addSubview(subtitle)
         addSubview(collectionProjects)
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
+            subtitle.topAnchor.constraint(equalTo: collectionProjects.topAnchor),
+            subtitle.leadingAnchor.constraint(equalTo: collectionProjects.leadingAnchor, constant: 16),
+            
+            imagePlaceHolder.widthAnchor.constraint(equalToConstant: 172),
+            imagePlaceHolder.heightAnchor.constraint(equalToConstant: 172),
+            
+            placeHolder.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            placeHolder.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            
             collectionProjects.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             collectionProjects.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             collectionProjects.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
