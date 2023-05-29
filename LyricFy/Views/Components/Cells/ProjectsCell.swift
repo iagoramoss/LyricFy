@@ -81,7 +81,6 @@ extension ProjectsCell: ViewCode {
 
     func setupHierarchy() {
         projectComponent.addSubview(stackView)
-        print("======> \(UIScreen.main.bounds.width/2.298)")
         addSubview(projectComponent)
     }
 

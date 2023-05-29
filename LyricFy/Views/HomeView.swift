@@ -64,21 +64,10 @@ class HomeView: UIView, ViewCode {
 
     lazy var imagePlaceHolder: UIImageView = {
         let view = UIImageView(image: UIImage(named: "placeHolderNoProject"))
-//        view.frame = .init(origin: .zero, size: .init(width: 172, height: 172))
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
     }()
-    
-//    lazy var stackView: UIStackView = {
-//        let stack = UIStackView()
-//        stack.axis = .vertical
-//        stack.spacing = 8
-//        stack.alignment = .center
-//        stack.translatesAutoresizingMaskIntoConstraints = false
-//        [nameProject, date].forEach { stack.addArrangedSubview($0) }
-//        return stack
-//    }()
 
     lazy var placeHolder: UIStackView = {
         let view = UIStackView()
