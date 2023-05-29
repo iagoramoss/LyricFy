@@ -32,7 +32,7 @@ class ProjectsCell: UICollectionViewCell {
     
     lazy var dateDecribe: UILabel = {
         let label = UILabel()
-        label.text = "Data de criação"
+        label.text = "Date of creation"
         label.font = .systemFont(ofSize: 11, weight: .semibold)
         label.textColor = .colors(name: .buttonsLabel)
         label.translatesAutoresizingMaskIntoConstraints = false
