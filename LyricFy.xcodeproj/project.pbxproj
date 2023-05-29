@@ -43,10 +43,13 @@
 		781615122A1183BF00EDE98B /* AudioFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781615112A1183BF00EDE98B /* AudioFileManager.swift */; };
 		784D59992A1D3C1000EAA30A /* ReferenceTablePersistenceManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784D59982A1D3C1000EAA30A /* ReferenceTablePersistenceManagerProtocol.swift */; };
 		7882169129FD9D340032A177 /* CGFloat+Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7882169029FD9D340032A177 /* CGFloat+Screen.swift */; };
+		7891340B2A24D6110090B443 /* AudioPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7891340A2A24D6110090B443 /* AudioPlayerController.swift */; };
+		7891340F2A24E2EB0090B443 /* AudioRecorderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7891340E2A24E2EB0090B443 /* AudioRecorderController.swift */; };
 		78BE20E62A041A9A003B3AF2 /* KeyboardListenerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BE20E52A041A9A003B3AF2 /* KeyboardListenerProtocol.swift */; };
 		78C9686F2A0975E5009054D0 /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C9686E2A0975E5009054D0 /* AudioController.swift */; };
 		78C968712A09760F009054D0 /* AudioState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C968702A09760F009054D0 /* AudioState.swift */; };
 		78D0E8532A12B2AF00C80579 /* AudioPermissionAlertAlertDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D0E8522A12B2AF00C80579 /* AudioPermissionAlertAlertDelegate.swift */; };
+		78E0F26D2A2510250057BE6F /* Double+FormattedTimeString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E0F26C2A2510250057BE6F /* Double+FormattedTimeString.swift */; };
 		78EE4D582A1D360700C8216C /* AudioFileManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78EE4D572A1D360700C8216C /* AudioFileManagerProtocol.swift */; };
 		78F391DE2A02EF9F0097884C /* ScreenLyricsEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F391DD2A02EF9F0097884C /* ScreenLyricsEditingViewModel.swift */; };
 		78F391E02A02F3400097884C /* UITextView+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F391DF2A02F3400097884C /* UITextView+Combine.swift */; };
@@ -98,10 +101,13 @@
 		781615112A1183BF00EDE98B /* AudioFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileManager.swift; sourceTree = "<group>"; };
 		784D59982A1D3C1000EAA30A /* ReferenceTablePersistenceManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferenceTablePersistenceManagerProtocol.swift; sourceTree = "<group>"; };
 		7882169029FD9D340032A177 /* CGFloat+Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Screen.swift"; sourceTree = "<group>"; };
+		7891340A2A24D6110090B443 /* AudioPlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerController.swift; sourceTree = "<group>"; };
+		7891340E2A24E2EB0090B443 /* AudioRecorderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderController.swift; sourceTree = "<group>"; };
 		78BE20E52A041A9A003B3AF2 /* KeyboardListenerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardListenerProtocol.swift; sourceTree = "<group>"; };
 		78C9686E2A0975E5009054D0 /* AudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
 		78C968702A09760F009054D0 /* AudioState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioState.swift; sourceTree = "<group>"; };
 		78D0E8522A12B2AF00C80579 /* AudioPermissionAlertAlertDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPermissionAlertAlertDelegate.swift; sourceTree = "<group>"; };
+		78E0F26C2A2510250057BE6F /* Double+FormattedTimeString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+FormattedTimeString.swift"; sourceTree = "<group>"; };
 		78EE4D572A1D360700C8216C /* AudioFileManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileManagerProtocol.swift; sourceTree = "<group>"; };
 		78F391DD2A02EF9F0097884C /* ScreenLyricsEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenLyricsEditingViewModel.swift; sourceTree = "<group>"; };
 		78F391DF2A02F3400097884C /* UITextView+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Combine.swift"; sourceTree = "<group>"; };
@@ -240,6 +246,7 @@
 				78F391DF2A02F3400097884C /* UITextView+Combine.swift */,
 				9F46596C2A0EB4840032B471 /* UIColor.swift */,
 				78052D592A21514D00738C25 /* UIView+asImage.swift */,
+				78E0F26C2A2510250057BE6F /* Double+FormattedTimeString.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -247,6 +254,8 @@
 		78C9686D2A0975AC009054D0 /* Audio */ = {
 			isa = PBXGroup;
 			children = (
+				7891340A2A24D6110090B443 /* AudioPlayerController.swift */,
+				7891340E2A24E2EB0090B443 /* AudioRecorderController.swift */,
 				78C9686E2A0975E5009054D0 /* AudioController.swift */,
 				78C968702A09760F009054D0 /* AudioState.swift */,
 				781615112A1183BF00EDE98B /* AudioFileManager.swift */,
@@ -402,11 +411,13 @@
 				9F62B0B72A01A27000A2F91C /* SheetView.swift in Sources */,
 				0D2CB1112A0AC13C0080CB8A /* CoreDataManager.swift in Sources */,
 				78052D562A21285D00738C25 /* PlayerView.swift in Sources */,
+				7891340F2A24E2EB0090B443 /* AudioRecorderController.swift in Sources */,
 				9F74D1342A04A3B8001017B2 /* VersionsView.swift in Sources */,
 				0D2CB0DE29FC4F560080CB8A /* HomeViewModel.swift in Sources */,
 				78052D5A2A21514D00738C25 /* UIView+asImage.swift in Sources */,
 				78EE4D582A1D360700C8216C /* AudioFileManagerProtocol.swift in Sources */,
 				6735E4002A180349005F9BF7 /* CompositionViewModel.swift in Sources */,
+				78E0F26D2A2510250057BE6F /* Double+FormattedTimeString.swift in Sources */,
 				67227F1829FC50A300E1166C /* Alert.swift in Sources */,
 				7882169129FD9D340032A177 /* CGFloat+Screen.swift in Sources */,
 				673574FB2A05801F00C75DB6 /* PartView.swift in Sources */,
@@ -441,6 +452,7 @@
 				78F391E02A02F3400097884C /* UITextView+Combine.swift in Sources */,
 				67F7BE622A12B007000ACA06 /* CompositionHeaderCell.swift in Sources */,
 				7814FA432A1C3D010033692B /* PartPersistenceManagerProtocol.swift in Sources */,
+				7891340B2A24D6110090B443 /* AudioPlayerController.swift in Sources */,
 				781615122A1183BF00EDE98B /* AudioFileManager.swift in Sources */,
 				78C968712A09760F009054D0 /* AudioState.swift in Sources */,
 			);
@@ -581,7 +593,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = A7SRF7ZP35;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LyricFy/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Lyra;
@@ -616,7 +628,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = A7SRF7ZP35;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LyricFy/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Lyra;
