@@ -117,11 +117,13 @@ class CompositionScreenController: UIViewController {
             
             let part = self.viewModel.parts.last!
             self.editPart(part: part)
+            
+            self.reloadData()
         }
         
         if #available(iOS 16.0, *) {
             sheetVC.sheetPresentationController?.detents = [.custom(resolver: { _ in
-                return 200
+                return 300
             })]
         } else {
             sheetVC.sheetPresentationController?.detents = [.medium()]
