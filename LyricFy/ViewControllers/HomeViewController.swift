@@ -103,13 +103,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        if viewModel.projects.isEmpty {
-            screen.placeHolder.isHidden = false
-            screen.placeHolder.isHidden = false
-        } else {
-            screen.placeHolder.isHidden = true
-            screen.placeHolder.isHidden = true
-        }
+        screen.placeHolder.isHidden = !viewModel.projects.isEmpty
         screen.numberOfProjects = viewModel.projects.count
         return viewModel.projects.count
     }
