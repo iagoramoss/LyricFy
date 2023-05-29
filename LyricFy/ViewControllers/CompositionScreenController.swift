@@ -95,14 +95,17 @@ class CompositionScreenController: UIViewController {
     }
     
     private func editPart(part: Part) {
-        let lyricsViewModel = ScreenLyricsEditingViewModel(compositionPart: part,
-                                                           dataManager: DataAccessManager.shared,
-                                                           audioManager: AudioController.shared,
-                                                           audioFileManager: LocalAudioFileManager.shared)
+        let lyricsViewModel = ScreenLyricsEditingViewModel(
+            compositionPart: part,
+            dataManager: DataAccessManager.shared,
+            audioSessionManager: LocalAudioSessionManager.shared,
+            audioFileManager: LocalAudioFileManager.shared
+        )
         
-        navigationController?.pushViewController(ScreenLyricsEditingController(viewModel: lyricsViewModel,
-                                                                               delegate: self),
-                                                 animated: true)
+        navigationController?.pushViewController(ScreenLyricsEditingController(
+            viewModel: lyricsViewModel,
+            delegate: self
+        ), animated: true)
     }
     
     @objc

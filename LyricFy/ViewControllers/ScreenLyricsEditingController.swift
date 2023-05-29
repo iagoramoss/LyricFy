@@ -16,13 +16,14 @@ class ScreenLyricsEditingController: UIViewController {
     
     private var subscriptions = Set<AnyCancellable>()
     
-    private let delegate: PartDelegate
+    private weak var delegate: PartDelegate?
     
     init(viewModel: ScreenLyricsEditingViewModel, delegate: PartDelegate) {
         self.viewModel = viewModel
         self.delegate = delegate
         
         super.init(nibName: nil, bundle: nil)
+        viewModel.delegete = self
     }
     
     // MARK: - Lifecycle
@@ -52,13 +53,13 @@ class ScreenLyricsEditingController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        viewModel.prepareToExit()
+        viewModel.stopTasks()
     }
     
     // MARK: - View Actions
     @objc
     func playAndPauseAction() {
-        switch viewModel.audioManager.audioControlState {
+        switch viewModel.audioState {
         case .preparedToPlay:
             viewModel.playAudio()
         case .playing:
@@ -71,7 +72,7 @@ class ScreenLyricsEditingController: UIViewController {
     
     @objc
     func recordAndStopAction() {
-        switch viewModel.audioManager.audioControlState {
+        switch viewModel.audioState {
         case .recording:
             viewModel.stopRecording()
         case .preparedToRecord:
@@ -111,12 +112,12 @@ class ScreenLyricsEditingController: UIViewController {
             .assign(to: \.lyricsText, on: self.viewModel)
             .store(in: &subscriptions)
         
-        viewModel.audioManager.$audioControlState
+        viewModel.$audioState
             .sink { self.screen?.recorderView.audioSatateChanged(state: $0) }
             .store(in: &subscriptions)
         
-        viewModel.audioManager.$recordingTimeLabel
-            .sink { self.screen?.recorderView.labelTimer.text = $0 ?? "00:00:00" }
+        viewModel.$recordingTimeLabel
+            .sink { self.screen?.recorderView.labelTimer.text = $0 ?? "00:00" }
             .store(in: &subscriptions)
     }
     
@@ -157,7 +158,7 @@ extension ScreenLyricsEditingController: UITextViewDelegate {
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        viewModel.saveLyricsEdition(completion: delegate.reloadData)
+        viewModel.saveLyricsEdition(completion: delegate?.reloadData)
     }
 }
 

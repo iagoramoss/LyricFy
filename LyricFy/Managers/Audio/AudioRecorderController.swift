@@ -33,6 +33,7 @@ class AudioRecorderController: NSObject, AVAudioRecorderDelegate {
         audioRecorder.isMeteringEnabled = true
         super.init()
         audioRecorder.delegate = self
+        self.delegate = delegate
     }
     
     func startRecording(completion: () -> Void) {

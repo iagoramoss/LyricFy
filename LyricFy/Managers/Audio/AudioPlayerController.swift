@@ -16,16 +16,21 @@ protocol AudioPlayerDelegate: AnyObject {
 
 class AudioPlayerController: NSObject, AVAudioPlayerDelegate {
     
+    var audioDuration: TimeInterval {
+        audioPlayer.duration
+    }
+    
     weak var delegate: AudioPlayerDelegate?
     
     private var timer: Timer?
     private var audioPlayer: AVAudioPlayer
     
-    init(contentsOfURL audioURL: URL) throws {
+    init(audioURL: URL, delegate: AudioPlayerDelegate) throws {
         try audioPlayer = AVAudioPlayer(contentsOf: audioURL)
         super.init()
         audioPlayer.delegate = self
         audioPlayer.numberOfLoops = 0
+        self.delegate = delegate
     }
     
     func playAudio(completion: () -> Void) {

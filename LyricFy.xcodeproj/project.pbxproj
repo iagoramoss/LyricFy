@@ -50,6 +50,7 @@
 		78C968712A09760F009054D0 /* AudioState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C968702A09760F009054D0 /* AudioState.swift */; };
 		78D0E8532A12B2AF00C80579 /* AudioPermissionAlertAlertDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D0E8522A12B2AF00C80579 /* AudioPermissionAlertAlertDelegate.swift */; };
 		78E0F26D2A2510250057BE6F /* Double+FormattedTimeString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E0F26C2A2510250057BE6F /* Double+FormattedTimeString.swift */; };
+		78E0F26F2A2517E00057BE6F /* AudioSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E0F26E2A2517E00057BE6F /* AudioSessionManager.swift */; };
 		78EE4D582A1D360700C8216C /* AudioFileManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78EE4D572A1D360700C8216C /* AudioFileManagerProtocol.swift */; };
 		78F391DE2A02EF9F0097884C /* ScreenLyricsEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F391DD2A02EF9F0097884C /* ScreenLyricsEditingViewModel.swift */; };
 		78F391E02A02F3400097884C /* UITextView+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F391DF2A02F3400097884C /* UITextView+Combine.swift */; };
@@ -108,6 +109,7 @@
 		78C968702A09760F009054D0 /* AudioState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioState.swift; sourceTree = "<group>"; };
 		78D0E8522A12B2AF00C80579 /* AudioPermissionAlertAlertDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPermissionAlertAlertDelegate.swift; sourceTree = "<group>"; };
 		78E0F26C2A2510250057BE6F /* Double+FormattedTimeString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+FormattedTimeString.swift"; sourceTree = "<group>"; };
+		78E0F26E2A2517E00057BE6F /* AudioSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionManager.swift; sourceTree = "<group>"; };
 		78EE4D572A1D360700C8216C /* AudioFileManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileManagerProtocol.swift; sourceTree = "<group>"; };
 		78F391DD2A02EF9F0097884C /* ScreenLyricsEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenLyricsEditingViewModel.swift; sourceTree = "<group>"; };
 		78F391DF2A02F3400097884C /* UITextView+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Combine.swift"; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 		78C9686D2A0975AC009054D0 /* Audio */ = {
 			isa = PBXGroup;
 			children = (
+				78E0F26E2A2517E00057BE6F /* AudioSessionManager.swift */,
 				7891340A2A24D6110090B443 /* AudioPlayerController.swift */,
 				7891340E2A24E2EB0090B443 /* AudioRecorderController.swift */,
 				78C9686E2A0975E5009054D0 /* AudioController.swift */,
@@ -433,6 +436,7 @@
 				67227F0829F85EDE00E1166C /* LyricFy.xcdatamodeld in Sources */,
 				0D7EF1522A12C5E1001DE424 /* HomeViewController.swift in Sources */,
 				78C9686F2A0975E5009054D0 /* AudioController.swift in Sources */,
+				78E0F26F2A2517E00057BE6F /* AudioSessionManager.swift in Sources */,
 				67F7BE5F2A0F58D4000ACA06 /* Part.swift in Sources */,
 				673574FD2A05803900C75DB6 /* PartCell.swift in Sources */,
 				78052D582A213E4900738C25 /* SliderThumb.swift in Sources */,
