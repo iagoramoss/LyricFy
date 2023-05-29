@@ -78,6 +78,8 @@ class CompositionScreenController: UIViewController {
                                  guard let versionID = self?.viewModel.selectedVersionID else { return }
                                  self?.viewModel.updateVersionName(id: versionID, name: newName)
                                  
+                                 self?.reloadData()
+                                 
                              }
                          ), animated: true, completion: nil)
                      }),
@@ -132,9 +134,11 @@ class CompositionScreenController: UIViewController {
                                                            audioManager: AudioController.shared,
                                                            audioFileManager: LocalAudioFileManager.shared)
         
-        navigationController?.pushViewController(ScreenLyricsEditingController(viewModel: lyricsViewModel,
-                                                                               delegate: self),
-                                                 animated: true)
+        navigationController?.pushViewController(
+            ScreenLyricsEditingController(viewModel: lyricsViewModel,
+                                          delegate: self
+                                         ), animated: true
+        )
     }
     
     @objc
@@ -352,14 +356,7 @@ extension CompositionScreenController: PartDelegate {
         
         guard let header = header as? CompositionHeader else { return header }
         
-        var versionName = viewModel.selectedVersionName {
-            didSet {
-                versionName = viewModel.selectedVersionName
-                print("=====> \(versionName)")
-            }
-        }
-        
-        header.versionName = versionName
+        header.versionName = viewModel.selectedVersionName
         return header
     }
     

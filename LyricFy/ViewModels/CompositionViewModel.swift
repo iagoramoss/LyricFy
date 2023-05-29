@@ -39,15 +39,6 @@ extension CompositionViewModel {
     func getVersions() -> [Version] {
         var versions = service.getCompositionVersionsByCompositionID(compositionID: composition.id)
         
-//        versions.sort {
-//            let v1 = Int($0.name.split(separator: " ").last!)!
-//            let v2 = Int($1.name.split(separator: " ").last!)!
-//            
-//            return v1 < v2
-//        }
-        
-//        lastVersion = Int(versions.last!.name.split(separator: " ").last!)!
-        
         return versions
     }
     
@@ -56,9 +47,8 @@ extension CompositionViewModel {
     }
     
     func createVersion(name: String) {
-//        service.createVersionWithCompositionID(name: "Version \(lastVersion + 1)",
-//                                               compositionID: composition.id,
-//                                               parts: parts)
+        var name = name.isEmpty ? "Version \(lastVersion + 1)" : name
+        
         service.createVersionWithCompositionID(name: name,
                                                compositionID: composition.id,
                                                parts: parts)
@@ -68,13 +58,10 @@ extension CompositionViewModel {
     }
     
     func updateVersionName(id: UUID, name: String) {
-//        service.createVersionWithCompositionID(name: "Version \(lastVersion + 1)",
-//                                               compositionID: composition.id,
-//                                               parts: parts)
         service.updateVersionByID(versionID: id, newName: name)
         
+        selectedVersionName = name
         updateVersions()
-//        switchVersion(to: versions.count - 1)
     }
     
     func deleteVersion() {
