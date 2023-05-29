@@ -141,6 +141,15 @@ extension DataAccessManager {
         manager.save()
     }
     
+    func updateVersionByID(versionID: UUID, newName: String) {
+        guard let version = getVersionEntityByID(id: versionID) else { return }
+        
+        // Updating version name
+        version.version = newName
+        
+        manager.save()
+    }
+    
     func deleteVersionByID(versionID: UUID) {
         guard let version = getVersionEntityByID(id: versionID) else { return }
         

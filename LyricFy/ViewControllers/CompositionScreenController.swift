@@ -46,8 +46,40 @@ class CompositionScreenController: UIViewController {
                      image: UIImage(systemName: "doc.on.doc"),
                      state: .off,
                      handler: { [weak self] _ in
-                         self?.viewModel.createVersion()
-                         self?.reloadData()
+                         
+                         self?.present(
+                            Alert(
+                                title: "Version Name",
+                                textFieldPlaceholder: "Ex: Last version",
+                                textFieldDefaultText: "Version",
+                                projectName: nil,
+                                action: { [weak self] name in
+                                    self?.viewModel.createVersion(name: name)
+                                    self?.reloadData()
+                                }
+                            ),
+                            animated: true)
+                         
+                     }),
+            
+            UIAction(title: "Rename version",
+                     image: UIImage(systemName: "pencil"),
+                     state: .off,
+                     handler: { [weak self] _ in
+                         guard let versionName = self?.viewModel.selectedVersionName else { return }
+                         
+                         self?.present(Alert(
+                             title: "Rename Version",
+                             actionButtonLabel: "Rename",
+                             textFieldPlaceholder: nil,
+                             textFieldDefaultText: versionName,
+                             projectName: versionName,
+                             action: { [weak self] newName in
+                                 guard let versionID = self?.viewModel.selectedVersionID else { return }
+                                 self?.viewModel.updateVersionName(id: versionID, name: newName)
+                                 
+                             }
+                         ), animated: true, completion: nil)
                      }),
             
             UIAction(title: "Delete version",
@@ -320,7 +352,14 @@ extension CompositionScreenController: PartDelegate {
         
         guard let header = header as? CompositionHeader else { return header }
         
-        header.versionName = viewModel.selectedVersionName
+        var versionName = viewModel.selectedVersionName {
+            didSet {
+                versionName = viewModel.selectedVersionName
+                print("=====> \(versionName)")
+            }
+        }
+        
+        header.versionName = versionName
         return header
     }
     
