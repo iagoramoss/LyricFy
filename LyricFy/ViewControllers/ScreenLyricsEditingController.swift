@@ -13,7 +13,7 @@ class ScreenLyricsEditingController: UIViewController {
     private var screen: LyricsEditingScreenView? { didSet { setupView() } }
     
     private var viewModel: ScreenLyricsEditingViewModel
-    
+
     private var subscriptions = Set<AnyCancellable>()
     
     private weak var delegate: PartDelegate?
@@ -94,7 +94,7 @@ class ScreenLyricsEditingController: UIViewController {
             self.viewModel.deleteAudio()
             self.screen?.recorderView.audioDeleted()
         }
-        
+
         present(alert, animated: false)
     }
     
