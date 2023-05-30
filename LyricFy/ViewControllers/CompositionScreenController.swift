@@ -178,11 +178,7 @@ extension CompositionScreenController: PartDelegate {
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
-        if viewModel.parts.isEmpty {
-            partView?.placeHolder.isHidden = false
-        } else {
-            partView?.placeHolder.isHidden = true
-        }
+        partView?.placeHolder.isHidden = !viewModel.parts.isEmpty
         return viewModel.parts.count
     }
     
