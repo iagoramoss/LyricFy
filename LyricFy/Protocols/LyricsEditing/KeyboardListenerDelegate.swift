@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol KeyboardListener {
+protocol KeyboardListenerDelegate: AnyObject {
     
     func keyboardWillAppear()
     func keyboardWillhide()

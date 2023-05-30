@@ -57,9 +57,9 @@ class LyricsEditingScreenView: UIView, ViewCode {
         return view
     }()
 
-    let keyboardListenerDelegate: KeyboardListener
+    let keyboardListenerDelegate: KeyboardListenerDelegate
 
-    init(keyboardListener: KeyboardListener) {
+    init(keyboardListener: KeyboardListenerDelegate) {
         self.keyboardListenerDelegate = keyboardListener
         super.init(frame: .zero)
         setupView()

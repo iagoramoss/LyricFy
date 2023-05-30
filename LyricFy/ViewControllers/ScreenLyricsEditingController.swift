@@ -178,7 +178,7 @@ extension ScreenLyricsEditingController: AudioPermissionAlertDelegate {
     }
 }
 
-extension ScreenLyricsEditingController: KeyboardListener {
+extension ScreenLyricsEditingController: KeyboardListenerDelegate {
     
     func keyboardWillAppear() {
         let doneButton = UIBarButtonItem(title: "Done",

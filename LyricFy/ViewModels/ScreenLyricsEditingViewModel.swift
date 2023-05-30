@@ -25,18 +25,18 @@ class ScreenLyricsEditingViewModel {
     @Published private(set) var pastPlayingTimeLabel: String?
     @Published private(set) var missingPlayingTimeLabel: String?
     
-    let audioSessionManager: AudioSessionManager
+    let audioSessionManager: AudioSessionManagerProtocol
     let audioFileManager: AudioFileManager
     let dataManager: PartPersistenceManager
     
-    private var audioPlayerController: AudioPlayerController?
-    private var audioRecorderController: AudioRecorderController?
+    private var audioPlayerManager: AudioPlayerManagerProtocol?
+    private var audioRecorderManager: AudioRecorderManagerProtocol?
     
     weak var delegete: AudioPermissionAlertDelegate?
     
     init(compositionPart: Part,
          dataManager: PartPersistenceManager,
-         audioSessionManager: AudioSessionManager,
+         audioSessionManager: AudioSessionManagerProtocol,
          audioFileManager: AudioFileManager
     ) {
         self.compositionPart = compositionPart
@@ -56,7 +56,7 @@ class ScreenLyricsEditingViewModel {
             self.audioSessionManager.prepareToPlay()
             self.audioState = .preparedToPlay
             self.setupAudioPlayerController(audioURL: url)
-            self.missingPlayingTimeLabel = audioPlayerController?.audioDuration.formattedTimeString
+            self.missingPlayingTimeLabel = audioPlayerManager?.audioDuration.formattedTimeString
             self.pastPlayingTimeLabel = "00:00"
         } else {
             self.audioSessionManager.prepareToRecord()
@@ -106,7 +106,7 @@ extension ScreenLyricsEditingViewModel: AudioRecorderDelegate {
         // Update reference table with new audio url
         audioFileManager.saveAudioInReferenceTable(audioURL: newAudioURL)
         
-        guard let recorder = audioRecorderController else {
+        guard let recorder = audioRecorderManager else {
             #if DEBUG
             print("[ScreenLyricsEditingViewModel]: Recorder does not exist.")
             #endif
@@ -129,7 +129,7 @@ extension ScreenLyricsEditingViewModel: AudioRecorderDelegate {
             return
         }
         
-        guard let recorder = audioRecorderController else {
+        guard let recorder = audioRecorderManager else {
             #if DEBUG
             print("[ScreenLyricsEditingViewModel]: Recorder does not exist.")
             #endif
@@ -145,11 +145,11 @@ extension ScreenLyricsEditingViewModel: AudioRecorderDelegate {
     func recorderDidFinishRecording() {
         audioState = .preparedToPlay
         recordingTimeLabel = nil
-        audioRecorderController = nil
+        audioRecorderManager = nil
         setupAudioPlayerController(audioURL: audioURL!)
         audioSessionManager.prepareToPlay()
         
-        missingPlayingTimeLabel = audioPlayerController?.audioDuration.formattedTimeString
+        missingPlayingTimeLabel = audioPlayerManager?.audioDuration.formattedTimeString
         pastPlayingTimeLabel = "00:00"
     }
     
@@ -183,7 +183,7 @@ extension ScreenLyricsEditingViewModel: AudioPlayerDelegate {
             return
         }
         
-        guard let player = audioPlayerController else {
+        guard let player = audioPlayerManager else {
             #if DEBUG
             print("[ScreenLyricsEditingViewModel]: Player does not exist.")
             #endif
@@ -203,7 +203,7 @@ extension ScreenLyricsEditingViewModel: AudioPlayerDelegate {
             return
         }
         
-        guard let player = audioPlayerController else { return }
+        guard let player = audioPlayerManager else { return }
         
         player.pauseAudio { [weak self] in
             self?.audioState = .pausedPlaying
@@ -218,7 +218,7 @@ extension ScreenLyricsEditingViewModel: AudioPlayerDelegate {
             return
         }
         
-        guard let player = audioPlayerController else { return }
+        guard let player = audioPlayerManager else { return }
         
         player.resumeAudio { [weak self] in
             self?.audioState = .playing
@@ -229,7 +229,7 @@ extension ScreenLyricsEditingViewModel: AudioPlayerDelegate {
     func playerDidFinishPlaying() {
         audioState = .preparedToPlay
         
-        missingPlayingTimeLabel = audioPlayerController?.audioDuration.formattedTimeString
+        missingPlayingTimeLabel = audioPlayerManager?.audioDuration.formattedTimeString
         pastPlayingTimeLabel = "00:00"
     }
     
@@ -244,7 +244,7 @@ extension ScreenLyricsEditingViewModel {
     
     func setupAudioPlayerController(audioURL: URL) {
         do {
-            audioPlayerController = try AudioPlayerController(audioURL: audioURL,
+            audioPlayerManager = try AudioPlayerManager(audioURL: audioURL,
                                                               delegate: self)
         } catch {
             fatalError("[ScreenLyricsEditingViewModel] Error Player: \(error)")
@@ -253,7 +253,7 @@ extension ScreenLyricsEditingViewModel {
     
     func setupAudioRecorderController(audioURL: URL) {
         do {
-            audioRecorderController = try AudioRecorderController(outputURL: audioURL,
+            audioRecorderManager = try AudioRecorderManager(outputURL: audioURL,
                                                                   delegate: self)
         } catch {
             fatalError("[ScreenLyricsEditingViewModel] Error Recorder: \(error)")
@@ -273,7 +273,7 @@ extension ScreenLyricsEditingViewModel {
         }
         
         audioURL = nil
-        audioPlayerController = nil
+        audioPlayerManager = nil
         pastPlayingTimeLabel = nil
         missingPlayingTimeLabel = nil
         

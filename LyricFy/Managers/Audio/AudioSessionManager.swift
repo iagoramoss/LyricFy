@@ -8,22 +8,27 @@
 import Foundation
 import AVFoundation
 
-protocol AudioSessionManager {
-    
-    var isRecordPermissionGranted: Bool { get }
-    
-    func requestRecordPermission()
-    func prepareToRecord()
-    func prepareToPlay()
-}
-
-final class LocalAudioSessionManager: AudioSessionManager {
+final class LocalAudioSessionManager {
     
     private init() {}
     
-    public static let shared: AudioSessionManager = LocalAudioSessionManager()
+    public static let shared: AudioSessionManagerProtocol = LocalAudioSessionManager()
     
     private var session = AVAudioSession.sharedInstance()
+    
+    private func setAudioCategory(_ category: AVAudioSession.Category) {
+        do {
+            try session.setCategory(category, mode: .default)
+            try session.setActive(true)
+        } catch {
+            #if DEBUG
+            print("[LocalAudioSessionManager]: Error while setting up audio category: \(error.localizedDescription)")
+            #endif
+        }
+    }
+}
+
+extension LocalAudioSessionManager: AudioSessionManagerProtocol {
     
     var isRecordPermissionGranted: Bool {
         return session.recordPermission == .granted
@@ -39,17 +44,5 @@ final class LocalAudioSessionManager: AudioSessionManager {
     
     func prepareToPlay() {
         setAudioCategory(.playback)
-    }
-    
-    // MARK: - Utility
-    private func setAudioCategory(_ category: AVAudioSession.Category) {
-        do {
-            try session.setCategory(category, mode: .default)
-            try session.setActive(true)
-        } catch {
-            #if DEBUG
-            print("[AudioController]: Error while setting up audio category: \(error.localizedDescription)")
-            #endif
-        }
     }
 }

@@ -8,17 +8,7 @@
 import Foundation
 import AVFAudio
 
-protocol AudioPlayerDelegate: AnyObject {
-    
-    func playerDidFinishPlaying()
-    func playerDidUpdateTime(duration: TimeInterval, currentTime: TimeInterval)
-}
-
-class AudioPlayerController: NSObject, AVAudioPlayerDelegate {
-    
-    var audioDuration: TimeInterval {
-        audioPlayer.duration
-    }
+class AudioPlayerManager: NSObject, AVAudioPlayerDelegate {
     
     weak var delegate: AudioPlayerDelegate?
     
@@ -31,6 +21,19 @@ class AudioPlayerController: NSObject, AVAudioPlayerDelegate {
         audioPlayer.delegate = self
         audioPlayer.numberOfLoops = 0
         self.delegate = delegate
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        timer?.invalidate()
+        timer = nil
+        delegate?.playerDidFinishPlaying()
+    }
+}
+
+extension AudioPlayerManager: AudioPlayerManagerProtocol {
+    
+    var audioDuration: TimeInterval {
+        audioPlayer.duration
     }
     
     func playAudio(completion: () -> Void) {
@@ -58,11 +61,5 @@ class AudioPlayerController: NSObject, AVAudioPlayerDelegate {
     func update() {
         delegate?.playerDidUpdateTime(duration: audioPlayer.duration,
                                       currentTime: audioPlayer.currentTime)
-    }
-    
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        timer?.invalidate()
-        timer = nil
-        delegate?.playerDidFinishPlaying()
     }
 }

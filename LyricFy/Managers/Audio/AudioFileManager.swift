@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class LocalAudioFileManager: AudioFileManager {
+final class LocalAudioFileManager {
     
     public static var shared = LocalAudioFileManager(persistenceManager: DataAccessManager.shared)
     
@@ -16,6 +16,19 @@ final class LocalAudioFileManager: AudioFileManager {
     }
     
     private let persistenceManager: ReferencePersistenceManager
+    
+    private func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        
+        guard let url = paths.first else {
+            fatalError("Could not get path.")
+        }
+        
+        return url
+    }
+}
+
+extension LocalAudioFileManager: AudioFileManager {
     
     // MARK: - Utility
     func fileExists(fileURL: URL) -> Bool {
@@ -53,12 +66,7 @@ final class LocalAudioFileManager: AudioFileManager {
     func cleanAudioFilesFromSystemAndReferenceTable() {
         // Make the check and clean audio files in foreground
         DispatchQueue.global(qos: .background).async { [weak self] in
-            guard let self = self else {
-                #if DEBUG
-                print("[LocalAudioFileManager]: Couldnt get {self} reference.")
-                #endif
-                return
-            }
+            guard let self = self else { return }
             
             // Get audio URLS from unique reference table
             let urls = self.persistenceManager.getAudioUrlsFromReferenceTable()
@@ -73,13 +81,5 @@ final class LocalAudioFileManager: AudioFileManager {
                 }
             }
         }
-    }
-}
-
-extension LocalAudioFileManager {
-    
-    private func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
     }
 }

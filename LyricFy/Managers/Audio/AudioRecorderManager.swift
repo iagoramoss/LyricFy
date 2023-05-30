@@ -8,13 +8,7 @@
 import Foundation
 import AVFoundation
 
-protocol AudioRecorderDelegate: AnyObject {
-    
-    func recorderDidFinishRecording()
-    func recorderDidUpdateTime(currentRecordingTime: TimeInterval)
-}
-
-class AudioRecorderController: NSObject, AVAudioRecorderDelegate {
+class AudioRecorderManager: NSObject, AVAudioRecorderDelegate {
     
     weak var delegate: AudioRecorderDelegate?
     
@@ -35,6 +29,13 @@ class AudioRecorderController: NSObject, AVAudioRecorderDelegate {
         audioRecorder.delegate = self
         self.delegate = delegate
     }
+    
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        delegate?.recorderDidFinishRecording()
+    }
+}
+
+extension AudioRecorderManager: AudioRecorderManagerProtocol {
     
     func startRecording(completion: () -> Void) {
         audioRecorder.prepareToRecord()
@@ -57,9 +58,5 @@ class AudioRecorderController: NSObject, AVAudioRecorderDelegate {
     @objc
     func update() {
         delegate?.recorderDidUpdateTime(currentRecordingTime: audioRecorder.currentTime)
-    }
-    
-    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-        delegate?.recorderDidFinishRecording()
     }
 }
