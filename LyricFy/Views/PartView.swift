@@ -11,20 +11,6 @@ import UIKit
 class PartView: UIView, ViewCode {
     
     var delegate: PartDelegate
-
-    lazy var imageView: UIImageView = {
-           let image = UIImageView()
-           image.image = UIImage(named: "imagePlaceholder")
-           return image
-        }()
-
-    lazy var placeholder: UILabel = {
-        let label = UILabel()
-        label.text = "You haven't written any part of the song."
-        label.textColor = .colors(name: .placeholderColor)
-        label.font = UIFont.boldSystemFont(ofSize: 15)
-        return label
-    }()
     
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -38,6 +24,44 @@ class PartView: UIView, ViewCode {
         return tableView
     }()
     
+    lazy var labelTopPlaceHolder: UILabel = {
+        let view = UILabel()
+        view.text = "Create Music\nyour way"
+        view.numberOfLines = 2
+        view.textAlignment = .center
+        view.font = .customFont(fontName: .ralewayMedium, style: .title2, size: 22)
+        view.textColor = .magenta
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    lazy var labelBottomPlaceHolder: UILabel = {
+        let view = UILabel()
+        view.text = "You don't have a song yet."
+        view.font = .customFont(fontName: .ralewayMedium, style: .subheadline, size: 15)
+        view.textColor = .magenta
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    lazy var imagePlaceHolder: UIImageView = {
+        let view = UIImageView(image: UIImage(named: "placeHolderNoSession"))
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+
+    lazy var placeHolder: UIStackView = {
+        let view = UIStackView()
+        view.axis = .vertical
+        view.spacing = 14
+        view.alignment = .center
+        [labelTopPlaceHolder, imagePlaceHolder, labelBottomPlaceHolder].forEach { view.addArrangedSubview($0) }
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
     init(delegate: PartDelegate) {
         self.delegate = delegate
         super.init(frame: .zero)
@@ -45,15 +69,12 @@ class PartView: UIView, ViewCode {
     }
     
     func setupHierarchy() {
+        tableView.addSubview(placeHolder)
         addSubview(tableView)
-        tableView.addSubview(imageView)
-        tableView.addSubview(placeholder)
     }
     
     func setupConstraints() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        placeholder.translatesAutoresizingMaskIntoConstraints = false
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -61,13 +82,11 @@ class PartView: UIView, ViewCode {
             tableView.topAnchor.constraint(equalTo: topAnchor),
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            imageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            imageView.widthAnchor.constraint(equalToConstant: 28),
-            imageView.heightAnchor.constraint(equalToConstant: 28),
-
-            placeholder.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            placeholder.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10)
+            imagePlaceHolder.widthAnchor.constraint(equalToConstant: 172),
+            imagePlaceHolder.heightAnchor.constraint(equalToConstant: 172),
+            
+            placeHolder.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            placeHolder.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
     }
     
