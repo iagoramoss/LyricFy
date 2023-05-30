@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PlayerView: UIView, ViewCode {
+class PlayerView: UIView {
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -70,6 +70,13 @@ class PlayerView: UIView, ViewCode {
         setupView()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension PlayerView: ViewCode {
+    
     func setupAdditionalConfiguration() {
         backgroundColor = .colors(name: .recorderColor)
     }
@@ -113,9 +120,5 @@ class PlayerView: UIView, ViewCode {
             playAndPauseButton.topAnchor.constraint(equalTo: musicSlider.bottomAnchor, constant: 28),
             playAndPauseButton.heightAnchor.constraint(equalToConstant: 27)
         ])
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

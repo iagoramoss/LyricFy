@@ -48,6 +48,8 @@ class ScreenLyricsEditingViewModel {
         self.audioSessionManager = audioSessionManager
         self.audioFileManager = audioFileManager
         
+        self.audioSessionManager.requestRecordPermission()
+        
         // Check if there is an audioURL and if its file exists
         if let url = compositionPart.audioURL, audioFileManager.fileExists(fileURL: url) {
             self.audioURL = url
@@ -145,6 +147,7 @@ extension ScreenLyricsEditingViewModel: AudioRecorderDelegate {
         recordingTimeLabel = nil
         audioRecorderController = nil
         setupAudioPlayerController(audioURL: audioURL!)
+        audioSessionManager.prepareToPlay()
         
         missingPlayingTimeLabel = audioPlayerController?.audioDuration.formattedTimeString
         pastPlayingTimeLabel = "00:00"
@@ -276,6 +279,7 @@ extension ScreenLyricsEditingViewModel {
         
         setupAudioRecorderController(audioURL: getDynamicUrl)
         audioState = .preparedToRecord
+        audioSessionManager.prepareToRecord()
         
         // Save part without audio
         saveLyricsEdition(completion: nil)

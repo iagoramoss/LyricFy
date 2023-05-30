@@ -10,7 +10,9 @@ import UIKit
 
 class LyricsEditingScreenView: UIView, ViewCode {
 
-    var recorderView = RecorderView()
+    lazy var recorderView = RecorderView()
+    
+    lazy var playerView = PlayerView()
 
     lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
@@ -62,6 +64,20 @@ class LyricsEditingScreenView: UIView, ViewCode {
         super.init(frame: .zero)
         setupView()
     }
+    
+    func setupAudioView(state: AudioState) {
+        
+        recorderView.audioSatateChanged(state: state)
+        
+        switch state {
+        case .recording, .preparedToRecord:
+            recorderView.isHidden = false
+            playerView.isHidden = true
+        case .preparedToPlay, .pausedPlaying, .playing:
+            recorderView.isHidden = true
+            playerView.isHidden = false
+        }
+    }
 
     func setupAdditionalConfiguration() {
         backgroundColor = .clear
@@ -73,10 +89,12 @@ class LyricsEditingScreenView: UIView, ViewCode {
         contentView.addSubview(textView)
         scrollView.addSubview(contentView)
         addSubview(scrollView)
-        self.addSubview(recorderView)
+        addSubview(recorderView)
+        addSubview(playerView)
     }
 
     func setupConstraints() {
+        playerView.translatesAutoresizingMaskIntoConstraints = false
         recorderView.translatesAutoresizingMaskIntoConstraints = false
         placeHolder.translatesAutoresizingMaskIntoConstraints = false
 
@@ -102,10 +120,15 @@ class LyricsEditingScreenView: UIView, ViewCode {
             placeHolder.topAnchor.constraint(equalTo: textView.topAnchor, constant: 8),
             placeHolder.leadingAnchor.constraint(equalTo: textView.leadingAnchor, constant: 10),
 
-            recorderView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            recorderView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.25),
-            recorderView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            recorderView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            recorderView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            recorderView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            recorderView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            recorderView.heightAnchor.constraint(equalToConstant: 180),
+            
+            playerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            playerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            playerView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            playerView.heightAnchor.constraint(equalToConstant: 180)
         ])
     }
 

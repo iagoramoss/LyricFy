@@ -237,6 +237,16 @@
 			path = CoreData;
 			sourceTree = "<group>";
 		};
+		784DD5872A25426C009CA8D2 /* ScreenLyricsEditing */ = {
+			isa = PBXGroup;
+			children = (
+				67F7BE532A0F5825000ACA06 /* LyricsEditingScreenView.swift */,
+				78052D552A21285D00738C25 /* PlayerView.swift */,
+				9F8F0B972A0AE6F40063297F /* RecorderView.swift */,
+			);
+			path = ScreenLyricsEditing;
+			sourceTree = "<group>";
+		};
 		7882168F29FD9D1D0032A177 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -287,13 +297,11 @@
 			isa = PBXGroup;
 			children = (
 				67227F1629FC508100E1166C /* Components */,
+				784DD5872A25426C009CA8D2 /* ScreenLyricsEditing */,
 				9F62B0B62A01A27000A2F91C /* SheetView.swift */,
 				9F74D1332A04A3B8001017B2 /* VersionsView.swift */,
 				0D2CB0D429FC40A00080CB8A /* HomeView.swift */,
-				9F8F0B972A0AE6F40063297F /* RecorderView.swift */,
 				673574FA2A05801F00C75DB6 /* PartView.swift */,
-				67F7BE532A0F5825000ACA06 /* LyricsEditingScreenView.swift */,
-				78052D552A21285D00738C25 /* PlayerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

@@ -13,7 +13,7 @@ class ScreenLyricsEditingController: UIViewController {
     private var screen: LyricsEditingScreenView? { didSet { setupView() } }
     
     private var viewModel: ScreenLyricsEditingViewModel
-
+    
     private var subscriptions = Set<AnyCancellable>()
     
     private weak var delegate: PartDelegate?
@@ -40,13 +40,13 @@ class ScreenLyricsEditingController: UIViewController {
                                                       action: #selector(recordAndStopAction),
                                                       for: .touchUpInside)
         
-        screen?.recorderView.playButton.addTarget(self,
-                                                  action: #selector(playAndPauseAction),
-                                                  for: .touchUpInside)
+        screen?.playerView.playAndPauseButton.addTarget(self,
+                                                        action: #selector(playAndPauseAction),
+                                                        for: .touchUpInside)
         
-        screen?.recorderView.trashButton.addTarget(self,
-                                                   action: #selector(deleteAudioAction),
-                                                   for: .touchUpInside)
+        screen?.playerView.trashButton.addTarget(self,
+                                                 action: #selector(deleteAudioAction),
+                                                 for: .touchUpInside)
         
         screen?.placeHolder.isHidden = viewModel.lyricsText.isEmpty ? false : true
     }
@@ -92,9 +92,8 @@ class ScreenLyricsEditingController: UIViewController {
                           actionButtonStyle: .destructive,
                           preferredStyle: .alert) {
             self.viewModel.deleteAudio()
-            self.screen?.recorderView.audioDeleted()
         }
-
+        
         present(alert, animated: false)
     }
     
@@ -113,7 +112,7 @@ class ScreenLyricsEditingController: UIViewController {
             .store(in: &subscriptions)
         
         viewModel.$audioState
-            .sink { self.screen?.recorderView.audioSatateChanged(state: $0) }
+            .sink { self.screen?.setupAudioView(state: $0) }
             .store(in: &subscriptions)
         
         viewModel.$recordingTimeLabel
