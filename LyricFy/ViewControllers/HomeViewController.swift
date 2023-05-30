@@ -238,9 +238,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
                 textFieldDefaultText: project.name,
                 projectName: project.name,
                 action: { [weak self] name in
-                    if name.trimmingCharacters(in: .whitespaces).isEmpty {
-                        return
-                    }
+                    if name.trimmingCharacters(in: .whitespaces).isEmpty { return }
                     
                     self?.viewModel.updateProjectName(projectId: project.id, newName: name)
                     collectionView.reloadData()

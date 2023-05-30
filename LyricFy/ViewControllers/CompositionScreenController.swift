@@ -87,13 +87,13 @@ class CompositionScreenController: UIViewController {
                              textFieldDefaultText: versionName,
                              projectName: versionName,
                              action: { [weak self] newName in
+                                 if newName.trimmingCharacters(in: .whitespaces).isEmpty { return }
                                  guard let versionID = self?.viewModel.selectedVersionID else { return }
                                  
                                  self?.viewModel.updateVersionName(id: versionID, name: newName)
                                  self?.navigationItem.title = self?.viewModel.selectedVersionName
                                  
                                  self?.reloadData()
-                                 
                              }
                          ), animated: true, completion: nil)
                      }),
