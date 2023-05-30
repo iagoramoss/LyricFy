@@ -22,7 +22,8 @@ class SheetViewController: UIViewController {
             }
             
             button.addAction(UIAction(handler: { [weak self] _ in
-                self?.action?(button.titleLabel!.text!)
+                guard let self = self else { return }
+                self.action?(self.sheetView.partType)
             }), for: .touchUpInside)
         }
     }
