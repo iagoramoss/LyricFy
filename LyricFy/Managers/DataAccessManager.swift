@@ -56,7 +56,7 @@ class DataAccessManager {
         // Creating First Version
         let version = VersionEntity(context: manager.context)
         version.id = UUID()
-        version.version = "Version 1"
+        version.version = "Untitled"
         version.project = project
         version.parts = NSSet(array: [])
         
