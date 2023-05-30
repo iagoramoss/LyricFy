@@ -181,8 +181,8 @@
 		67227EFC29F85EDE00E1166C /* LyricFy */ = {
 			isa = PBXGroup;
 			children = (
-				0D2CB1172A0EB58E0080CB8A /* Fonts */,
 				781D450729F98C5E005B1ACC /* Resources */,
+				0D2CB1172A0EB58E0080CB8A /* Fonts */,
 				7882168F29FD9D1D0032A177 /* Extensions */,
 				9F0CECAF29FB0C0800103EFE /* Protocols */,
 				781D450929F98CB2005B1ACC /* Managers */,
@@ -298,10 +298,10 @@
 		78C9686D2A0975AC009054D0 /* Audio */ = {
 			isa = PBXGroup;
 			children = (
+				781615112A1183BF00EDE98B /* AudioFileManager.swift */,
 				78E0F26E2A2517E00057BE6F /* AudioSessionManager.swift */,
 				7891340A2A24D6110090B443 /* AudioPlayerManager.swift */,
 				7891340E2A24E2EB0090B443 /* AudioRecorderManager.swift */,
-				781615112A1183BF00EDE98B /* AudioFileManager.swift */,
 				78C968702A09760F009054D0 /* AudioState.swift */,
 			);
 			path = Audio;

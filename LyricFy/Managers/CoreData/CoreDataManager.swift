@@ -8,20 +8,18 @@
 import Foundation
 import CoreData
 
-class CoreDataManager {
+final class CoreDataManager {
     
     static let shared = CoreDataManager()
     
     let container: NSPersistentContainer
     let context: NSManagedObjectContext
     
-    init() {
+    private init() {
         container = NSPersistentContainer(name: "LyricFy")
         container.loadPersistentStores { _, error in
-            if let error = error {
-                #if DEBUG
-                    print("[CoreDataManager]: Error loading Core Data: \(error.localizedDescription)")
-                #endif
+            guard error == nil else {
+                fatalError("Error while loading persistent store.")
             }
         }
         context = container.viewContext
