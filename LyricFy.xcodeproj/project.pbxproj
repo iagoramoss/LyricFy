@@ -10,7 +10,6 @@
 		0D2CB0D529FC40A00080CB8A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2CB0D429FC40A00080CB8A /* HomeView.swift */; };
 		0D2CB0DA29FC41210080CB8A /* ProjectsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2CB0D929FC41210080CB8A /* ProjectsCell.swift */; };
 		0D2CB0DE29FC4F560080CB8A /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2CB0DD29FC4F560080CB8A /* HomeViewModel.swift */; };
-		0D2CB0E02A039EA10080CB8A /* AddProjectsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2CB0DF2A039EA10080CB8A /* AddProjectsCell.swift */; };
 		0D2CB1112A0AC13C0080CB8A /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2CB1102A0AC13C0080CB8A /* CoreDataManager.swift */; };
 		0D2CB1142A0AC1CA0080CB8A /* DataAccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2CB1132A0AC1CA0080CB8A /* DataAccessManager.swift */; };
 		0D2CB11B2A0EB68F0080CB8A /* Raleway-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D2CB1182A0EB68E0080CB8A /* Raleway-Bold.ttf */; };
@@ -49,7 +48,7 @@
 		78F391E02A02F3400097884C /* UITextView+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F391DF2A02F3400097884C /* UITextView+Combine.swift */; };
 		9F0CECAE29FB050800103EFE /* CompositionScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0CECAD29FB050800103EFE /* CompositionScreenController.swift */; };
 		9F35359229FEE7A600F24950 /* SheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35359129FEE7A600F24950 /* SheetViewController.swift */; };
-		9F46596D2A0EB4840032B471 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F46596C2A0EB4840032B471 /* UIColor.swift */; };
+		9F46596D2A0EB4840032B471 /* UIColor+colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F46596C2A0EB4840032B471 /* UIColor+colors.swift */; };
 		9F62B0B72A01A27000A2F91C /* SheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F62B0B62A01A27000A2F91C /* SheetView.swift */; };
 		9F74D1342A04A3B8001017B2 /* VersionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F74D1332A04A3B8001017B2 /* VersionsView.swift */; };
 		9F74D1362A04A4A2001017B2 /* VersionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F74D1352A04A4A2001017B2 /* VersionsViewController.swift */; };
@@ -61,7 +60,6 @@
 		0D2CB0D629FC40D30080CB8A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		0D2CB0D929FC41210080CB8A /* ProjectsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsCell.swift; sourceTree = "<group>"; };
 		0D2CB0DD29FC4F560080CB8A /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		0D2CB0DF2A039EA10080CB8A /* AddProjectsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectsCell.swift; sourceTree = "<group>"; };
 		0D2CB1102A0AC13C0080CB8A /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		0D2CB1132A0AC1CA0080CB8A /* DataAccessManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAccessManager.swift; sourceTree = "<group>"; };
 		0D2CB1182A0EB68E0080CB8A /* Raleway-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Bold.ttf"; sourceTree = "<group>"; };
@@ -101,7 +99,7 @@
 		78F391DF2A02F3400097884C /* UITextView+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Combine.swift"; sourceTree = "<group>"; };
 		9F0CECAD29FB050800103EFE /* CompositionScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionScreenController.swift; sourceTree = "<group>"; };
 		9F35359129FEE7A600F24950 /* SheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetViewController.swift; sourceTree = "<group>"; };
-		9F46596C2A0EB4840032B471 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		9F46596C2A0EB4840032B471 /* UIColor+colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+colors.swift"; sourceTree = "<group>"; };
 		9F62B0B62A01A27000A2F91C /* SheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetView.swift; sourceTree = "<group>"; };
 		9F74D1332A04A3B8001017B2 /* VersionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionsView.swift; sourceTree = "<group>"; };
 		9F74D1352A04A4A2001017B2 /* VersionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionsViewController.swift; sourceTree = "<group>"; };
@@ -123,7 +121,6 @@
 			isa = PBXGroup;
 			children = (
 				0D2CB0D929FC41210080CB8A /* ProjectsCell.swift */,
-				0D2CB0DF2A039EA10080CB8A /* AddProjectsCell.swift */,
 				673574FC2A05803900C75DB6 /* PartCell.swift */,
 				67F7BE612A12B007000ACA06 /* CompositionHeaderCell.swift */,
 			);
@@ -231,7 +228,7 @@
 				7882169029FD9D340032A177 /* CGFloat+Screen.swift */,
 				673574FE2A05805F00C75DB6 /* UIFont+CustomFont.swift */,
 				78F391DF2A02F3400097884C /* UITextView+Combine.swift */,
-				9F46596C2A0EB4840032B471 /* UIColor.swift */,
+				9F46596C2A0EB4840032B471 /* UIColor+colors.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -418,8 +415,7 @@
 				0D2CB0DA29FC41210080CB8A /* ProjectsCell.swift in Sources */,
 				78D0E8532A12B2AF00C80579 /* AudioPermissionAlertAlertDelegate.swift in Sources */,
 				784D59992A1D3C1000EAA30A /* ReferenceTablePersistenceManagerProtocol.swift in Sources */,
-				9F46596D2A0EB4840032B471 /* UIColor.swift in Sources */,
-				0D2CB0E02A039EA10080CB8A /* AddProjectsCell.swift in Sources */,
+				9F46596D2A0EB4840032B471 /* UIColor+colors.swift in Sources */,
 				0D2CB0D529FC40A00080CB8A /* HomeView.swift in Sources */,
 				6735E3FF2A140B32005F9BF7 /* ViewCode.swift in Sources */,
 				9F0CECAE29FB050800103EFE /* CompositionScreenController.swift in Sources */,

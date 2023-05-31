@@ -234,6 +234,6 @@ extension RecorderView: ViewCode {
     }
 
     func setupAdditionalConfiguration() {
-        self.backgroundColor = .colors(name: .recorderColor)
+        self.backgroundColor = .colors(name: .buttonsColor)
     }
 }

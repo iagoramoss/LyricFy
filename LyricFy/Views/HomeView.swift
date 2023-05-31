@@ -22,8 +22,6 @@ class HomeView: UIView, ViewCode {
         collectionProjects.backgroundColor = .none
         collectionProjects.register(ProjectsCell.self,
                                     forCellWithReuseIdentifier: ProjectsCell.identifier)
-        collectionProjects.register(AddProjectsCell.self,
-                                    forCellWithReuseIdentifier: AddProjectsCell.identifier)
         return collectionProjects
     }()
     
@@ -48,7 +46,7 @@ class HomeView: UIView, ViewCode {
         view.numberOfLines = 2
         view.textAlignment = .center
         view.font = .customFont(fontName: .ralewayMedium, style: .title2, size: 22)
-        view.textColor = .magenta
+        view.textColor = .colors(name: .placeholderColor)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -57,7 +55,7 @@ class HomeView: UIView, ViewCode {
         let view = UILabel()
         view.text = "You don't have a song yet."
         view.font = .customFont(fontName: .ralewayMedium, style: .subheadline, size: 15)
-        view.textColor = .magenta
+        view.textColor = .colors(name: .placeholderColor)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()

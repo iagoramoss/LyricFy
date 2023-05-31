@@ -14,7 +14,7 @@ class SheetView: UIView, ViewCode {
     private lazy var label: UILabel = {
         let label = UILabel()
         label.text = "Choose the composition session you want to work on:"
-        label.textColor = .magenta
+        label.textColor = .colors(name: .buttonsColor)
         label.font = .customFont(fontName: .ralewaySemibold, style: .body, size: 17)
         label.numberOfLines = 0
         return label
@@ -29,8 +29,8 @@ class SheetView: UIView, ViewCode {
             return title
         })
         
-        config.baseBackgroundColor = .magenta
-        config.baseForegroundColor = .black
+        config.baseBackgroundColor = .colors(name: .sheetComponentColor)
+        config.baseForegroundColor = .colors(name: .buttonsColor)
         config.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 16, bottom: 10, trailing: 16)
         config.cornerStyle = .large
         
@@ -55,6 +55,8 @@ class SheetView: UIView, ViewCode {
         let label = UILabel()
         label.text = "Session"
         label.font = .preferredFont(for: .subheadline, weight: .regular)
+        label.textColor = .colors(name: .buttonsColor)
+     
         return label
     }()
     
@@ -75,6 +77,7 @@ class SheetView: UIView, ViewCode {
         button.setTitle("Create a session", for: .normal)
         button.layer.cornerRadius = 12
         button.clipsToBounds = true
+        button.tintColor = .colors(name: .buttonsColor)
         
         return button
     }()
@@ -123,6 +126,6 @@ class SheetView: UIView, ViewCode {
     }
     
     func setupAdditionalConfiguration() {
-        backgroundColor = .colors(name: .sheetColor)
+        backgroundColor = .colors(name: .bgColor)
     }
 }

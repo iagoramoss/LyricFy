@@ -35,9 +35,10 @@ class LyricsEditingScreenView: UIView, ViewCode {
 
     lazy var placeHolder: UILabel = {
         let view = UILabel()
-        view.text = "Type something here..."
-        view.font = .systemFont(ofSize: 18)
-        view.textColor = UIColor.lightGray
+        view.text = "Here you can write your verses for your song."
+        view.font = .customFont(fontName: .ralewayMedium, style: .body, size: 17)
+        view.textColor = .colors(name: .placeholderColor)
+        view.numberOfLines = 0
         return view
     }()
     
@@ -48,7 +49,7 @@ class LyricsEditingScreenView: UIView, ViewCode {
         view.isEditable = true
         view.isScrollEnabled = false
         view.font = UIFont.systemFont(ofSize: 17)
-        view.textColor = .colors(name: .barButtonColor)
+        view.textColor = .colors(name: .buttonsColor)
         view.textAlignment = .left
         view.backgroundColor = .clear
         view.typingAttributes = NSAttributedString.defaultParagraphAttributes
@@ -100,7 +101,8 @@ class LyricsEditingScreenView: UIView, ViewCode {
             textView.heightAnchor.constraint(greaterThanOrEqualToConstant: .screenHeight/3),
             
             placeHolder.topAnchor.constraint(equalTo: textView.topAnchor, constant: 8),
-            placeHolder.leadingAnchor.constraint(equalTo: textView.leadingAnchor, constant: 10),
+            placeHolder.leadingAnchor.constraint(equalTo: textView.leadingAnchor, constant: 3),
+            placeHolder.widthAnchor.constraint(equalTo: textView.widthAnchor, constant: -20),
 
             recorderView.widthAnchor.constraint(equalTo: self.widthAnchor),
             recorderView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.25),
