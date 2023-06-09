@@ -30,7 +30,7 @@ class PartView: UIView, ViewCode {
         view.numberOfLines = 2
         view.textAlignment = .center
         view.font = .customFont(fontName: .ralewayMedium, style: .title2, size: 22)
-        view.textColor = .magenta
+        view.textColor = .colors(name: .placeholderColor)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -39,7 +39,7 @@ class PartView: UIView, ViewCode {
         let view = UILabel()
         view.text = "You don't have a song yet."
         view.font = .customFont(fontName: .ralewayMedium, style: .subheadline, size: 15)
-        view.textColor = .magenta
+        view.textColor = .colors(name: .placeholderColor)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()

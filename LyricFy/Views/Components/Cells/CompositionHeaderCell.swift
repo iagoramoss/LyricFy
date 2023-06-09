@@ -14,6 +14,7 @@ class CompositionHeader: UITableViewHeaderFooterView, ViewCode {
     var versionName: String = "" {
         didSet {
             versionLabel.text = versionName
+            versionLabel.textColor = .colors(name: .buttonsColor)
         }
     }
     

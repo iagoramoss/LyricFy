@@ -31,7 +31,7 @@ class HomeViewController: UIViewController {
         
         view.backgroundColor = .colors(name: .bgColor)
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupView()

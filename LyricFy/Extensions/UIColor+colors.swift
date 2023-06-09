@@ -1,5 +1,5 @@
 //
-//  UIColor.swift
+//  UIColor+colors.swift
 //  LyricFy
 //
 //  Created by Anne Victoria Batista Auzier on 12/05/23.
@@ -12,18 +12,16 @@ enum Colors: String {
     case bgColor
     case buttonsColor
     case buttonsLabel
-    case labelSheetColor
-    case sheetButtonColor
-    case sheetColor
-    case barButtonColor
     case sectionsColor
-    case recorderColor
     case placeholderColor
-    case cellsColor
+    case sheetComponentColor
 }
 
 extension UIColor {
     static func colors(name: Colors) -> UIColor? {
-        return UIColor(named: name.rawValue)
+        guard let color = UIColor(named: name.rawValue) else {
+            return .black
+        }
+        return color
     }
 }

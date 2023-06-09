@@ -12,8 +12,8 @@ class SheetViewController: UIViewController {
     var sheetView = SheetView()
     var action: ((String) -> Void)?
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func loadView() {
+        super.loadView()
         view = sheetView
         
         sheetView.subviews.forEach { subview in

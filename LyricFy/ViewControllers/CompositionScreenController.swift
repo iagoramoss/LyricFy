@@ -32,7 +32,7 @@ class CompositionScreenController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
-        navigationController?.navigationBar.tintColor = .colors(name: .barButtonColor)
+        navigationController?.navigationBar.tintColor = .colors(name: .buttonsColor)
     }
 
     private func setupNavigationBar() {
@@ -124,11 +124,11 @@ class CompositionScreenController: UIViewController {
         
         let addButton = UIBarButtonItem(image: .init(systemName: "plus"), style: .plain,
                                         target: self, action: #selector(onTappedButtonAdd))
-        addButton.tintColor = .colors(name: .barButtonColor)
+        addButton.tintColor = .colors(name: .buttonsColor)
         
         let menuButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"))
         menuButton.menu = menu
-        menuButton.tintColor = .colors(name: .barButtonColor)
+        menuButton.tintColor = .colors(name: .buttonsColor)
         
         navigationItem.title = viewModel.selectedVersionName
         navigationController?.navigationBar.largeTitleTextAttributes = [

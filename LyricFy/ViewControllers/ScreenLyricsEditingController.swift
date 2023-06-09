@@ -123,7 +123,7 @@ class ScreenLyricsEditingController: UIViewController {
     private func setupNavigationBar() {
         navigationItem.title = viewModel.lyricsType
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.tintColor = .colors(name: .barButtonColor)
+        navigationController?.navigationBar.tintColor = .colors(name: .buttonsColor)
     }
     
     deinit {
@@ -185,7 +185,7 @@ extension ScreenLyricsEditingController: KeyboardListener {
                                          style: .done,
                                          target: self,
                                          action: #selector(doneClicked))
-        doneButton.tintColor = .colors(name: .sheetButtonColor)
+        doneButton.tintColor = .colors(name: .buttonsColor)
         navigationItem.rightBarButtonItem = doneButton
     }
     
