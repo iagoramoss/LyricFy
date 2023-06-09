@@ -231,7 +231,6 @@
 				673574FE2A05805F00C75DB6 /* UIFont+CustomFont.swift */,
 				78F391DF2A02F3400097884C /* UITextView+Combine.swift */,
 				9F46596C2A0EB4840032B471 /* UIColor+colors.swift */,
-				9F46596C2A0EB4840032B471 /* UIColor.swift */,
 				67F7FA812A266B18006AD7A3 /* String+getUntitledString.swift */,
 			);
 			path = Extensions;
@@ -421,8 +420,7 @@
 				784D59992A1D3C1000EAA30A /* ReferenceTablePersistenceManagerProtocol.swift in Sources */,
 				9F46596D2A0EB4840032B471 /* UIColor+colors.swift in Sources */,
 				67F7FA822A266B18006AD7A3 /* String+getUntitledString.swift in Sources */,
-				9F46596D2A0EB4840032B471 /* UIColor.swift in Sources */,
-				0D2CB0E02A039EA10080CB8A /* AddProjectsCell.swift in Sources */,
+				9F46596D2A0EB4840032B471 /* UIColor+colors.swift in Sources */,
 				0D2CB0D529FC40A00080CB8A /* HomeView.swift in Sources */,
 				6735E3FF2A140B32005F9BF7 /* ViewCode.swift in Sources */,
 				9F0CECAE29FB050800103EFE /* CompositionScreenController.swift in Sources */,
@@ -572,7 +570,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = A7SRF7ZP35;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LyricFy/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Lyra;
@@ -607,7 +605,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = A7SRF7ZP35;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LyricFy/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Lyra;
