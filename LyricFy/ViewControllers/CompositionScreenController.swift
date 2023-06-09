@@ -48,9 +48,54 @@ class CompositionScreenController: UIViewController {
                      image: UIImage(systemName: "doc.on.doc"),
                      state: .off,
                      handler: { [weak self] _ in
-                         self?.viewModel.createVersion()
-                         self?.navigationItem.title = self?.viewModel.selectedVersionName
-                         self?.reloadData()
+                         
+                         self?.present(
+                            Alert(
+                                title: "Version Name",
+                                textFieldPlaceholder: "Ex: Last version",
+                                textFieldDefaultText: "Version",
+                                projectName: nil,
+                                action: { [weak self] name in
+                                    guard let self = self else { return }
+                                    
+                                    var name = name
+                                    
+                                    name.handleTextFieldName(existingNames: self.viewModel.versions.map({
+                                        $0.name
+                                    }))
+                                    
+                                    self.viewModel.createVersion(name: name)
+                                    self.navigationItem.title = self.viewModel.selectedVersionName
+                                    
+                                    self.reloadData()
+                                }
+                            ),
+                            animated: true)
+                         
+                     }),
+            
+            UIAction(title: "Rename version",
+                     image: UIImage(systemName: "pencil"),
+                     state: .off,
+                     handler: { [weak self] _ in
+                         guard let versionName = self?.viewModel.selectedVersionName else { return }
+                         
+                         self?.present(Alert(
+                             title: "Rename Version",
+                             actionButtonLabel: "Rename",
+                             textFieldPlaceholder: nil,
+                             textFieldDefaultText: versionName,
+                             projectName: versionName,
+                             action: { [weak self] newName in
+                                 if newName.trimmingCharacters(in: .whitespaces).isEmpty { return }
+                                 guard let versionID = self?.viewModel.selectedVersionID else { return }
+                                 
+                                 self?.viewModel.updateVersionName(id: versionID, name: newName)
+                                 self?.navigationItem.title = self?.viewModel.selectedVersionName
+                                 
+                                 self?.reloadData()
+                             }
+                         ), animated: true, completion: nil)
                      }),
             
             UIAction(title: "Delete version",
@@ -100,9 +145,11 @@ class CompositionScreenController: UIViewController {
                                                            audioManager: AudioController.shared,
                                                            audioFileManager: LocalAudioFileManager.shared)
         
-        navigationController?.pushViewController(ScreenLyricsEditingController(viewModel: lyricsViewModel,
-                                                                               delegate: self),
-                                                 animated: true)
+        navigationController?.pushViewController(
+            ScreenLyricsEditingController(viewModel: lyricsViewModel,
+                                          delegate: self),
+            animated: true
+        )
     }
     
     @objc

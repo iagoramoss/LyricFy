@@ -56,7 +56,7 @@ class DataAccessManager {
         // Creating First Version
         let version = VersionEntity(context: manager.context)
         version.id = UUID()
-        version.version = "Version 1"
+        version.version = "Untitled"
         version.project = project
         version.parts = NSSet(array: [])
         
@@ -137,6 +137,15 @@ extension DataAccessManager {
         }
         
         version.parts = NSSet(array: compositionParts)
+        
+        manager.save()
+    }
+    
+    func updateVersionByID(versionID: UUID, newName: String) {
+        guard let version = getVersionEntityByID(id: versionID) else { return }
+        
+        // Updating version name
+        version.version = newName
         
         manager.save()
     }
