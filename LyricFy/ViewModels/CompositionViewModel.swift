@@ -14,10 +14,10 @@ class CompositionViewModel: ObservableObject {
     @Published private(set) var parts: [Part] = []
     @Published private(set) var selectedVersionIndex = 0
     @Published private(set) var selectedVersionName = ""
+    @Published private(set) var selectedVersionID: UUID?
     
     private let composition: Composition
     private let service = DataAccessManager.shared
-    private var selectedVersionID: UUID?
     private var lastVersion = 0
     
     init(composition: Composition) {
@@ -39,15 +39,6 @@ extension CompositionViewModel {
     func getVersions() -> [Version] {
         var versions = service.getCompositionVersionsByCompositionID(compositionID: composition.id)
         
-        versions.sort {
-            let v1 = Int($0.name.split(separator: " ").last!)!
-            let v2 = Int($1.name.split(separator: " ").last!)!
-            
-            return v1 < v2
-        }
-        
-        lastVersion = Int(versions.last!.name.split(separator: " ").last!)!
-        
         return versions
     }
     
@@ -55,13 +46,22 @@ extension CompositionViewModel {
         versions = getVersions()
     }
     
-    func createVersion() {
-        service.createVersionWithCompositionID(name: "Version \(lastVersion + 1)",
+    func createVersion(name: String) {
+        var name = name.isEmpty ? "Version \(lastVersion + 1)" : name
+        
+        service.createVersionWithCompositionID(name: name,
                                                compositionID: composition.id,
                                                parts: parts)
         
         updateVersions()
         switchVersion(to: versions.count - 1)
+    }
+    
+    func updateVersionName(id: UUID, name: String) {
+        service.updateVersionByID(versionID: id, newName: name)
+        
+        selectedVersionName = name
+        updateVersions()
     }
     
     func deleteVersion() {

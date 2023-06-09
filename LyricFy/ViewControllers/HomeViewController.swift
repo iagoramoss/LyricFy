@@ -78,21 +78,7 @@ class HomeViewController: UIViewController {
                 guard let self = self else { return }
                 
                 var projectName = projectName
-                
-                if projectName.trimmingCharacters(in: .whitespaces).isEmpty {
-                    let projectNames = self.viewModel.projects.map { $0.name }
-                    var untitledCount = 0
-                    
-                    repeat {
-                        projectName = "Untitled"
-                        
-                        if untitledCount > 0 {
-                            projectName += " \(untitledCount)"
-                        }
-                        
-                        untitledCount += 1
-                    } while projectNames.contains(projectName)
-                }
+                projectName.handleTextFieldName(existingNames: self.viewModel.projects.map({ $0.name }))
                 
                 self.viewModel.createProject(name: projectName)
                 self.screen.collectionProjects.reloadData()
@@ -252,9 +238,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
                 textFieldDefaultText: project.name,
                 projectName: project.name,
                 action: { [weak self] name in
-                    if name.trimmingCharacters(in: .whitespaces).isEmpty {
-                        return
-                    }
+                    if name.trimmingCharacters(in: .whitespaces).isEmpty { return }
                     
                     self?.viewModel.updateProjectName(projectId: project.id, newName: name)
                     collectionView.reloadData()
